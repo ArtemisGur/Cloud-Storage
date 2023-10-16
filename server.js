@@ -26,11 +26,10 @@ clientDB.connect().then(mongoClient => {
     listDatabases(clientDB)
 })
 
-
 APP.use(express.static(__dirname + '/src/mainPage/'))
 APP.use(express.static(__dirname + '/src/registrationPage/'))
 APP.use(express.static(__dirname + '/src/autorizationPage/'))
-APP.use(express.static(__dirname + '/src/workPage/'))
+APP.use(express.static(__dirname + '/workpage/'))
 APP.use(express.urlencoded({extended: false}))
 
 APP.get('/', (req, res) => {
@@ -75,11 +74,16 @@ APP.get('/auth', (req, res) => {
     }
 })
 
+APP.get('/static/js/main.effe100f.js', (req, res) => {
+    res.sendFile(__dirname + '/workpage/build/static/js/main.effe100f.js')
+})
+
 APP.get('/work', (req, res) => {
-    res.redirect('http://localhost:3000')
+    res.sendFile(__dirname + '/workpage/build/index.html')
 })
 
 APP.get("/test", (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
     res.json({"smth": "test"})
 })
 
@@ -96,7 +100,7 @@ APP.post('/auth-user', (req, res) => {
             res.redirect('/auth')
         }
         else{
-            res.redirect('/')
+            res.redirect('/work')
         }
     })
 })
