@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/autorizationPage.css">
+    <script src="../js/mainPage.js"></script>
+    <title>Authorization</title>
+</head>
+<body>
+    <div class="main-window">
+        <div class="header">
+            <div class="logo">
+                <a href="/">
+                    <img style="margin-top: 8%;" src="../css/img/aaa.jpg" alt="">
+                </a>
+            </div>
+            <div class="id-but">
+                <div class="authorization-button">
+                    <a href="/auth" id="but1-link">
+                        <button class="but-1">Войти в MyStorage</button>
+                    </a>
+                </div>
+                <div class="reg-button">
+                    <a href="/registration" id="but2-link">
+                        <button class="but-2">Попробовать бесплатно</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="reg-window">
+            <div class="main-reg"> 
+                <div id="reg-container">
+                    <form id="reg-fields" method="post" action="/auth-user" name="auth-user">
+                        <h1 id="reg-text">
+                            Вход в MyStorage
+                        </h1>
+                        <hr>
+                        <input type="text" placeholder="Логин или email" class="input-field" id="login" name="login">
+                        <p class="correction-field"></p>
+                        <input type="password" placeholder="Пароль" class="input-field" id="password" name="password"> 
+                        <p id="errorAlert"><%=errorAuth %></p>
+                        <p id="help-text">Еще нет аккаунта? <a href="/registration" id="reg-link"> Попробуйте бесплатно</a></p>
+                        <button id="button-reg" type="submit">Вход</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

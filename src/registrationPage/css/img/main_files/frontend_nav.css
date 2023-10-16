@@ -1,0 +1,42 @@
+.shop-brand-nav {
+	margin: -8px !important;
+	padding: 0;
+	list-style: none;
+}
+
+.shop-brand-nav__item {
+	display: inline-block;
+	width: 50%;
+	vertical-align: top;
+}
+
+.shop-brand-nav__item_current {
+}
+
+.shop-brand-nav-item {
+	margin: 8px;
+	display: block;
+}
+
+.shop-brand-nav-item__image-box {
+	height: 50px;
+	display: block;
+	margin-bottom: 8px;
+	position: relative;
+}
+
+.shop-brand-nav-item__image {
+	max-width: 100%;
+	max-height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+}
+
+.shop-brand-nav-item__name {
+	text-align: center;
+	display: block;
+}

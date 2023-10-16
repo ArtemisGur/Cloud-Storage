@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/registrationPage.css">
+    <script src="../js/index.js"></script>
+    <title>Registration</title>
+</head>
+
+<body>
+    <div class="main-window">
+        <div class="header">
+            <div class="logo">
+                <a href="/">
+                    <img style="margin-top: 8%;" src="../css/img/aaa.jpg" alt="">
+                </a>
+            </div>
+            <div class="id-but">
+                <div class="authorization-button">
+                    <a href="/auth" id="but1-link">
+                        <button class="but-1">Войти в MyStorage</button>
+                    </a>
+                </div>
+                <div class="reg-button">
+                    <a href="/registration" id="but2-link">
+                        <button class="but-2">Попробовать бесплатно</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div id="reg-window">
+            <div class="main-reg"> 
+                <div id="reg-container">
+                    <div id="main-cont">
+                        <h3 id="main-header">Добро пожаловать в MyStorage</h3>
+                        <div id="main-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa 
+                            qui officia deserunt mollit anim id est laborum.
+                        </div>
+                    </div>
+                    <form id="reg-fields" method="post" action="/reg-user" name="reg-user">
+                        <h1 id="reg-text">
+                            Регистрация
+                        </h1>
+                        <input type="text" placeholder="Ваш логин" class="input-field" id="login" 
+                        onblur="checkValidation('login')" name="login">
+                        <p id="loginCorrection"><%= errorAlertLogin %></p>
+                        <input type="email" placeholder="Почта" class="input-field" id="email"
+                        onblur="checkValidation('email')" name="email">
+                        <p id="emailCorrection"><%= errorAlertEmail %></p>
+                        <input type="password" autocomplete="current-password" placeholder="Пароль" class="input-field" id="password"
+                        onblur="checkValidation('password')" name="password">
+                        <p class="correction-field" id="passwordCorrection"></p>
+                        <input type="password" placeholder="Подтверждение пароля" class="input-field" id="passwordConfirmation" 
+                        onblur="checkValidation('passwordConfirmation')">
+                        <p class="correction-field" id="passwordConfirmationCorrection"></p>
+                        <button id="button-reg" type="submit" disabled>Стать участником</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+
+</html>

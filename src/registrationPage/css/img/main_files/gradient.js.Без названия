@@ -1,0 +1,193 @@
+class LinearGradient {
+    constructor() {
+        this.threeColors = false;
+        this.firstColor = '152, 207, 195';
+        this.secondColor = '86, 181, 184';
+        this.thirdColor = '237, 242, 208';
+        this.direction = '45deg';
+        this.ofsetOne = '';
+        this.ofsetTwo = '';
+        this.ofsetThree = '';
+    }
+
+    setThreeColors(thirdOfsetBlock, thirdColorBlock) {
+        this.threeColors = true;
+        thirdOfsetBlock.show();
+        thirdColorBlock.show();
+        this.setGradient(element, code);
+    }
+
+    setTwoColors(thirdOfsetBlock, thirdColorBlock) {
+        this.threeColors = false;
+        thirdOfsetBlock.hide();
+        thirdColorBlock.hide();
+        this.setGradient(element, code);
+    }
+
+    setGradient(element, code) {
+        if (this.threeColors) {
+            element.style.background = `linear-gradient(${this.direction}, rgb(${this.firstColor})${this.ofsetOne}, rgb(${this.secondColor})${this.ofsetTwo}, rgb(${this.thirdColor})${this.ofsetThree})`;
+        } else {
+            element.style.background = `linear-gradient(${this.direction}, rgb(${this.firstColor})${this.ofsetOne}, rgb(${this.secondColor})${this.ofsetTwo})`;
+        }
+        this.showCSS(code);
+    }
+
+    showCSS(code) {
+        if (this.threeColors) {
+            code.innerHTML = `<span class="hljs-attribute">background:</span> <span class="hljs-built_in">-webkit-linear-gradient</span>(${this.direction}, rgb(${this.firstColor})${this.ofsetOne}, rgb(${this.secondColor})${this.ofsetTwo}, rgb(${this.thirdColor})${this.ofsetThree});<br>
+            <span class="hljs-attribute">background:</span> <span class="hljs-built_in">-moz-linear-gradient</span>(${this.direction}, rgb(${this.firstColor})${this.ofsetOne}, rgb(${this.secondColor})${this.ofsetTwo}, rgb(${this.thirdColor})${this.ofsetThree});<br>
+            <span class="hljs-attribute">background:</span> <span class="hljs-built_in">linear-gradient</span>(${this.direction}, rgb(${this.firstColor})${this.ofsetOne}, rgb(${this.secondColor})${this.ofsetTwo}, rgb(${this.thirdColor})${this.ofsetThree});`;
+        } else {
+            code.innerHTML = `<span class="hljs-attribute">background:</span> <span class="hljs-built_in">-webkit-linear-gradient</span>(${this.direction}, rgb(${this.firstColor})${this.ofsetOne}, rgb(${this.secondColor})${this.ofsetTwo});<br>
+            <span class="hljs-attribute">background:</span> <span class="hljs-built_in">-moz-linear-gradient</span>(${this.direction}, rgb(${this.firstColor})${this.ofsetOne}, rgb(${this.secondColor})${this.ofsetTwo});<br>
+            <span class="hljs-attribute">background:</span> <span class="hljs-built_in">linear-gradient</span>(${this.direction}, rgb(${this.firstColor})${this.ofsetOne}, rgb(${this.secondColor})${this.ofsetTwo});`;
+        }
+    }
+}
+
+/*Variables*/
+let firstColor = $('#first-color');
+let secondColor = $('#second-color');
+let thirdColor = $('#third-color');
+let ofsetOne = document.getElementById('ofset-1');
+let ofsetTwo =  document.getElementById('ofset-2');
+let ofsetThree =  document.getElementById('ofset-3');
+let thirdOfsetBlock = $('.settings__third-ofset');
+let thirdColorBlock = $('.settings__third-color');
+let element = document.getElementById('element');
+let code = document.getElementById('code');
+let threeColorsBtn = document.getElementById('three-colors');
+let gradient = new LinearGradient();
+let directions = document.querySelectorAll('.settings__direction');
+let form = document.querySelector('.settings__form');
+
+gradient.setGradient(element, code);
+
+/*Events*/
+form.onsubmit = (event) => {
+    event.preventDefault();
+};
+
+threeColorsBtn.onchange = () => {
+    if (threeColorsBtn.checked) {
+        gradient.setThreeColors(thirdOfsetBlock, thirdColorBlock, element, code);
+    } else {
+        gradient.setTwoColors(thirdOfsetBlock, thirdColorBlock, element, code);
+    }
+};
+
+for(let i=0; i < directions.length; i++) {
+    directions[i].onclick = () => {
+        gradient.direction = directions[i].getAttribute('data-direction') + 'deg';
+        gradient.setGradient(element, code);
+    }
+}
+
+firstColor.on('move.spectrum', function (e, tinyColor) {
+    gradient.firstColor = `${Math.round(tinyColor._r)},  ${Math.round(tinyColor._g)},  ${Math.round(tinyColor._b)}`;
+    gradient.setGradient(element, code);
+});
+
+firstColor.on('change.spectrum', function (e, tinyColor) {
+    gradient.firstColor = `${Math.round(tinyColor._r)},  ${Math.round(tinyColor._g)},  ${Math.round(tinyColor._b)}`;
+    gradient.setGradient(element, code);
+});
+
+secondColor.on('move.spectrum', function (e, tinyColor) {
+    gradient.secondColor = `${Math.round(tinyColor._r)},  ${Math.round(tinyColor._g)},  ${Math.round(tinyColor._b)}`;
+    gradient.setGradient(element, code);
+});
+
+secondColor.on('change.spectrum', function (e, tinyColor) {
+    gradient.secondColor = `${Math.round(tinyColor._r)},  ${Math.round(tinyColor._g)},  ${Math.round(tinyColor._b)}`;
+    gradient.setGradient(element, code);
+});
+
+thirdColor.on('move.spectrum', function (e, tinyColor) {
+    gradient.thirdColor = `${Math.round(tinyColor._r)},  ${Math.round(tinyColor._g)},  ${Math.round(tinyColor._b)}`;
+    gradient.setGradient(element, code);
+});
+
+thirdColor.on('change.spectrum', function (e, tinyColor) {
+    gradient.thirdColor = `${Math.round(tinyColor._r)},  ${Math.round(tinyColor._g)},  ${Math.round(tinyColor._b)}`;
+    gradient.setGradient(element, code);
+});
+
+ofsetOne.oninput = () => {
+    if (ofsetOne.value < 1) {
+        gradient.ofsetOne = '';
+    } else {
+        gradient.ofsetOne = ' ' + ofsetOne.value + "%";
+    }
+    gradient.setGradient(element, code);
+};
+
+ofsetTwo.oninput = () => {
+    if (ofsetTwo.value < 1) {
+        gradient.ofsetTwo = '';
+    } else {
+        gradient.ofsetTwo = ' ' + ofsetTwo.value + "%";
+    }
+    gradient.setGradient(element, code);
+};
+
+ofsetThree.oninput = () => {
+    if (ofsetThree.value < 1) {
+        gradient.ofsetThree = '';
+    } else {
+        gradient.ofsetThree = ' ' + ofsetThree.value + "%";
+    }
+    gradient.setGradient(element, code);
+};
+
+/*Range*/
+$('#ofset-1').ionRangeSlider({
+    skin: "flat",
+    min: 0,
+    max: 100,
+    postfix: '%',
+});
+
+$('#ofset-2').ionRangeSlider({
+    skin: "flat",
+    min: 0,
+    max: 100,
+    postfix: '%',
+});
+
+$('#ofset-3').ionRangeSlider({
+    skin: "flat",
+    min: 0,
+    max: 100,
+    postfix: '%',
+});
+
+/*ColorPicker*/
+firstColor.spectrum({
+    color: "#9acfc3",
+    preferredFormat: "hex",
+    allowEmpty: false,
+    showInput: true,
+    showButtons: false,
+});
+
+secondColor.spectrum({
+    color: "#52b3b6",
+    preferredFormat: "hex",
+    allowEmpty: false,
+    showInput: true,
+    showButtons: false,
+});
+
+thirdColor.spectrum({
+    color: "#edf2d0",
+    preferredFormat: "hex",
+    allowEmpty: false,
+    showInput: true,
+    showButtons: false,
+});
+$( document ).ready(function() {
+  /*highlight*/
+  hljs.initHighlightingOnLoad();
+});

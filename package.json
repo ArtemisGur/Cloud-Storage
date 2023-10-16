@@ -1,0 +1,20 @@
+{
+  "name": "mystorage-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "node server.js",
+    "dev": "server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6",
+    "mongodb": "^6.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
