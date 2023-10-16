@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import Header from './components/Header'
+import './css/main.css'
 
 function App() {
   
-  const [state, setState] = useState([{}]);
-
-  useEffect(() => {
-      fetch("/test")
-      .then(res => res.json())
-      .then(
-        data => {
-            setState(data)
-        },
-        (error) => {}
-      )
-  }, [])
+  // const [state, setState] = useState([{}]);
+  // useEffect(() => {
+  //     fetch("/test")
+  //     .then(res => res.json())
+  //     .then(
+  //       data => {
+  //           setState(data)
+  //       },
+  //       (error) => {}
+  //     )
+  // }, [])
   
   return (
     <div className='App'>
-      <h1>Test hihihaha</h1>
+      <Header />
     </div>
   )
 }

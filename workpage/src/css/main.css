@@ -1,0 +1,31 @@
+body{
+    margin: 0;
+}
+
+.header-container{
+    display: flex;
+    background-color: #fafafa;
+    padding: 4px;
+}
+
+#logo-img{
+    margin-top: 2%;
+}
+
+.logo-block{
+    flex-basis: 25%;
+}
+
+.search-cont{
+    flex-basis: 25%;
+}
+
+#search-field{
+    display: flex;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 20px;
+    width: 80%;
+    background-color: rgb(230, 230, 230);
+    font-weight: 600;
+}
