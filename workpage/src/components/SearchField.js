@@ -1,15 +1,15 @@
 import { useState } from "react"
 
-const SearchButton = () => {
+const SearchField = () => {
 
-    let [click, setClick] = useState('Поиск по хранилищу')
+    let [click, setClick] = useState('Поиск хранилища')
 
     return(
         <div className="search-cont">
-            <input id="search-field" placeholder={click} onBlur={() => setClick(click='Поиск по хранилищу')} onClick={() => setClick(click='')}></input>
+            <input id="search-field" placeholder={click} onBlur={() => setClick(click='Поиск хранилища')} onClick={() => setClick(click='')}></input>
         </div>
     )
     
 }
 
-export default SearchButton
+export default SearchField

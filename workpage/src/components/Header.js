@@ -1,5 +1,6 @@
 import logo from '../img/logo.jpg'
-import SearchButton from './SearchField'
+import profileLogo from '../img/profile-logo.png'
+import SearchField from './SearchField'
 
 const Header = () => {
     return(
@@ -9,7 +10,11 @@ const Header = () => {
                     <img src={logo} id="logo-img"/>
                 </a>
             </div>
-            <SearchButton />
+            <SearchField />
+            <div className='logo-profile'>
+                <img src={profileLogo}/>
+            </div>
+            <button id='button-exit'>Выйти</button>
         </div>
     )
 }

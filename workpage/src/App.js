@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from './components/Header'
+import NavigateMenu from './components/NavigateMenu'
 import './css/main.css'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
   return (
     <div className='App'>
       <Header />
+      <NavigateMenu />
     </div>
   )
 }

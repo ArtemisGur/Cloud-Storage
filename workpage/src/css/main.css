@@ -1,15 +1,18 @@
 body{
     margin: 0;
+    background-color: #f9faff;
+    
 }
 
 .header-container{
     display: flex;
-    background-color: #fafafa;
-    padding: 4px;
+    margin-top: 0.5%;
 }
 
 #logo-img{
-    margin-top: 2%;
+    margin-top: 2.5%;
+    margin-left: 2%;
+    transform: scale(1);
 }
 
 .logo-block{
@@ -21,11 +24,87 @@ body{
 }
 
 #search-field{
+    background: url('../img/search-logo.png');
+    background-repeat: no-repeat;
+    background-position: 5px;
     display: flex;
-    font-size: 16px;
+    font-size: 14px;
     padding: 10px;
+    padding-left: 40px;
     border-radius: 20px;
     width: 80%;
-    background-color: rgb(230, 230, 230);
+    background-color: #ddecf5;
     font-weight: 600;
+    border: 1px solid #2d4a53;
+    box-shadow: 0 0 10px #2d4a53; 
+    outline: none;
+    font-family: system-ui;
+}
+
+.logo-profile{
+    margin-left: 30%;
+}
+
+#button-exit{
+    flex-basis: 10%;
+    margin-left: 2%;
+    height: 37px;
+    font-size: 16px;
+    font-family: system-ui;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53; 
+    background: #f9faff;
+    border-radius: 6px;
+    transition: 0.2s linear;
+    outline: none;
+}   
+
+.nav-menu-storage{
+    width: 15%;
+}
+
+.but-create-cont{
+    padding-top: 8%;
+    margin-left: 5%;
+}
+
+#but-create{
+    padding: 10px;
+    font-size: 16px;
+    font-family: system-ui;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53; 
+    background: #f9faff;
+    border-radius: 6px;
+    transition: 0.2s linear;
+    outline: none;
+}
+
+#but-create:hover, #button-exit:hover{
+    background-color: #ddecf5;
+    box-shadow: 0 0 5px #2d4a53;
+}
+
+.nav-menu-cont{
+    margin-top: 5%;
+    margin-left: 2%;
+}
+
+#nav-field-cont{
+    padding: 15px;
+    transition: 0.2s linear;
+    border: 0px solid #2d4a53;
+    border-radius: 35px;
+    margin-left: 5%;
+}
+
+#nav-field-cont:hover{
+    background-color: lightgray;
+    
+}
+
+#nav-field{
+    font-size: 14px;
+    font-family: system-ui;
+    
 }
