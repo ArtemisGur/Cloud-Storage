@@ -9,7 +9,6 @@ const SearchField = () => {
             <input id="search-field" placeholder={click} onBlur={() => setClick(click='Поиск хранилища')} onClick={() => setClick(click='')}></input>
         </div>
     )
-    
 }
 
 export default SearchField

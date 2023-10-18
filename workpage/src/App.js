@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { PageProvider } from './components/PageContext';
 import Header from './components/Header'
 import NavigateMenu from './components/NavigateMenu'
+import { CreateStorage } from './components/CreatePage';
 import './css/main.css'
 
 function App() {
@@ -19,8 +21,11 @@ function App() {
   
   return (
     <div className='App'>
-      <Header />
-      <NavigateMenu />
+        <Header />
+        <PageProvider>
+          <NavigateMenu />
+          <CreateStorage />
+        </PageProvider>
     </div>
   )
 }

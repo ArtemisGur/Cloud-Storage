@@ -6,11 +6,11 @@ body{
 
 .header-container{
     display: flex;
-    margin-top: 0.5%;
+    margin-top: 0.8%;
 }
 
 #logo-img{
-    margin-top: 2.5%;
+    margin-top: 1%;
     margin-left: 2%;
     transform: scale(1);
 }
@@ -32,8 +32,8 @@ body{
     padding: 10px;
     padding-left: 40px;
     border-radius: 20px;
-    width: 80%;
-    background-color: #ddecf5;
+    width: 100%;
+    background-color: #f9faff;
     font-weight: 600;
     border: 1px solid #2d4a53;
     box-shadow: 0 0 10px #2d4a53; 
@@ -65,7 +65,7 @@ body{
 
 .but-create-cont{
     padding-top: 8%;
-    margin-left: 5%;
+    margin-left: 10%;
 }
 
 #but-create{
@@ -95,16 +95,16 @@ body{
     transition: 0.2s linear;
     border: 0px solid #2d4a53;
     border-radius: 35px;
-    margin-left: 5%;
+    margin-left: 10%;
 }
 
 #nav-field-cont:hover{
-    background-color: lightgray;
+    background-color: #ddecf5;
     
 }
 
 #nav-field{
     font-size: 14px;
     font-family: system-ui;
-    
+    font-weight: 500;
 }

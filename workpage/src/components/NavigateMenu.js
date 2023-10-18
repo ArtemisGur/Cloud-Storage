@@ -4,8 +4,8 @@ import NavListComponents from './NavListComponents'
 const NavigateMenu = () => {
     return(
         <div className="nav-menu-storage">
-            <ButtonCreateStorage />
-            <NavListComponents />
+            <ButtonCreateStorage/>
+            <NavListComponents/>
         </div>
     )
 }
