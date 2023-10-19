@@ -1,7 +1,11 @@
+head{
+    height: auto
+}
+
 body{
     margin: 0;
     background-color: #f9faff;
-    
+    height: 100%;
 }
 
 .header-container{
@@ -107,4 +111,102 @@ body{
     font-size: 14px;
     font-family: system-ui;
     font-weight: 500;
+}
+
+.work-page-container{
+    display: flex;
+}
+
+.create-storage-cont{
+    background-color: #ddecf575;
+    border-radius: 6px;
+    width: 79.2%;
+    margin-top: 1%;
+    min-height: 80vh;
+    font-family: system-ui;
+}
+
+.create-storage-interior{
+    margin-left: 2%;
+}
+
+#create-interior{
+ margin-left: 1%;
+}
+
+.header-span{
+    font-size: 20px;
+    margin-top: 0.5%;
+    margin-bottom: 1%;
+    font-weight: 500;
+}
+
+#name-storage-create{
+ border-radius: 6px;
+ font-size: 16px;
+ outline: none;
+ padding: 10px;
+ width: 30%;
+ border: 0px solid #2d4a53;
+ margin-top: 1%;
+ box-shadow: 0 0 5px #2d4a53;
+}
+
+.checkbox-type-storage{
+    margin-bottom: 2%;
+}
+
+.checkbox-type-storage{
+    font-size: 16px;
+}
+
+.type-storage-promt{
+    margin-left: 1%;
+    opacity: 0.5;
+    font-size: 14px;
+}
+
+#type-storage-cont{
+    margin-left: 1%;
+}
+
+#button-create-storage-interior{
+    padding: 10px;
+    font-size: 16px;
+    font-family: system-ui;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53; 
+    background: #f9faff;
+    border-radius: 6px;
+    transition: 0.2s linear;
+    outline: none;
+    width: 10%;
+}
+
+#button-create-storage-interior:hover{
+    background-color: #ddecf5;
+    box-shadow: 0 0 5px #2d4a53;
+}
+
+.checkbox-type{
+    margin-left: 1%;
+}
+
+#password-for-storage-hint{
+    margin-top: 1%;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53; 
+    background: #f9faff;
+    border-radius: 6px;
+    font-size: 20px;
+    padding-left: 10px;
+    outline: none;
+}
+
+#closed-storage-block{
+    margin-left: 2%;
+}
+
+#password-header-hint{
+    font-size: 14px;
 }

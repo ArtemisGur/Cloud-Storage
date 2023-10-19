@@ -23,8 +23,10 @@ function App() {
     <div className='App'>
         <Header />
         <PageProvider>
-          <NavigateMenu />
-          <CreateStorage />
+          <div className='work-page-container'>
+            <NavigateMenu />
+            <CreateStorage />
+          </div>
         </PageProvider>
     </div>
   )
