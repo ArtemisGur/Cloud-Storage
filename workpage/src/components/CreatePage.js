@@ -36,22 +36,33 @@ const CreateStorage = () => {
                         <div className="header-span">
                             <span>Тип хранилища</span>
                         </div>
-                        <div id="type-storage-cont">
+                        <div id="type-storage-cont">    
                             <div className="checkbox-type-storage">
+                            <label className="label-type">
                                 <span className="span-type-storage">Открытое</span>
-                                <input type="checkbox" className="checkbox-type"/>
+                                <input type="checkbox" className="checkbox-type" id="first-checkbox"
+                                    onClick={() => {if(checked){clickHandler()};document.getElementById('second-checkbox').checked = false; document.getElementById('third-checkbox').checked = false;}}
+                                />
                                 <span className="type-storage-promt">Любой пользователь MyStorage сможет просматривать содержимое хранилища</span>
+                                </label>
                             </div>  
                             <div className="checkbox-type-storage">
+                            <label className="label-type">  
                                 <span className="span-type-storage">Закрытое</span>
-                                <input type="checkbox" className="checkbox-type" onClick={clickHandler}/>
+                                <input type="checkbox" className="checkbox-type" id="second-checkbox" 
+                                    onClick={() => {clickHandler(); document.getElementById('first-checkbox').checked = false; document.getElementById('third-checkbox').checked = false;}}/>
                                 <span className="type-storage-promt">Для входа в хранилище другим пользователям потребуется пароль</span>
                                 {passwordForStorage}
+                            </label>
                             </div>
                             <div className="checkbox-type-storage">
+                            <label className="label-type">            
                                 <span className="span-type-storage">Личное</span>
-                                <input type="checkbox" className="checkbox-type"/>
-                                <span className="type-storage-promt"> Содержимое хранилища доступно только его создателю</span>
+                                <input type="checkbox" className="checkbox-type" id="third-checkbox" 
+                                    onClick={() => {if(checked){clickHandler()};document.getElementById('first-checkbox').checked = false; document.getElementById('second-checkbox').checked = false;}}
+                                />
+                                <span className="type-storage-promt"> Содержимое хранилища доступно только его создателю</span>              
+                            </label>
                             </div>
                         </div>
                         <button id="button-create-storage-interior">Создать</button>

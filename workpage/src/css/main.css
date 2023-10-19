@@ -190,6 +190,7 @@ body{
 
 .checkbox-type{
     margin-left: 1%;
+    scale: 1.2;
 }
 
 #password-for-storage-hint{
@@ -210,3 +211,13 @@ body{
 #password-header-hint{
     font-size: 14px;
 }
+
+.label-type{
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53; 
+    border-radius: 6px;
+    padding:10px;
+    margin:0 0 10px;
+    display:block; 
+    max-width: 80%;
+   }
