@@ -1,5 +1,6 @@
 const express = require('express')
 const MongoClient = require('mongodb').MongoClient
+const bcrypt = require('bcrypt')
 
 const clientDB = new MongoClient("mongodb://127.0.0.1:27017/")
 const db = clientDB.db("DBUsers")
@@ -88,10 +89,14 @@ APP.get("/test", (req, res) => {
 })
 
 APP.post('/auth-user', (req, res) => {
-    collectionUsers.countDocuments({login: req.body.login, password: req.body.password})
+    collectionUsers.findOne({login: req.body.login})
     .then((user) => {
+        const validPassword = bcrypt.compareSync(req.body.password, user.password)
         console.log(user)
         if (user == 0){
+            userChecked = true
+        }
+        if (!validPassword){
             userChecked = true
         }
     })
@@ -138,10 +143,11 @@ APP.post('/reg-user', (req, res) => {
 async function regUser(req){
     console.log(req)
     try{
+        const hashPassword = bcrypt.hashSync(req.password, 6)
         let user = {
             login: req.login,
             email: req.email,
-            password: req.password
+            password: hashPassword
         }
     
         let result = await collectionUsers.insertOne(user)
