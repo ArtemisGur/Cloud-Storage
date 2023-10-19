@@ -1,6 +1,7 @@
 const express = require('express')
 const MongoClient = require('mongodb').MongoClient
 const bcrypt = require('bcrypt')
+const session = require('express-session')
 
 const clientDB = new MongoClient("mongodb://127.0.0.1:27017/")
 const db = clientDB.db("DBUsers")
@@ -27,6 +28,13 @@ clientDB.connect().then(mongoClient => {
     listDatabases(clientDB)
 })
 
+APP.use(express.json())
+APP.use(session({
+    secret: 'thisSecretKey',
+    cookie: {
+        sameSite: 'strict'
+    }
+}))
 APP.use(express.static(__dirname + '/src/mainPage/'))
 APP.use(express.static(__dirname + '/src/registrationPage/'))
 APP.use(express.static(__dirname + '/src/autorizationPage/'))
@@ -77,10 +85,18 @@ APP.get('/auth', (req, res) => {
 
 APP.get('/static/js/main.effe100f.js', (req, res) => {
     res.sendFile(__dirname + '/workpage/build/static/js/main.effe100f.js')
+    
 })
 
 APP.get('/work', (req, res) => {
-    res.sendFile(__dirname + '/workpage/build/index.html')
+    if (!req.session.authorized){
+        res.redirect('/auth') 
+    }
+    else{
+        console.log(req.session)
+        res.sendFile(__dirname + '/workpage/build/index.html')
+    }
+    
 })
 
 APP.get("/test", (req, res) => {
@@ -100,11 +116,14 @@ APP.post('/auth-user', (req, res) => {
             userChecked = true
         }
     })
-    .then(() => {
+    .then((user) => {
         if (userChecked){
             res.redirect('/auth')
         }
         else{
+            req.session.user = user
+            req.session.login = req.body.login
+            req.session.authorized = true
             res.redirect('/work')
         }
     })
@@ -134,6 +153,7 @@ APP.post('/reg-user', (req, res) => {
         }
         else{
             regUser(req.body)
+            res.cookie('login', req.body.login, {secure: true})
             res.redirect('/work')
         }
     })
