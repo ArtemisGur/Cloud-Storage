@@ -2,7 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { PageProvider } from './components/PageContext';
 import Header from './components/Header'
 import NavigateMenu from './components/NavigateMenu'
-import { CreateStorage } from './components/CreatePage';
+import { CreateStorage } from './components/mainFrame/CreatePage';
+import { OwnerStorage } from './components/mainFrame/showOwnerStorages';
 import './css/main.css'
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
   //       (error) => {}
   //     )
   // }, [])
-  
+
   return (
     <div className='App'>
         <Header />
@@ -26,6 +27,7 @@ function App() {
           <div className='work-page-container'>
             <NavigateMenu />
             <CreateStorage />
+            <OwnerStorage />
           </div>
         </PageProvider>
     </div>

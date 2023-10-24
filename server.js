@@ -114,6 +114,10 @@ APP.post("/getNewStorage", (req, res) => {
     console.log(req.body)
 })
 
+APP.post('/getOwnerStorages', (req, res) => {
+    res.json({'username' : req.session.login})
+})
+
 APP.post('/auth-user', (req, res) => {
     collectionUsers.findOne({login: req.body.login})
     .then((user) => {

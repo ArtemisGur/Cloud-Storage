@@ -1,8 +1,10 @@
+import axios from 'axios'
 import logo from '../img/logo.jpg'
 import profileLogo from '../img/profile-logo.png'
 import SearchField from './SearchField'
 
 const Header = () => {
+
     return(
         <div className="header-container">
             <div className="logo-block">

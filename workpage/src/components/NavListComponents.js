@@ -1,27 +1,6 @@
-
-const MyStorages = () => {
-    return(
-        <div id="nav-field-cont">
-            <span id="nav-field">Мои хранилища</span>
-        </div>
-    )
-}
-
-const EnabledStorages = () => {
-    return(
-        <div id="nav-field-cont">
-            <span id="nav-field">Доступные мне</span>
-        </div>
-    )
-}
-
-const DeletedStorages = () => {
-    return(
-        <div id="nav-field-cont">
-            <span id="nav-field">Удаленные</span>
-        </div>
-    )
-}
+import { MyStorages, test } from "./buttonsNavigate/buttonMyStorages"
+import EnabledStorages from "./buttonsNavigate/buttonEnabledStorages"
+import DeletedStorages from "./buttonsNavigate/buttonDeletedStorages"
 
 const NavList = () => {
     return(

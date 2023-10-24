@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react"
 
-import { PageContext } from "./PageContext"
+import { PageContext } from "../PageContext"
 
 const ButtonCreateStorage = () => {
     const {activePage, changePage} = useContext(PageContext)

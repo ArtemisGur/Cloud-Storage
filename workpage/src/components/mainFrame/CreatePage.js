@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { PageContext } from "./PageContext"
+import { PageContext } from "../PageContext"
 import axios from 'axios';
 
 const CreateStorage = () => {
