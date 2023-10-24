@@ -1,10 +1,13 @@
 const express = require('express')
-const MongoClient = require('mongodb').MongoClient
-const bcrypt = require('bcrypt')
 const session = require('express-session')
 const cors = require("cors");
 const fs = require('fs')
+const bcrypt = require('bcrypt')
 
+const fileController = require('./server/fileControllers/fileController')
+const userController = require('./server/userConrol/userControl')
+
+const MongoClient = require('mongodb').MongoClient
 const clientDB = new MongoClient("mongodb://127.0.0.1:27017/")
 const db = clientDB.db("DBUsers")
 const collectionUsers = db.collection("users")
@@ -90,17 +93,11 @@ APP.get('/auth', (req, res) => {
     }
 })
 
-// APP.get('/static/js/main.effe100f.js', (req, res) => {
-//     res.sendFile(__dirname + '/workpage/build/static/js/main.effe100f.js')
-    
-// })
-
 APP.get('/work', (req, res) => {
     if (!req.session.authorized){
         res.redirect('/auth') 
     }
     else{
-        console.log(req.session)
         res.redirect("http://localhost:3000/")
     }
     
@@ -111,12 +108,10 @@ APP.post("/getNewStorage", (req, res) => {
     if (req.body.newStorage.nameStorage == '' || req.body.newStorage.typeStorage == null){
         res.sendStatus(202)
     }
+    else{
+        fileController.createStorageDir(req, req.session.login)
+    }
     console.log(req.body)
-})
-
-APP.get("/test", (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    res.json({"smth": "test"})
 })
 
 APP.post('/auth-user', (req, res) => {
@@ -136,6 +131,7 @@ APP.post('/auth-user', (req, res) => {
             res.redirect('/auth')
         }
         else{
+            res.cookie('login', req.body.login, {secure: true})
             req.session.user = user
             req.session.login = req.body.login
             req.session.authorized = true
@@ -167,7 +163,8 @@ APP.post('/reg-user', (req, res) => {
             res.redirect('/registration')
         }
         else{
-            regUser(req.body)
+            let user =  userController.regUser(req.body)
+            collectionUsers.insertOne(user)
             res.cookie('login', req.body.login, {secure: true})
             req.session.login = req.body.login
             req.session.authorized = true
@@ -178,23 +175,10 @@ APP.post('/reg-user', (req, res) => {
 
 })
 
-async function regUser(req){
-    console.log(req)
-    try{
-        const hashPassword = bcrypt.hashSync(req.password, 6)
-        let user = {
-            login: req.login,
-            email: req.email,
-            password: hashPassword
-        }
+// APP.get('/static/js/main.effe100f.js', (req, res) => {
+//     res.sendFile(__dirname + '/workpage/build/static/js/main.effe100f.js')
     
-        let result = await collectionUsers.insertOne(user)
-        console.log(result)
-    }
-    catch(err){
-        console.log(err)
-    }
-}
+// })
 
 APP.listen(PORT, () => {
     console.log(`Server has been started on port ${PORT}`)
