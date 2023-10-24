@@ -179,7 +179,6 @@ body{
     background: #f9faff;
     border-radius: 6px;
     transition: 0.2s linear;
-    outline: none;
     width: 10%;
 }
 
@@ -221,3 +220,8 @@ body{
     display:block; 
     max-width: 80%;
    }
+
+#hint-storage-create{
+    margin-bottom: 2%;
+    color: crimson;
+}

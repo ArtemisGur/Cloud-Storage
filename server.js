@@ -2,6 +2,8 @@ const express = require('express')
 const MongoClient = require('mongodb').MongoClient
 const bcrypt = require('bcrypt')
 const session = require('express-session')
+const cors = require("cors");
+const fs = require('fs')
 
 const clientDB = new MongoClient("mongodb://127.0.0.1:27017/")
 const db = clientDB.db("DBUsers")
@@ -14,11 +16,10 @@ let isUserExist = false
 let isEmailExist = false
 let userChecked = false 
 
-APP.set('view engine', 'ejs')
 
 async function listDatabases(client){
     databasesList = await client.db().admin().listDatabases();
- 
+    
     console.log("Databases:");
     databasesList.databases.forEach(db => console.log(` - ${db.name}`));
 };
@@ -28,6 +29,11 @@ clientDB.connect().then(mongoClient => {
     listDatabases(clientDB)
 })
 
+APP.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
+APP.set('view engine', 'ejs')
 APP.use(express.json())
 APP.use(session({
     secret: 'thisSecretKey',
@@ -38,10 +44,11 @@ APP.use(session({
 APP.use(express.static(__dirname + '/src/mainPage/'))
 APP.use(express.static(__dirname + '/src/registrationPage/'))
 APP.use(express.static(__dirname + '/src/autorizationPage/'))
-APP.use(express.static(__dirname + '/workpage/'))
+//APP.use(express.static(__dirname + '/workpage/'))
 APP.use(express.urlencoded({extended: false}))
 
 APP.get('/', (req, res) => {
+    console.log(__dirname + '../src/mainPage/')
     res.render('mainPage')
 })
 
@@ -83,10 +90,10 @@ APP.get('/auth', (req, res) => {
     }
 })
 
-APP.get('/static/js/main.effe100f.js', (req, res) => {
-    res.sendFile(__dirname + '/workpage/build/static/js/main.effe100f.js')
+// APP.get('/static/js/main.effe100f.js', (req, res) => {
+//     res.sendFile(__dirname + '/workpage/build/static/js/main.effe100f.js')
     
-})
+// })
 
 APP.get('/work', (req, res) => {
     if (!req.session.authorized){
@@ -94,9 +101,17 @@ APP.get('/work', (req, res) => {
     }
     else{
         console.log(req.session)
-        res.sendFile(__dirname + '/workpage/build/index.html')
+        res.redirect("http://localhost:3000/")
     }
     
+})
+
+APP.post("/getNewStorage", (req, res) => {
+    
+    if (req.body.newStorage.nameStorage == '' || req.body.newStorage.typeStorage == null){
+        res.sendStatus(202)
+    }
+    console.log(req.body)
 })
 
 APP.get("/test", (req, res) => {
@@ -154,10 +169,13 @@ APP.post('/reg-user', (req, res) => {
         else{
             regUser(req.body)
             res.cookie('login', req.body.login, {secure: true})
+            req.session.login = req.body.login
+            req.session.authorized = true
+            fs.mkdirSync(`server/files/${req.body.login}`)
             res.redirect('/work')
         }
     })
-    
+
 })
 
 async function regUser(req){
