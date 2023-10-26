@@ -1,14 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { PageContext } from "../PageContext"
 import axios from 'axios';
-let test 
+
+let OwnerStorages = [ ]
 
 const MyStorages = () => {
     const {activePage, changePage} = useContext(PageContext)
     useEffect(() => {
        axios.post('http://localhost:5000/getOwnerStorages', '', { withCredentials: true })
        .then((res) => {
-        test = res.data.username
+        createOwnStorageObject(res.data)
        })
     })
 
@@ -19,4 +20,12 @@ const MyStorages = () => {
     )
 }
 
-export { MyStorages , test } 
+const createOwnStorageObject = (data) => {
+    OwnerStorages.length = 0
+    for (let i = 0; i < data.length; i++){
+        OwnerStorages.push({key: i, owner: data[i].owner, name: data[i].name, type: data[i].type})
+    }
+}
+
+export { MyStorages, OwnerStorages } 
+

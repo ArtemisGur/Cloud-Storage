@@ -11,6 +11,7 @@ const MongoClient = require('mongodb').MongoClient
 const clientDB = new MongoClient("mongodb://127.0.0.1:27017/")
 const db = clientDB.db("DBUsers")
 const collectionUsers = db.collection("users")
+const collectionStorages = db.collection("Storages")
 
 const APP = express()
 const PORT = 5000
@@ -115,7 +116,10 @@ APP.post("/getNewStorage", (req, res) => {
 })
 
 APP.post('/getOwnerStorages', (req, res) => {
-    res.json({'username' : req.session.login})
+    collectionStorages.find({owner: req.session.login}).toArray()
+    .then((result) => {
+        res.send(result)
+    })
 })
 
 APP.post('/auth-user', (req, res) => {

@@ -131,7 +131,8 @@ body{
 }
 
 #create-interior{
- margin-left: 1%;
+    margin-left: 1%;
+    margin-top: 3%;
 }
 
 #nav-field-cont{
@@ -229,4 +230,40 @@ body{
 #hint-storage-create{
     margin-bottom: 2%;
     color: crimson;
+}
+
+.button-storage{
+    width: 90%;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53; 
+    background: #f9faff;
+    border-radius: 6px;
+    transition: 0.1s linear;
+}
+.button-storage:hover{
+    background-color: #ddecf5;
+    box-shadow: 0 0 5px #2d4a53;
+}
+
+.but-storage-name{
+    float: left;
+    font-size: 20px;
+    
+}
+
+.but-storage-owner{
+    margin-top: 3%;
+    font-size: 13px;
+    float: right;
+    margin-right: 5%;
+    padding-bottom: 10px;
+}
+
+.button-storage-interior{
+    padding: 10px;
+    font-family: system-ui;
+}
+
+.button-storage-block{
+    margin-bottom: 1%;
 }
