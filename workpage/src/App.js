@@ -4,6 +4,7 @@ import Header from './components/Header'
 import NavigateMenu from './components/NavigateMenu'
 import { CreateStorage } from './components/mainFrame/CreatePage';
 import { OwnerStorage } from './components/mainFrame/showOwnerStorages';
+import { ShowInternalFiles } from './components/mainFrame/storageInternals';
 import './css/main.css'
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <NavigateMenu />
             <CreateStorage />
             <OwnerStorage />
+            <ShowInternalFiles />
           </div>
         </PageProvider>
     </div>

@@ -47,7 +47,6 @@ const showFiles = (req) => {
         let stat = fs.statSync(dirPath + '/' +files_[i])
         let size = stat.size
         let birthtime = stat.birthtime  
-        //let file = new File(name,)
         if (fs.statSync(fullName).isDirectory()){
             let type = ''
             let file = new File(fullName, name, type, size, birthtime)

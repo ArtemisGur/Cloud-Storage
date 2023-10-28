@@ -117,7 +117,7 @@ body{
     display: flex;
 }
 
-.create-storage-cont{
+.create-storage-cont, .show-file-cont{
     background-color: #ddecf575;
     border-radius: 6px;
     width: 79.2%;
@@ -266,4 +266,96 @@ body{
 
 .button-storage-block{
     margin-bottom: 1%;
+}
+
+.file-upload-input{
+    display: none;
+}
+
+.upload-file-label{
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53; 
+    background-color: #f9faff;
+    border-radius: 6px;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+
+.upload-file-label:hover{
+    background-color: #ddecf5;
+}
+
+.upload_file{
+    margin-top: 3%;
+    margin-left: 2%;
+}
+
+.back-to-storages{
+    margin-top: 3%;
+    margin-left: 2%;
+}
+
+.show-files-interior{
+    display: flex;
+}
+
+.file-params{
+    display: flex;
+    margin-top: 2%;
+}
+
+#file-prop-name{
+    margin-left: 5%;
+    width: 54%;
+}
+
+#file-name{
+    width: 60%;
+}
+
+#file-prop-type{
+    width: 9%;
+}
+
+#file-prop-date{
+    width: 15%;
+}
+
+#file-prop-size{
+    width: 10%;
+}
+
+#file-type{
+    width: 10%;
+}
+
+#file-date{
+    width: 16.5%;
+}
+
+#file-size{
+    width: 10%;
+}
+
+#file-interior{ 
+    display: flex;
+    width: 90%;
+    margin-top: 1%;
+    border: 1px solid #2d4a53;
+    border-radius: 6px;
+    margin-left: 4%;
+    padding-left: 1%;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    transition: 0.1s linear;
+    
+}
+
+#file-interior:hover{
+    background-color: lightgray;
+}
+
+#interior-block-files{
+    margin-top: 2%;
 }
