@@ -121,42 +121,12 @@ APP.post('/getOwnerStorages', (req, res) => {
     })
 })
 
-function File(fullName, name, type, size, createDate){
-    this.fullName = fullName
-    this.name = name
-    this.type = type
-    this.size = size
-    this.createDate = createDate
-}
 
 APP.post("/showFiles", (req, res) => {
-    console.log(req.body.owner, req.body.name)
-    let dirPath = __dirname + `/server/files/${req.body.owner}/Storage_${req.body.name}`
-    let files_ = fs.readdirSync(dirPath)
-    console.log(files_)
-    
-    let files = []
 
-    for (let i in files_){
-        let fullName = dirPath + '/' + files_[i]
-        let name = files_[i]
-        let stat = fs.statSync(dirPath + '/' +files_[i])
-        let size = stat.size
-        let birthtime = stat.birthtime  
-        //let file = new File(name,)
-        if (fs.statSync(fullName).isDirectory()){
-            let type = ''
-            let file = new File(fullName, name, type, size, birthtime)
-            files.push(file)
-        }
-        else{
-            let type = name.slice(name.lastIndexOf('.') + 1)
-            let file = new File(fullName, name, type, size, birthtime)
-            files.push(file)
-        }
-        console.log(files)
-    }
+    let files = fileController.showFiles(req) 
     res.send(files)
+    
 })
 
 APP.post('/auth-user', (req, res) => {
