@@ -3,6 +3,7 @@ const session = require('express-session')
 const cors = require("cors");
 const fs = require('fs')
 const bcrypt = require('bcrypt')
+const fileUpload = require('express-fileupload');
 
 const fileController = require('./server/fileControllers/fileController')
 const userController = require('./server/userConrol/userControl')
@@ -50,6 +51,7 @@ APP.use(express.static(__dirname + '/src/registrationPage/'))
 APP.use(express.static(__dirname + '/src/autorizationPage/'))
 //APP.use(express.static(__dirname + '/workpage/'))
 APP.use(express.urlencoded({extended: false}))
+APP.use(fileUpload());
 
 APP.get('/', (req, res) => {
     console.log(__dirname + '../src/mainPage/')
@@ -121,6 +123,19 @@ APP.post('/getOwnerStorages', (req, res) => {
     })
 })
 
+APP.post('/uploadNewFiles', (req, res) => {
+    const file = req.files.file
+    
+    file.mv(`${__dirname}/server/files/${req.body.path}/${file.name}`,
+    function (err) {
+        if (err) {
+          console.log(err)
+          return res.status(500).send({ msg: "Error occurred" });
+        }
+        return res.send({name: file.name, path: `/${file.name}`});
+    });
+    
+})
 
 APP.post("/showFiles", (req, res) => {
 

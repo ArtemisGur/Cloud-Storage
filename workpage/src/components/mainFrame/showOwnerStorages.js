@@ -4,13 +4,15 @@ import { OwnerStorages } from '../buttonsNavigate/buttonMyStorages'
 import axios from "axios"
 
 let internalFiles = [ ]
+let path
 
 const OwnerStorage = () => {
     const { activePage, changePage } = useContext(PageContext)
     const handlerClick = (num) => {
         axios.post('http://localhost:5000/showFiles', {"owner" : OwnerStorages[num].owner, "name" : OwnerStorages[num].name})
         .then((res) => {
-            creteObjInternalFiles(res.data, OwnerStorages[num].name)
+            creteObjInternalFiles(res.data)
+            path = `${OwnerStorages[num].owner}/Storage_${OwnerStorages[num].name}`
         })
         .then(() => {
             changePage(4)
@@ -56,6 +58,7 @@ const OwnerStorage = () => {
 const creteObjInternalFiles = (data, name) =>{
     internalFiles.length = 0
     for (let i = 0; i < data.length; i++){
+        console.log(name)
         const date = data[i].createDate
         const slicedDate = date.slice(0, 10)
         const size = Math.floor(data[i].size / (1024)  )
@@ -63,4 +66,4 @@ const creteObjInternalFiles = (data, name) =>{
     }
 }
 
-export { OwnerStorage, internalFiles }
+export { OwnerStorage, internalFiles, path }

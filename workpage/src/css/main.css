@@ -240,7 +240,7 @@ body{
     border-radius: 6px;
     transition: 0.1s linear;
 }
-.button-storage:hover{
+.button-storage:hover, .upbutton:hover{
     background-color: #ddecf5;
     box-shadow: 0 0 5px #2d4a53;
 }
@@ -272,7 +272,11 @@ body{
     display: none;
 }
 
-.upload-file-label{
+#button-upload-files{
+    cursor: pointer;
+}
+
+.upload-file-label, #button-upload-files{
     border: 0px solid #2d4a53;
     box-shadow: 0 0 5px #2d4a53; 
     background-color: #f9faff;
@@ -282,13 +286,18 @@ body{
     transition: 0.2s linear;
 }
 
-.upload-file-label:hover{
+.upload-file-label:hover, #button-upload-files:hover{
     background-color: #ddecf5;
 }
 
 .upload_file{
-    margin-top: 3%;
+    margin-top: 2.5%;
     margin-left: 2%;
+}
+
+.file-upload{
+    display: flex;
+    margin-top: 1%;
 }
 
 .back-to-storages{
@@ -359,3 +368,24 @@ body{
 #interior-block-files{
     margin-top: 2%;
 }
+
+#butt-choose{
+    font-size: 14px;
+    font-style: system-ui;
+    width: 400px;
+    
+}
+
+.upbutton{
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53;
+    background-color: #f9faff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+
+.progessBar{
+    margin-right: 2%;
+}
+
