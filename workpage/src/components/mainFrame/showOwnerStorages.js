@@ -65,4 +65,4 @@ const creteObjInternalFiles = (data, name) =>{
     }
 }
 
-export { OwnerStorage, internalFiles, path }
+export { OwnerStorage, internalFiles, path, creteObjInternalFiles }

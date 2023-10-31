@@ -1,18 +1,18 @@
 import axios from "axios"
 import { PageContext } from "../PageContext"
-import { internalFiles, path } from "./showOwnerStorages"
+import { internalFiles, path, creteObjInternalFiles } from "./showOwnerStorages"
 import { useContext, useState } from "react"
 import fileDownload from 'js-file-download'
 import React, { useRef } from 'react';
+import ReactDOM from 'react-dom';
 
 const ShowInternalFiles = () => {
-
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
     const [progress, setProgess] = useState(0);
-    const el = useRef();
     const [menu, setMenu] = useState(-1)
     const [showMenu, setShowMenu] = useState(false)
+    const el = useRef();
 
     const handleChange = (e) => {
         setProgess(0)
@@ -36,15 +36,23 @@ const ShowInternalFiles = () => {
             console.log(res)
         }).catch(err => console.log(err))
     }
-
-    function download(fullName, fileName) {
-
-        axios.post('/downloadFile', {'fullPath' : fullName}, { responseType: 'blob'} )
+    
+    const downloadFile = (fullName, fileName) => {
+    
+        axios.post('/downloadFile', {'fullPath' : fullName}, { responseType: 'blob' } )
         .then((res) => {
             fileDownload(res.data, fileName)
         })
         
       }
+    
+    const deleteFile = (fullName, fileName, key) => {
+    
+        axios.post('/deleteFile', {'fullPath' : fullName}, { responseType: 'blob' })
+        .then(() => {
+            internalFiles.splice(key, 1)
+        })
+    }
 
     let CreateFileBlock = (
         <div className="show-file-cont">
@@ -55,8 +63,7 @@ const ShowInternalFiles = () => {
                 </div>
                 <div className="upload_file">
                     <div id="block-interior-submenu">
-                        <div className="file-upload">
-                        
+                        <div className="file-upload">       
                             <button onClick={uploadFile} className="upbutton">
                                 Загрузить в хранилище
                             </button>
@@ -68,7 +75,6 @@ const ShowInternalFiles = () => {
                         </div>
                     </div>
                 </div>
-
             </div>
             <div className="file-params">
                 <div id="file-prop-name">Название</div>
@@ -81,21 +87,21 @@ const ShowInternalFiles = () => {
                     internalFiles.map((internalFiles) => {
                         {
                             return (
-                                <div id="file-interior" onClick={() => {setMenu(internalFiles.key)}}>
+                                <div id="file-interior" onClick={() => {setMenu(internalFiles.key); setShowMenu(!showMenu)}}>
                                     <div id="file-name" key={internalFiles.id}>{internalFiles.name}</div>
                                     <div id="file-type" key={internalFiles.id}>{internalFiles.type}</div>
                                     <div id="file-date" key={internalFiles.id}>{internalFiles.birthday}</div>
                                     <div id="file-size" key={internalFiles.id}>{internalFiles.size}</div>
-                                    {menu === internalFiles.key && (
-                                        <div id="myDropdown" class="dropdown-content">
+                                    {menu === internalFiles.key && showMenu &&(
+                                        <div id="myDropdown" className="dropdown-content">
                                             <div className="file-menu-block">
-                                                <button className="file-menu-but" onClick={() => {download(internalFiles.fullName, internalFiles.name)}}>Скачать</button>
+                                                <button className="file-menu-but" onClick={() => {downloadFile(internalFiles.fullName, internalFiles.name)}}>Скачать</button>
                                             </div>
                                             <div className="file-menu-block">
                                                 <button className="file-menu-but">Предосмотр</button>
                                             </div>
                                             <div className="file-menu-block">
-                                                <button className="file-menu-but">Удалить</button>
+                                                <button className="file-menu-but" onClick={() => {deleteFile(internalFiles.fullName, internalFiles.name, internalFiles.key)}}>Удалить</button>
                                             </div>
                                         </div>
                                     )}

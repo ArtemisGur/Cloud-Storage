@@ -125,28 +125,39 @@ APP.post('/getOwnerStorages', (req, res) => {
 
 APP.post('/uploadNewFiles', (req, res) => {
     const file = req.files.file
+
+    console.log(file)
     
     file.mv(`${__dirname}/server/files/${req.body.path}/${file.name}`,
     function (err) {
         if (err) {
-          console.log(err)
-          return res.status(500).send({ msg: "Error occurred" });
+            res.status(500).send({ msg: "Error occurred" })
         }
-        return res.send({name: file.name, path: `/${file.name}`});
+        res.send({name: file.name, path: `/${file.name}`})
     });
     
 })
 
 APP.post('/downloadFile', (req, res) => {
     const fileName = req.body.fullPath
-    console.log(fileName)
     fs.readFile(fileName, (err, data) => {
         if (err){
-            console.log(err)
+            return res.status(500).send({ msg: "Error occurred" })
         }
-        console.log(data)
         res.send(data)
     })
+})
+
+APP.post('/deleteFile', (req, res) => {
+    const fileName = req.body.fullPath
+    console.log(fileName)
+    try{
+        fs.unlinkSync(fileName)
+        res.send('deleted')
+    }
+    catch(err){
+        console.log(err)
+    }
 })
 
 APP.post("/showFiles", (req, res) => {
