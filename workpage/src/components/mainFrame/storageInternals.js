@@ -2,20 +2,23 @@ import axios from "axios"
 import { PageContext } from "../PageContext"
 import { internalFiles, path } from "./showOwnerStorages"
 import { useContext, useState } from "react"
+import fileDownload from 'js-file-download'
 import React, { useRef } from 'react';
 
 const ShowInternalFiles = () => {
-    
+
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
-    const [progress, setProgess] = useState(0); 
-    const el = useRef(); 
+    const [progress, setProgess] = useState(0);
+    const el = useRef();
+    const [menu, setMenu] = useState(-1)
+    const [showMenu, setShowMenu] = useState(false)
 
     const handleChange = (e) => {
         setProgess(0)
-        const file = e.target.files[0]; 
+        const file = e.target.files[0];
         console.log(file);
-        setFile(file); 
+        setFile(file);
     }
 
     const uploadFile = () => {
@@ -34,6 +37,15 @@ const ShowInternalFiles = () => {
         }).catch(err => console.log(err))
     }
 
+    function download(fullName, fileName) {
+
+        axios.post('/downloadFile', {'fullPath' : fullName}, { responseType: 'blob'} )
+        .then((res) => {
+            fileDownload(res.data, fileName)
+        })
+        
+      }
+
     let CreateFileBlock = (
         <div className="show-file-cont">
             <div className="show-files-interior">
@@ -44,13 +56,15 @@ const ShowInternalFiles = () => {
                 <div className="upload_file">
                     <div id="block-interior-submenu">
                         <div className="file-upload">
-                            <input type="file" ref={el} onChange={handleChange} id="butt-choose"/>
-                            <div className="progessBar">
-                                {progress}
-                            </div>
+                        
                             <button onClick={uploadFile} className="upbutton">
                                 Загрузить в хранилище
                             </button>
+                            <div className="progessBar">
+                                {progress}
+                            </div>
+                            <input type="file" ref={el} onChange={handleChange} id="butt-choose" />
+                            
                         </div>
                     </div>
                 </div>
@@ -67,11 +81,24 @@ const ShowInternalFiles = () => {
                     internalFiles.map((internalFiles) => {
                         {
                             return (
-                                <div id="file-interior">
+                                <div id="file-interior" onClick={() => {setMenu(internalFiles.key)}}>
                                     <div id="file-name" key={internalFiles.id}>{internalFiles.name}</div>
                                     <div id="file-type" key={internalFiles.id}>{internalFiles.type}</div>
                                     <div id="file-date" key={internalFiles.id}>{internalFiles.birthday}</div>
                                     <div id="file-size" key={internalFiles.id}>{internalFiles.size}</div>
+                                    {menu === internalFiles.key && (
+                                        <div id="myDropdown" class="dropdown-content">
+                                            <div className="file-menu-block">
+                                                <button className="file-menu-but" onClick={() => {download(internalFiles.fullName, internalFiles.name)}}>Скачать</button>
+                                            </div>
+                                            <div className="file-menu-block">
+                                                <button className="file-menu-but">Предосмотр</button>
+                                            </div>
+                                            <div className="file-menu-block">
+                                                <button className="file-menu-but">Удалить</button>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             )
                         }

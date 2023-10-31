@@ -137,6 +137,18 @@ APP.post('/uploadNewFiles', (req, res) => {
     
 })
 
+APP.post('/downloadFile', (req, res) => {
+    const fileName = req.body.fullPath
+    console.log(fileName)
+    fs.readFile(fileName, (err, data) => {
+        if (err){
+            console.log(err)
+        }
+        console.log(data)
+        res.send(data)
+    })
+})
+
 APP.post("/showFiles", (req, res) => {
 
     let files = fileController.showFiles(req) 

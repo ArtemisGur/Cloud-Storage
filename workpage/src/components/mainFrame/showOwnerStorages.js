@@ -58,10 +58,9 @@ const OwnerStorage = () => {
 const creteObjInternalFiles = (data, name) =>{
     internalFiles.length = 0
     for (let i = 0; i < data.length; i++){
-        console.log(name)
         const date = data[i].createDate
         const slicedDate = date.slice(0, 10)
-        const size = Math.floor(data[i].size / (1024)  )
+        const size = Math.floor(data[i].size / (1024))
         internalFiles.push({key: i, fullName: data[i].fullName, name: data[i].name, type: data[i].type, size: size, birthday: slicedDate})
     }
 }
