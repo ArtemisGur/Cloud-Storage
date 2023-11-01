@@ -54,7 +54,6 @@ APP.use(express.urlencoded({extended: false}))
 APP.use(fileUpload());
 
 APP.get('/', (req, res) => {
-    console.log(__dirname + '../src/mainPage/')
     res.render('mainPage')
 })
 
@@ -125,8 +124,6 @@ APP.post('/getOwnerStorages', (req, res) => {
 
 APP.post('/uploadNewFiles', (req, res) => {
     const file = req.files.file
-
-    console.log(file)
     
     file.mv(`${__dirname}/server/files/${req.body.path}/${file.name}`,
     function (err) {
@@ -154,7 +151,6 @@ APP.post('/downloadFile', (req, res) => {
 
 APP.post('/deleteFile', (req, res) => {
     const fileName = req.body.fullPath
-    console.log(fileName)
     try{
         fs.unlinkSync(fileName)
         res.send('deleted')
@@ -167,7 +163,6 @@ APP.post('/deleteFile', (req, res) => {
 APP.post("/showFiles", (req, res) => {
 
     let files = fileController.showFiles(req)
-    console.log(files)
     res.send(files)
 
 })
@@ -175,7 +170,6 @@ APP.post("/showFiles", (req, res) => {
 APP.post('/searchStorages', (req, res) => {
     collectionStorages.find({name: req.body.storageName}).toArray()
     .then((result) => {
-        console.log(result)
         res.send(result)
     })
 })
@@ -184,7 +178,6 @@ APP.post('/auth-user', (req, res) => {
     collectionUsers.findOne({login: req.body.login})
     .then((user) => {
         const validPassword = bcrypt.compareSync(req.body.password, user.password)
-        console.log(user)
         if (user == 0){
             userChecked = true
         }

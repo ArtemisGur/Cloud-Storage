@@ -10,19 +10,16 @@ import { deleteData, addFile } from '../store/internalFilesSlice'
 const ShowInternalFiles = () => {
     const dispatch = useDispatch()
     let internalFiles = useSelector((store) => store.internalFile.data)
-    console.log(internalFiles)
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
     const [progress, setProgess] = useState(0);
     const [menu, setMenu] = useState(-1)
     const [showMenu, setShowMenu] = useState(false)
     const el = useRef();
-    console.log(activePage)
 
     const handleChange = (e) => {
         setProgess(0)
         const file = e.target.files[0];
-        //console.log(file);
         setFile(file);
     }
 
@@ -39,7 +36,6 @@ const ShowInternalFiles = () => {
             }
         })
         .then(res => {
-            console.log(res.data.birthday)
             res.data.birthday = res.data.birthday.slice(0, 10)
             dispatch(addFile(res.data))
         }).catch(err => console.log(err))

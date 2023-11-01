@@ -1,56 +1,51 @@
-// import { useContext, useState } from "react"
-// import { PageContext } from "../PageContext"
-// import { OwnerStorages } from '../buttonsNavigate/buttonMyStorages'
-// import { creteObjInternalFiles } from './showOwnerStorages'
-// import axios from "axios"
+import { useContext, useState } from "react"
+import { PageContext } from "../PageContext"
+import { creteObjInternalFiles } from './showOwnerStorages'
+import { useDispatch, useSelector } from "react-redux"
+import { setData } from "../store/internalFilesSlice"
+import axios from "axios"
 
-// let path
+const SearchStorageCont = () => {
+    const { activePage, changePage } = useContext(PageContext)
+    const dispatch = useDispatch()
+    let searchedStorages = useSelector((store) => store.searchedStorages.data)
+    const handlerClick = (num) => {
+        axios.post('http://localhost:5000/showFiles', {"owner" : searchedStorages[num].owner, "name" : searchedStorages[num].name})
+        .then((res) => {
+            let internalFile = creteObjInternalFiles(res.data)
+            dispatch(setData(internalFile))
+        })
+        .then(() => {
+            changePage(4)
+        })
+    }
 
-// const SearchStorageCont = () => {
-//     const { activePage, changePage } = useContext(PageContext)
-//     const handlerClick = (num) => {
-//         axios.post('http://localhost:5000/showFiles', {"owner" : OwnerStorages[num].owner, "name" : OwnerStorages[num].name})
-//         .then((res) => {
-//             creteObjInternalFiles(res.data)
-//             path = `${OwnerStorages[num].owner}/Storage_${OwnerStorages[num].name}`
-//         })
-//         .then(() => {
-//             //changePage(4)
-//         })
-//     }
+    return activePage === 5 ? (
+        <div className="create-storage-cont">
+        <div className="create-storage-interior">
+            <h2 id="header-create-page">Найденные хранилища</h2>
+            <div id="create-interior">
+                {
+                    searchedStorages.map((searchedStorages) => {
+                        return (
+                            <div className="button-storage-block" key={searchedStorages.id}>
+                            <label key={searchedStorages.id}>
+                                <button className="button-storage" key={searchedStorages.id} onClick={() => handlerClick(searchedStorages.key)}>
+                                    <div className="button-storage-interior" key={searchedStorages.id}>
+                                        <div className="but-storage-name" key={searchedStorages.id}>{searchedStorages.name}</div>
+                                        <div className="but-storage-owner" key={searchedStorages.id}>Владелец: <b>{searchedStorages.owner}</b></div>
+                                        <div className="but-storage-owner" key={searchedStorages.id}>Тип: {searchedStorages.type}</div>
+                                    </div>
+                                </button>
+                                </label>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        </div>
+    </div>
+    ) : null
+}
 
-//     let SearchStorageBlock = (
-//         <div className="create-storage-cont">
-//             <div className="create-storage-interior">
-//                 <h2 id="header-create-page">Найденные хранилища</h2>
-//                 <div id="create-interior">
-//                     {
-//                         OwnerStorages.map((OwnerStorages) => {
-//                             return (
-//                                 <div className="button-storage-block" key={OwnerStorages.id}>
-//                                 <label key={OwnerStorages.id}>
-//                                     <button className="button-storage" key={OwnerStorages.id} onClick={() => {handlerClick(OwnerStorages.key)}}>
-//                                         <div className="button-storage-interior" key={OwnerStorages.id}>
-//                                             <div className="but-storage-name" key={OwnerStorages.id}>{OwnerStorages.name}</div>
-//                                             <div className="but-storage-owner" key={OwnerStorages.id}>Владелец: <b>{OwnerStorages.owner}</b></div>
-//                                             <div className="but-storage-owner" key={OwnerStorages.id}>Тип: {OwnerStorages.type}</div>
-//                                         </div>
-//                                     </button>
-//                                     </label>
-//                                 </div>
-//                             )
-//                         })
-//                     }
-//                 </div>
-//             </div>
-//         </div>
-//     )
-
-//     if(activePage === 5){
-//         return SearchStorageBlock
-//     }
-//     else
-//         return null
-// }
-
-// export { SearchStorageCont }
+export { SearchStorageCont }

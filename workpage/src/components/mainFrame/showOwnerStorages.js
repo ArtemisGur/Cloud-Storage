@@ -20,7 +20,6 @@ const creteObjInternalFiles = (data, name) => {
 const OwnerStorage = () => {
     const dispatch = useDispatch()
     let storages = useSelector((store) => store.storages.data)
-    console.log(storages)
     const { activePage, changePage } = useContext(PageContext)
     const handlerClick = (num) => {
         axios.post('http://localhost:5000/showFiles', { "owner": storages[num].owner, "name": storages[num].name })

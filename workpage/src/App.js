@@ -12,19 +12,6 @@ import './css/main.css'
 
 function App() {
   
-  // const [state, setState] = useState([{}]);
-  // useEffect(() => {
-  //     fetch("/test")
-  //     .then(res => res.json())
-  //     .then(
-  //       data => {
-  //           setState(data)
-  //       },
-  //       (error) => {}
-  //     )
-  // }, [])
-
-
   return (
     <Provider store={store}>
       <div className='App'>
@@ -33,6 +20,7 @@ function App() {
             <div className='work-page-container'>
               <NavigateMenu />
               <CreateStorage />
+              <SearchStorageCont />
               <OwnerStorage />
               <ShowInternalFiles />
             </div>

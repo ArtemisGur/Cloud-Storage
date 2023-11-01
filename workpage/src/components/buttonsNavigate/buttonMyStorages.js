@@ -13,7 +13,6 @@ const MyStorages = () => {
        .then((res) => {
             let data = createOwnStorageObject(res.data)
             dispatch(setData(data))
-            console.log(data)
        })
        .then(() => {
             changePage(1)

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const storagesSlice = createSlice({
+const searchStorages = createSlice({
     name: 'storages',
     initialState: {
         data: null
@@ -22,5 +22,5 @@ const storagesSlice = createSlice({
     }
 })
 
-export const { setData, getData } = storagesSlice.actions
-export default storagesSlice.reducer
+export const { setData, getData } = searchStorages.actions
+export default searchStorages.reducer
