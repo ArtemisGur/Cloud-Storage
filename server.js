@@ -133,7 +133,11 @@ APP.post('/uploadNewFiles', (req, res) => {
         if (err) {
             res.status(500).send({ msg: "Error occurred" })
         }
-        res.send({name: file.name, path: `/${file.name}`})
+        let stat = fs.statSync(`${__dirname}/server/files/${req.body.path}/${file.name}`)
+        let size_ = Math.floor(stat.size / 1024)
+        let birthtime_ = stat.birthtime
+        let type_ = file.name.slice(file.name.lastIndexOf('.') + 1)
+        res.send({fullName: `/${file.name}`, name: file.name, type: type_, size: size_, birthday: birthtime_})
     });
     
 })
@@ -162,9 +166,18 @@ APP.post('/deleteFile', (req, res) => {
 
 APP.post("/showFiles", (req, res) => {
 
-    let files = fileController.showFiles(req) 
+    let files = fileController.showFiles(req)
+    console.log(files)
     res.send(files)
 
+})
+
+APP.post('/searchStorages', (req, res) => {
+    collectionStorages.find({name: req.body.storageName}).toArray()
+    .then((result) => {
+        console.log(result)
+        res.send(result)
+    })
 })
 
 APP.post('/auth-user', (req, res) => {

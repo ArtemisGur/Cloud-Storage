@@ -1,31 +1,39 @@
 import { createContext, useContext, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { PageContext } from "../PageContext"
 import axios from 'axios';
-
-let OwnerStorages = [ ]
+import { setData } from "../store/storagesSlice"
 
 const MyStorages = () => {
     const {activePage, changePage} = useContext(PageContext)
-    useEffect(() => {
-       axios.post('http://localhost:5000/getOwnerStorages', '', { withCredentials: true })
+    const dispatch = useDispatch()
+
+    const handlerClick = () => {
+        axios.post('http://localhost:5000/getOwnerStorages', '', { withCredentials: true })
        .then((res) => {
-        createOwnStorageObject(res.data)
+            let data = createOwnStorageObject(res.data)
+            dispatch(setData(data))
+            console.log(data)
        })
-    })
+       .then(() => {
+            changePage(1)
+       })
+    }
 
     return(
-        <button id="nav-field" onClick={() => changePage(1)}>
+        <button id="nav-field" onClick={handlerClick}>
             <div id="nav-field-cont">Мои хранилища</div>
         </button>
     )
 }
 
 const createOwnStorageObject = (data) => {
-    OwnerStorages.length = 0
+    let OwnerStorages = []
     for (let i = 0; i < data.length; i++){
         OwnerStorages.push({key: i, owner: data[i].owner, name: data[i].name, type: data[i].type})
     }
+    return OwnerStorages
 }
 
-export { MyStorages, OwnerStorages } 
+export { MyStorages, createOwnStorageObject } 
 

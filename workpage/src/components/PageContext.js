@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 const PageContext = createContext()
 
 function PageProvider({children}){
-    const [activePage, setActivePage] = useState()
+    const [activePage, setActivePage] = useState(-1)
 
     const changePage = (index) => {
         setActivePage(index)

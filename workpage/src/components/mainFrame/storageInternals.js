@@ -1,23 +1,28 @@
 import axios from "axios"
 import { PageContext } from "../PageContext"
-import { internalFiles, path, creteObjInternalFiles } from "./showOwnerStorages"
+import { path, creteObjInternalFiles } from "./showOwnerStorages"
 import { useContext, useState } from "react"
 import fileDownload from 'js-file-download'
 import React, { useRef } from 'react';
-import ReactDOM from 'react-dom';
+import { useDispatch, useSelector } from "react-redux"
+import { deleteData, addFile } from '../store/internalFilesSlice'
 
 const ShowInternalFiles = () => {
+    const dispatch = useDispatch()
+    let internalFiles = useSelector((store) => store.internalFile.data)
+    console.log(internalFiles)
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
     const [progress, setProgess] = useState(0);
     const [menu, setMenu] = useState(-1)
     const [showMenu, setShowMenu] = useState(false)
     const el = useRef();
+    console.log(activePage)
 
     const handleChange = (e) => {
         setProgess(0)
         const file = e.target.files[0];
-        console.log(file);
+        //console.log(file);
         setFile(file);
     }
 
@@ -32,8 +37,11 @@ const ShowInternalFiles = () => {
                 ) + '%';
                 setProgess(progress)
             }
-        }).then(res => {
-            console.log(res)
+        })
+        .then(res => {
+            console.log(res.data.birthday)
+            res.data.birthday = res.data.birthday.slice(0, 10)
+            dispatch(addFile(res.data))
         }).catch(err => console.log(err))
     }
     
@@ -50,17 +58,13 @@ const ShowInternalFiles = () => {
     
         axios.post('/deleteFile', {'fullPath' : fullName}, { responseType: 'blob' })
         .then(() => {
-            internalFiles.splice(key, 1)
+           dispatch(deleteData(key))
         })
     }
 
-    let CreateFileBlock = (
+    return activePage === 4 ? (
         <div className="show-file-cont">
             <div className="show-files-interior">
-                <div className="back-to-storages">
-                    <label className="upload-file-label">Назад</label>
-                    <input type="action" className="file-upload-input" />
-                </div>
                 <div className="upload_file">
                     <div id="block-interior-submenu">
                         <div className="file-upload">       
@@ -70,8 +74,7 @@ const ShowInternalFiles = () => {
                             <div className="progessBar">
                                 {progress}
                             </div>
-                            <input type="file" ref={el} onChange={handleChange} id="butt-choose" />
-                            
+                            <input type="file" ref={el} onChange={handleChange} id="butt-choose" />    
                         </div>
                     </div>
                 </div>
@@ -98,9 +101,6 @@ const ShowInternalFiles = () => {
                                                 <button className="file-menu-but" onClick={() => {downloadFile(internalFiles.fullName, internalFiles.name)}}>Скачать</button>
                                             </div>
                                             <div className="file-menu-block">
-                                                <button className="file-menu-but">Предосмотр</button>
-                                            </div>
-                                            <div className="file-menu-block">
                                                 <button className="file-menu-but" onClick={() => {deleteFile(internalFiles.fullName, internalFiles.name, internalFiles.key)}}>Удалить</button>
                                             </div>
                                         </div>
@@ -112,13 +112,7 @@ const ShowInternalFiles = () => {
                 }
             </div>
         </div>
-    )
-
-    if (activePage === 4) {
-        return CreateFileBlock
-    }
-    else
-        return null
+    ) : null
 
 }
 

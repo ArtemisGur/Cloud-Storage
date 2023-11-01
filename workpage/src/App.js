@@ -5,6 +5,9 @@ import NavigateMenu from './components/NavigateMenu'
 import { CreateStorage } from './components/mainFrame/CreatePage';
 import { OwnerStorage } from './components/mainFrame/showOwnerStorages';
 import { ShowInternalFiles } from './components/mainFrame/storageInternals';
+import { SearchStorageCont } from './components/mainFrame/searchPage'
+import { Provider } from 'react-redux';
+import store from '../src/components/store/store'
 import './css/main.css'
 
 function App() {
@@ -23,17 +26,19 @@ function App() {
 
 
   return (
-    <div className='App'>
-        <Header />
-        <PageProvider>
-          <div className='work-page-container'>
-            <NavigateMenu />
-            <CreateStorage />
-            <OwnerStorage />
-            <ShowInternalFiles />
-          </div>
-        </PageProvider>
-    </div>
+    <Provider store={store}>
+      <div className='App'>
+          <PageProvider>
+            <Header />
+            <div className='work-page-container'>
+              <NavigateMenu />
+              <CreateStorage />
+              <OwnerStorage />
+              <ShowInternalFiles />
+            </div>
+          </PageProvider>
+      </div>
+    </Provider>
   )
 }
 
