@@ -2,7 +2,8 @@ import { useContext, useState } from "react"
 import { PageContext } from "../PageContext"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
-import { setData } from '../store/internalFilesSlice'
+import { setDataFiles } from '../store/internalFilesSlice'
+import { setData } from "../store/storagesSlice"
 
 let path
 
@@ -21,12 +22,12 @@ const OwnerStorage = () => {
     const dispatch = useDispatch()
     let storages = useSelector((store) => store.storages.data)
     const { activePage, changePage } = useContext(PageContext)
-    const handlerClick = (num) => {
+    const handlerClick = (num, type, owner, name) => {
         axios.post('http://localhost:5000/showFiles', { "owner": storages[num].owner, "name": storages[num].name })
             .then((res) => {
                 let internalFile = creteObjInternalFiles(res.data)
                 path = `${storages[num].owner}/Storage_${storages[num].name}`
-                dispatch(setData(internalFile))
+                dispatch(setDataFiles(internalFile))
             })
             .then(() => {
                 changePage(4)
@@ -43,7 +44,7 @@ const OwnerStorage = () => {
                         return (
                             <div className="button-storage-block" key={storages.id}>
                                 <label>
-                                    <button className="button-storage" onClick={() => handlerClick(storages.key)}>
+                                    <button className="button-storage" onClick={() => handlerClick(storages.key, storages.key, storages.owner, storages.name)}>
                                         <div className="button-storage-interior">
                                             <div className="but-storage-name">{storages.name}</div>
                                             <div className="but-storage-owner">Владелец: <b>{storages.owner}</b></div>

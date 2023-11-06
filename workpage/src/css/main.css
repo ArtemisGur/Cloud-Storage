@@ -434,19 +434,17 @@ body{
     flex-wrap: wrap;
 }
 
-.img-type{
-}
-
 .file-block{
     margin-left: 2%;
     margin-top: 1%;
-    transition: 0.1s linear;
+    transition: 0.2s linear;
     padding: 20px;
     border-radius: 12px;
 }
 
 .file-block:hover{
     background-color: lightgray;
+    transform: translate(20px);
 }
 
 .file-name-2{
@@ -457,8 +455,8 @@ body{
     margin-top: 10%;
     min-width: 120px;
     border: 0px solid #2d4a53;
-    box-shadow: 0 0 5px #2d4a53;
-    background-color: lightgray;
+    box-shadow: 0 0 15px 1px #2d4a53;
+    background-color: gray;
 }
 
 .discripion-file{
@@ -483,8 +481,20 @@ body{
     transition: 0.1s linear;
     cursor: pointer;
     height: 3vh;
+    transition: 0.5s linear;
+    
 }
 
 #icon:hover {
     background-color: #ddecf5;
+    transform: translate();
+}
+
+.sec-interior-header{
+    width: 100%;
+    display: flex;
+}
+
+#icon:active{
+    
 }

@@ -7,7 +7,7 @@ const internalFilesSlice = createSlice({
     },
 
     reducers: {
-        setData: (state, action) => {
+        setDataFiles: (state, action) => {
             state.data = action.payload
         },
         getData: (state) => {
@@ -22,5 +22,5 @@ const internalFilesSlice = createSlice({
     }
 })
 
-export const { setData, getData, deleteData, addFile } = internalFilesSlice.actions
+export const { setDataFiles, getData, deleteData, addFile } = internalFilesSlice.actions
 export default internalFilesSlice.reducer
