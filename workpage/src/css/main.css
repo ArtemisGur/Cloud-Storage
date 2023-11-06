@@ -293,11 +293,13 @@ body{
 .upload_file{
     margin-top: 2%;
     margin-left: 2%;
+    width: 70%;
 }
 
 .file-upload{
     display: flex;
     margin-top: 1%;
+    
 }
 
 .back-to-storages{
@@ -386,7 +388,7 @@ body{
     transition: 0.2s linear;
     font-size: 16px;
     padding: 10px;
-    width: 60%;
+    width: 30%;
 }
 
 .progessBar{
@@ -424,5 +426,65 @@ body{
     border: none;
     transition: 0.2s linear;
     cursor: pointer;
+    background-color: rgb(243, 242, 242);
+}
 
+#file-interior-with-img{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.img-type{
+}
+
+.file-block{
+    margin-left: 2%;
+    margin-top: 1%;
+    transition: 0.1s linear;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.file-block:hover{
+    background-color: lightgray;
+}
+
+.file-name-2{
+    margin-left: 15%;
+}
+
+.dropdown-content-2 {
+    margin-top: 10%;
+    min-width: 120px;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53;
+    background-color: lightgray;
+}
+
+.discripion-file{
+    background-color: rgb(243, 242, 242);
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 2.5%;
+    padding-top: 2.5%;
+    font-style: system-ui;
+}
+
+.icon-1{
+    margin-left: 40%;
+}
+
+#icon{
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53;
+    background-color: white;
+    margin-left: 2%;
+    border-radius: 6px;
+    transition: 0.1s linear;
+    cursor: pointer;
+    height: 3vh;
+}
+
+#icon:hover {
+    background-color: #ddecf5;
 }

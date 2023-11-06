@@ -11,6 +11,8 @@ const SearchField = () => {
     let [click, setClick] = useState('Поиск хранилища')
     const { activePage, changePage } = useContext(PageContext)
     const handlerSearch = (e) => {
+        document.getElementById('nav-field').style.background = "none"
+
         e.preventDefault()
         axios.post('/searchStorages', {'storageName' : e.target.storageName.value})
         .then((res) => {

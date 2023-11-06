@@ -9,6 +9,7 @@ const SearchStorageCont = () => {
     const { activePage, changePage } = useContext(PageContext)
     const dispatch = useDispatch()
     let searchedStorages = useSelector((store) => store.searchedStorages.data)
+    
     const handlerClick = (num) => {
         axios.post('http://localhost:5000/showFiles', {"owner" : searchedStorages[num].owner, "name" : searchedStorages[num].name})
         .then((res) => {

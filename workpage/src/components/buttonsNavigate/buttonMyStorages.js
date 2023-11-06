@@ -9,6 +9,8 @@ const MyStorages = () => {
     const dispatch = useDispatch()
 
     const handlerClick = () => {
+        document.getElementById('nav-field').style.background = "#ddecf5"
+
         axios.post('http://localhost:5000/getOwnerStorages', '', { withCredentials: true })
        .then((res) => {
             let data = createOwnStorageObject(res.data)
