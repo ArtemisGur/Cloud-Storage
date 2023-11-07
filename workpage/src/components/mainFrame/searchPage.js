@@ -46,7 +46,6 @@ const SearchStorageCont = () => {
         })
         .then((res) => {
             if(res === -1){
-                console.log('catched')
                 return 0
             }
             changePage(6)

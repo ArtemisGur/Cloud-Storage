@@ -168,7 +168,7 @@ APP.post("/showFiles", (req, res) => {
 })
 
 APP.post('/searchStorages', (req, res) => {
-    collectionStorages.find({name: req.body.storageName, type: {$ne : 'Personality'}}).toArray()
+    collectionStorages.find({name: req.body.storageName, type: {$ne : 'Personality'}, owner: {$ne : req.session.login}}).toArray()
     .then((result) => {
         console.log(result)
         res.send(result)

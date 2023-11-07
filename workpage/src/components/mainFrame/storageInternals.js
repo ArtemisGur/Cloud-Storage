@@ -22,7 +22,7 @@ import icons from '../../img/icons.png'
 const ShowInternalFiles = () => {
     const dispatch = useDispatch()
     let internalFiles = useSelector((store) => store.internalFile.data)
-    let storages = useSelector((store) => store.storages.data)
+    let storages = useSelector((store) => store.ownStorages.data)
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
     const [progress, setProgess] = useState(0);
@@ -79,36 +79,49 @@ const ShowInternalFiles = () => {
     return activePage === 4 ? (
         <div className="show-file-cont">
             <div className="show-files-interior">
-                <h1>
-                    {storages.name}
-                </h1>
                 <div className="upload_file">
                     <div id="block-interior-submenu">
-                        <div className="file-upload-1">
-                            <input type="file" ref={el} onChange={handleChange} id="butt-choose-1" />
-                            <div className="progessBar">
-                                {progress}
+                        <div className="block-top-files">
+                            <h4 id="discription-block">
+                                Хранилище: <span className="discription-storage">{storages.name}</span>
+                                <br />
+                                Владелец: <span className="discription-storage">Вы</span>
+                            </h4>
+                            <div className="file-upload">
+                                <button id="storage-delete">Удалить Хранилище</button>
                             </div>
-                            <button onClick={uploadFile} className="upbutton-1">
-                                Загрузить в хранилище
-                            </button>
+                        </div>
+                        <hr id="break-line-2" />
+                        <div className="interor-block-menu">
+                            <div className="button-change-view">
+                                <button className="icon-1" id="icon" onClick={() => handlerSetType(1)}>
+                                    <img src={list}>
+
+                                    </img>
+                                </button>
+                                <button id="icon" onClick={() => handlerSetType(2)}>
+                                    <img src={icons}>
+
+                                    </img>
+                                </button>
+                            </div>
+                            <div className="sec-interior-header">
+                                <label id="choose-file-label">
+                                    Выберите файл
+                                    <input type="file" ref={el} onChange={handleChange} id="butt-choose" />
+                                </label>
+                                <span className="progessBar">
+                                    {progress}
+                                </span>
+                                <button onClick={uploadFile} className="upbutton">
+                                    +
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-                <hr id="break-line"/>
             <div id="interior-block-files">
-                <button className="icon-1" id="icon" onClick={() => handlerSetType(1)}>
-                    <img src={list}>
-
-                    </img>
-                </button>
-                <button id="icon" onClick={() => handlerSetType(2)}>
-                    <img src={icons}>
-
-                    </img>
-                </button>
-                
                 {showType === 1 && (
                     <div>
                         <div className="file-params">
@@ -149,7 +162,7 @@ const ShowInternalFiles = () => {
                             internalFiles.map((internalFiles) => {
                                 {
                                     return (
-                                        <div className="file-block" onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(!showMenu) }} onMouseLeave={() => { setShowMenu(!showMenu) }}>
+                                        <div className="file-block" onClick={() => { setMenu(internalFiles.key); setShowMenu(!showMenu) }}>
                                             {internalFiles.type === 'jpeg' &&
                                                 <img className="img-type" src={jpeg} />
                                             }
@@ -182,7 +195,7 @@ const ShowInternalFiles = () => {
                                             }
                                             <div className="file-name-2">{internalFiles.name}</div>
                                             <div className="dropdown-interior-2">
-                                                {menu === internalFiles.key && showMenu && (
+                                                {menu === internalFiles.key && (
                                                     <div className="dropdown-content-2">
                                                         <div className="disctiption-block">
                                                             <div className="discripion-file">Тип файла: {internalFiles.type}</div>
