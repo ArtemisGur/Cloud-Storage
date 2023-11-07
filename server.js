@@ -168,8 +168,9 @@ APP.post("/showFiles", (req, res) => {
 })
 
 APP.post('/searchStorages', (req, res) => {
-    collectionStorages.find({name: req.body.storageName}).toArray()
+    collectionStorages.find({name: req.body.storageName, type: {$ne : 'Personality'}}).toArray()
     .then((result) => {
+        console.log(result)
         res.send(result)
     })
 })
