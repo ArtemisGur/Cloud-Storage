@@ -83,32 +83,38 @@ const ShowInternalFilesOthers = () => {
                     <div id="block-interior-submenu">
 
                         <div className="file-upload">
+                            <button id="subscribe-storage-2">Подписаться на изменения</button>
+                            
                             {storages.type === 'Closed' && (<div className="sec-interior-header">
-                                <button onClick={uploadFile} className="upbutton">
-                                    Загрузить в хранилище
-                                </button>
+                                <input type="file" ref={el} onChange={handleChange} id="butt-choose" />
                                 <div className="progessBar">
                                     {progress}
                                 </div>
-                                <input type="file" ref={el} onChange={handleChange} id="butt-choose" />
+                                <button onClick={uploadFile} className="upbutton">
+                                    Загрузить в хранилище
+                                </button>
+
                             </div>)}
-                            <button className="icon-1" id="icon" onClick={() => handlerSetType(2)}>
-                                <img src={list}>
 
-                                </img>
-                            </button>
-                            <button id="icon" onClick={() => handlerSetType(1)}>
-                                <img src={icons}>
-
-                                </img>
-                            </button>
 
                         </div>
+
                         <h3 id="discription-block">
                             Хранилище: <span className="discription-storage">{storages.name}</span>
                             <br />
                             Владелец: <span className="discription-storage">{storages.owner}</span>
                         </h3>
+                            <hr id="break-line-2"/>
+                        <button className="icon-1" id="icon" onClick={() => handlerSetType(1)}>
+                                <img src={list}>
+
+                                </img>
+                            </button>
+                            <button id="icon" onClick={() => handlerSetType(2)}>
+                                <img src={icons}>
+
+                                </img>
+                            </button>
                     </div>
                 </div>
             </div>
@@ -209,6 +215,7 @@ const ShowInternalFilesOthers = () => {
                         }
                     </div>)
                 }
+
             </div>
         </div>
     ) : null

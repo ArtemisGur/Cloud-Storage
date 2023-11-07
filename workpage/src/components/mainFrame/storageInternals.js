@@ -84,29 +84,31 @@ const ShowInternalFiles = () => {
                 </h1>
                 <div className="upload_file">
                     <div id="block-interior-submenu">
-                        <div className="file-upload">
-                            <button onClick={uploadFile} className="upbutton">
-                                Загрузить в хранилище
-                            </button>
+                        <div className="file-upload-1">
+                            <input type="file" ref={el} onChange={handleChange} id="butt-choose-1" />
                             <div className="progessBar">
                                 {progress}
                             </div>
-                            <input type="file" ref={el} onChange={handleChange} id="butt-choose" />
-                            <button className="icon-1" id="icon" onClick={() => handlerSetType(2)}>
-                                <img src={list}>
-
-                                </img>
-                            </button>
-                            <button id="icon" onClick={() => handlerSetType(1)}>
-                                <img src={icons}>
-
-                                </img>
+                            <button onClick={uploadFile} className="upbutton-1">
+                                Загрузить в хранилище
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+                <hr id="break-line"/>
             <div id="interior-block-files">
+                <button className="icon-1" id="icon" onClick={() => handlerSetType(1)}>
+                    <img src={list}>
+
+                    </img>
+                </button>
+                <button id="icon" onClick={() => handlerSetType(2)}>
+                    <img src={icons}>
+
+                    </img>
+                </button>
+                
                 {showType === 1 && (
                     <div>
                         <div className="file-params">

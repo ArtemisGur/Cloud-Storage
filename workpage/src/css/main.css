@@ -240,7 +240,7 @@ body{
     border-radius: 6px;
     transition: 0.1s linear;
 }
-.button-storage:hover, .upbutton:hover{
+.button-storage:hover, .upbutton:hover, .upbutton-1:hover{
     background-color: #ddecf5;
     box-shadow: 0 0 5px #2d4a53;
 }
@@ -293,13 +293,17 @@ body{
 .upload_file{
     margin-top: 2%;
     margin-left: 2%;
-    width: 70%;
+    width: 90%;
 }
 
 .file-upload{
     display: flex;
     margin-top: 1%;
-    
+}
+
+.file-upload-1{
+    display: flex;
+    margin-top: 1%;
 }
 
 .back-to-storages{
@@ -309,6 +313,7 @@ body{
 
 .show-files-interior{
     display: flex;
+    width: 100%;
 }
 
 .file-params{
@@ -375,7 +380,13 @@ body{
 #butt-choose{
     font-size: 14px;
     font-style: system-ui;
-    width: 400px;
+    margin-top: 1%;
+    margin-left: 20%;
+}
+
+#butt-choose-1{
+    font-size: 14px;
+    font-style: system-ui;
     margin-top: 1%;
 }
 
@@ -389,11 +400,25 @@ body{
     font-size: 16px;
     padding: 10px;
     width: 30%;
+    font-family: system-ui;
+    margin-left: auto;
+}
+
+.upbutton-1{
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53;
+    background-color: #f9faff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s linear;
+    font-size: 16px;
+    padding: 10px;
+    width: 20%;
+    font-family: system-ui;
 }
 
 .progessBar{
     margin-right: 2%;
-    margin-left: 5%;
     margin-top: 1%;
 }
 
@@ -482,7 +507,8 @@ body{
     transition: 0.1s linear;
     cursor: pointer;
     height: 3vh;
-    transition: 0.5s linear; 
+    transition: 0.2s linear; 
+    margin-top: 0.5%;
 }
 
 #icon:hover {
@@ -493,6 +519,7 @@ body{
 .sec-interior-header{
     width: 100%;
     display: flex;
+    margin-left: 30%;
 }
 
 #button-input-password-storage{
@@ -534,4 +561,46 @@ body{
 
 #block-inter{
     display: flex;
+}
+
+#subscribe-storage{
+    padding: 10px;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 10px #2d4a53; 
+    border-radius: 6px;
+    font-size: 16px;
+    transition: 0.2s linear;
+    width: 35%;
+    font-family: system-ui;
+    background-color: white;
+}
+
+#subscribe-storage-2{
+    padding: 10px;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 10px #2d4a53; 
+    border-radius: 6px;
+    font-size: 16px;
+    transition: 0.2s linear;
+    width: 20%;
+    font-family: system-ui;
+    background-color: white;
+}
+
+#subscribe-storage:hover, #subscribe-storage-2:hover{
+    background-color: #ddecf5;
+    cursor: pointer;
+}
+
+#break-line{
+    margin-top: 2%;
+    width: 96%;
+    border: 1px solid lightgrey;
+    box-shadow: 0 0 20px 2px lightgrey; 
+}
+
+#break-line-2{
+    margin-top: 2%;
+    border: 1px solid lightgrey;
+    box-shadow: 0 0 20px 2px lightgrey; 
 }
