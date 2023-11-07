@@ -23,8 +23,6 @@ const ShowInternalFiles = () => {
     const dispatch = useDispatch()
     let internalFiles = useSelector((store) => store.internalFile.data)
     let storages = useSelector((store) => store.storages.data)
-    console.log(storages)
-    console.log(storages)
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
     const [progress, setProgess] = useState(0);

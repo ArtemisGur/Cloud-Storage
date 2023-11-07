@@ -175,6 +175,21 @@ APP.post('/searchStorages', (req, res) => {
     })
 })
 
+APP.post('/confirmPasswordStorage', (req, res) => {
+    collectionStorages.findOne({owner: req.body.owner, name: req.body.name})
+    .then((storage) => {
+        console.log(storage.password, req.body.password)
+        if (storage.password != req.body.password){
+            res.sendStatus(202)
+        }
+        else{
+            let files = fileController.showFiles(req)
+            res.send(files)
+        }   
+    })
+    console.log(req.body)
+})
+
 APP.post('/auth-user', (req, res) => {
     collectionUsers.findOne({login: req.body.login})
     .then((user) => {

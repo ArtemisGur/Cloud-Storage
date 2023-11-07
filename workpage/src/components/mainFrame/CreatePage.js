@@ -58,7 +58,6 @@ const CreateStorage = () => {
         axios.post('http://localhost:5000/getNewStorage', {"newStorage" : data}, {withCredentials: true})
         .then((response) => {
             if (response.status === 202){
-                console.log(response.status)
                 hintHandler()
             }
             else{
