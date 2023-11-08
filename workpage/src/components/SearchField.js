@@ -7,7 +7,6 @@ import axios from 'axios';
 
 const SearchField = () => {
     const dispatch = useDispatch()
-    let searchedStorages = useSelector((store) => store.searchedStorages.data)
     let [click, setClick] = useState('Поиск хранилища')
     const { activePage, changePage } = useContext(PageContext)
     const handlerSearch = (e) => {

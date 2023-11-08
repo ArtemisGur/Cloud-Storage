@@ -26,13 +26,15 @@ const EnableStorages = () => {
     const { activePage, changePage } = useContext(PageContext)
 
     const handlerClick = (num, type, owner, name) => {
+        //console.log(num, type, owner, name)
 
-        axios.post('http://localhost:5000/checkStorage', { "owner": owner, "name": name }, {withCredentials: true})
+        axios.post('http://localhost:5000/checkStorage', { "owner": storages[num].owner, "name": storages[num].name }, {withCredentials: true})
         .then((res) => {
+            console.log(res)
             dispatch(setDataSubscribed({ "owner" : res.data.owner, "name" : res.data.name}))
         })
-
-        axios.post('http://localhost:5000/showFiles', { "owner": storages[num].owner, "name": storages[num].name })
+        .then(() => {
+            axios.post('http://localhost:5000/showFiles', { "owner": owner, "name": name })
             .then((res) => {
                 let internalFile = creteObjInternalFiles(res.data)
                 path = `${storages[num].owner}/Storage_${storages[num].name}`
@@ -44,6 +46,8 @@ const EnableStorages = () => {
             .then(() => {
                 changePage(6)
             })
+        })
+        
     }
 
     return activePage === 2 ? (

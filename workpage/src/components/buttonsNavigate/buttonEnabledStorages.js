@@ -17,7 +17,6 @@ const EnabledStorages = () => {
 
         axios.post('http://localhost:5000/getEnableStorages', '', { withCredentials: true })
             .then((res) => {
-                console.log(res)
                 let data = createOwnStorageObject(res.data)
                 dispatch(setData(data))
                 dispatch(setDataOwn({ user : data.user}))

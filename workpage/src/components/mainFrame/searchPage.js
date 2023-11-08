@@ -16,6 +16,11 @@ const SearchStorageCont = () => {
     const dispatch = useDispatch()
     let searchedStorages = useSelector((store) => store.searchedStorages.data)
     const handlerClick = (num, type, owner, name) => {
+        axios.post('http://localhost:5000/checkStorage', { "owner": owner, "name": name }, {withCredentials: true})
+        .then((res) => {
+            dispatch(setDataSubscribed({ "owner" : res.data.owner, "name" : res.data.name}))
+        })
+
         setHint(false)
         if (type === 'Closed') {
             setShowStorage(!showStorage)
@@ -25,7 +30,7 @@ const SearchStorageCont = () => {
             .then((res) => {
                 let internalFile = creteObjInternalFiles(res.data)
                 dispatch(setDataFiles(internalFile))
-                dispatch(setData({ 'name' : name, 'type': type, 'owner': owner }))
+                dispatch(setDataOwn({ "name" : name, "type": type, "owner": owner }))
             })
             .then(() => {
                 changePage(6)
