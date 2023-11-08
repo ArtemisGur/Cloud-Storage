@@ -57,7 +57,7 @@ const showFiles = (req) => {
             let file = new File(fullName, name, type, size, birthtime)
             files.push(file)
         }
-        console.log(files)
+        //console.log(files)
     }
     return files
 }

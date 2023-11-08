@@ -12,7 +12,7 @@ const SearchField = () => {
     const { activePage, changePage } = useContext(PageContext)
     const handlerSearch = (e) => {
         document.getElementById('nav-field').style.background = ""
-
+        document.getElementById('nav-field-enable').style.background = ""
         e.preventDefault()
         axios.post('/searchStorages', {'storageName' : e.target.storageName.value})
         .then((res) => {

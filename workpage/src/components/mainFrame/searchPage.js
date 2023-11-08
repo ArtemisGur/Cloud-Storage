@@ -4,6 +4,8 @@ import { creteObjInternalFiles } from './showOwnerStorages'
 import { useDispatch, useSelector } from "react-redux"
 import { setDataFiles } from "../store/internalFilesSlice"
 import { setData } from "../store/storagesSlice"
+import { setDataOwn } from "../store/ownStorageSlice"
+import { setDataSubscribed } from "../store/subscribedStorageSlice"
 import axios from "axios"
 
 const SearchStorageCont = () => {
@@ -32,6 +34,12 @@ const SearchStorageCont = () => {
 
     const submitPassword = (e) => {
         e.preventDefault()
+
+        axios.post('http://localhost:5000/checkStorage', { "owner": e.target.owner.value, "name": e.target.name.value }, {withCredentials: true})
+        .then((res) => {
+            dispatch(setDataSubscribed({ "owner" : res.data.owner, "name" : res.data.name}))
+        })
+
         axios.post('http://localhost:5000/confirmPasswordStorage', { "owner": e.target.owner.value, "name": e.target.name.value, "password" : e.target.passwordStorage.value })
         .then((res) => {
             if (res.status === 202){
@@ -41,7 +49,7 @@ const SearchStorageCont = () => {
             else{
                 let internalFile = creteObjInternalFiles(res.data)
                 dispatch(setDataFiles(internalFile))
-                dispatch(setData({ "name" : e.target.name.value, "type": e.target.type.value, "owner": e.target.owner.value }))
+                dispatch(setDataOwn({ "name" : e.target.name.value, "type": e.target.type.value, "owner": e.target.owner.value }))
             }
         })
         .then((res) => {

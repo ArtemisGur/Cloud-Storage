@@ -134,7 +134,7 @@ const ShowInternalFiles = () => {
                             internalFiles.map((internalFiles) => {
                                 {
                                     return (
-                                        <div id="file-interior" onClick={() => { setMenu(internalFiles.key); setShowMenu(!showMenu) }}>
+                                        <div id="file-interior" onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }}>
                                             <div id="file-name" key={internalFiles.id}>{internalFiles.name}</div>
                                             <div id="file-type" key={internalFiles.id}>{internalFiles.type}</div>
                                             <div id="file-date" key={internalFiles.id}>{internalFiles.birthday}</div>
@@ -162,39 +162,41 @@ const ShowInternalFiles = () => {
                             internalFiles.map((internalFiles) => {
                                 {
                                     return (
-                                        <div className="file-block" onClick={() => { setMenu(internalFiles.key); setShowMenu(!showMenu) }}>
-                                            {internalFiles.type === 'jpeg' &&
-                                                <img className="img-type" src={jpeg} />
-                                            }
-                                            {internalFiles.type === 'docx' &&
-                                                <img className="img-type" src={doc} />
-                                            }
-                                            {internalFiles.type === 'gif' &&
-                                                <img className="img-type" src={gif} />
-                                            }
-                                            {internalFiles.type === 'jpg' &&
-                                                <img className="img-type" src={jpg} />
-                                            }
-                                            {internalFiles.type === 'pdf' &&
-                                                <img className="img-type" src={pdf} />
-                                            }
-                                            {internalFiles.type === 'png' &&
-                                                <img className="img-type" src={png} />
-                                            }
-                                            {internalFiles.type === 'txt' &&
-                                                <img className="img-type" src={txt} />
-                                            }
-                                            {internalFiles.type === 'zip' &&
-                                                <img className="img-type" src={zip} />
-                                            }
-                                            {internalFiles.type === 'html' &&
-                                                <img className="img-type" src={html} />
-                                            }
-                                            {internalFiles.type === 'xml' &&
-                                                <img className="img-type" src={xml} />
-                                            }
-                                            <div className="file-name-2">{internalFiles.name}</div>
-                                            <div className="dropdown-interior-2">
+                                        <div className="file-block" onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }} >
+                                            <div className="test">
+                                                {internalFiles.type === 'jpeg' &&
+                                                    <img className="img-type" src={jpeg} />
+                                                }
+                                                {internalFiles.type === 'docx' &&
+                                                    <img className="img-type" src={doc} />
+                                                }
+                                                {internalFiles.type === 'gif' &&
+                                                    <img className="img-type" src={gif} />
+                                                }
+                                                {internalFiles.type === 'jpg' &&
+                                                    <img className="img-type" src={jpg} />
+                                                }
+                                                {internalFiles.type === 'pdf' &&
+                                                    <img className="img-type" src={pdf} />
+                                                }
+                                                {internalFiles.type === 'png' &&
+                                                    <img className="img-type" src={png} />
+                                                }
+                                                {internalFiles.type === 'txt' &&
+                                                    <img className="img-type" src={txt} />
+                                                }
+                                                {internalFiles.type === 'zip' &&
+                                                    <img className="img-type" src={zip} />
+                                                }
+                                                {internalFiles.type === 'html' &&
+                                                    <img className="img-type" src={html} />
+                                                }
+                                                {internalFiles.type === 'xml' &&
+                                                    <img className="img-type" src={xml} />
+                                                }
+                                                <div className="file-name-2">{internalFiles.name}</div>
+                                                <div className="dropdown-interior-2">
+                                                </div>
                                                 {menu === internalFiles.key && (
                                                     <div className="dropdown-content-2">
                                                         <div className="disctiption-block">

@@ -9,8 +9,8 @@ const MyStorages = () => {
     const dispatch = useDispatch()
 
     const handlerClick = () => {
-        document.getElementById('nav-field').style.background = "#ddecf5"
-
+        document.getElementById('nav-field-my').style.background = "#ddecf5"
+        document.getElementById('nav-field-enable').style.background = ""
         axios.post('http://localhost:5000/getOwnerStorages', '', { withCredentials: true })
        .then((res) => {
             let data = createOwnStorageObject(res.data)
@@ -22,7 +22,7 @@ const MyStorages = () => {
     }
 
     return(
-        <button id="nav-field" onClick={handlerClick}>
+        <button id="nav-field-my" onClick={handlerClick}>
             <div id="nav-field-cont">Мои хранилища</div>
         </button>
     )

@@ -94,7 +94,7 @@ body{
     margin-left: 2%;
 }
 
-#nav-field{
+#nav-field, #nav-field-my, #nav-field-enable{
     font-size: 14px;
     font-family: system-ui;
     font-weight: 500;
@@ -107,6 +107,7 @@ body{
     margin-bottom: 5%;
     margin-top: 5%;
     width: 85%;
+    cursor: pointer;
 }
 
 #nav-field:hover{
@@ -432,9 +433,7 @@ body{
     align-items: center;
 }
 
-.test{
-    margin-bottom: 2%;
-}
+
 
 .upbutton-1{
     border: 0px solid #2d4a53;
@@ -458,16 +457,11 @@ body{
 
 .dropdown-content {
     margin-left: 65%;
-    position: absolute;
+    position: sticky;
     background-color: #f1f1f1;
     min-width: 160px;
-    overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    border: 0px solid #2d4a53;
-    box-shadow: 0 0 5px #2d4a53;
-    border-bottom-left-radius: 24px;
-    border-top-right-radius: 24px;
-    border-bottom-right-radius: 24px;
+    margin-right: 3%;
+    border-radius: 6px;
 }
 
 .file-menu-but:hover{
@@ -485,8 +479,10 @@ body{
 }
 
 #file-interior-with-img{
+    overflow: auto;
     display: flex;
     flex-wrap: wrap;
+    max-height: 60vh;
 }
 
 .file-block{
@@ -494,12 +490,15 @@ body{
     transition: 0.2s linear;
     padding: 20px;
     border-radius: 12px;
-    
+    position: relative;
+    min-height: 25vh;
+    backface-visibility: hidden;
+    overflow: hidden;
+    width: 10%;
 }
 
 .file-block:hover{
-    background-color: lightgray;
-    
+    background-color: lightgray;  
 }
 
 .file-name-2{
@@ -507,13 +506,34 @@ body{
 }
 
 .dropdown-content-2 {
-    min-width: 120px;
     border: 0px solid #2d4a53;
     position: absolute;
-    margin-bottom: 35%;
+    margin-bottom: 100%;
     box-shadow: 0 0 15px 1px #2d4a53;
     background-color: gray;
-    z-index: 100;
+    top: 0;
+    transform: perspective(400px) rotateY(180deg);
+    transition: 0.4s linear;
+    font-size: 12px;
+    min-height: 100%;
+}
+
+.test{
+    transform: perspective(400px) rotateY(0deg);
+    transition: 0.4s linear;
+}
+
+
+.file-block:hover > .test{
+    transform: perspective(400px) rotateY(-180deg);
+}
+.file-block:hover > .dropdown-content-2{
+    transform: perspective(400px) rotateY(0deg);
+}
+
+.files-block{
+    max-height: 60vh;
+    overflow: auto;
 }
 
 .discripion-file{
@@ -528,6 +548,7 @@ body{
 .icon-1{
     margin-left: 5%;
 }
+
 
 #icon{
     border: 0px solid #2d4a53;

@@ -7,7 +7,7 @@ const ownStorage = createSlice({
     },
 
     reducers: {
-        setData: (state, action) => {
+        setDataOwn: (state, action) => {
             state.data = action.payload
         },
         getData: (state) => {
@@ -22,5 +22,5 @@ const ownStorage = createSlice({
     }
 })
 
-export const { setData, getData } = ownStorage.actions
+export const { setDataOwn, getData } = ownStorage.actions
 export default ownStorage.reducer

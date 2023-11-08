@@ -3,7 +3,7 @@ import { PageContext } from "../PageContext"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { setDataFiles } from '../store/internalFilesSlice'
-import { setData } from "../store/ownStorageSlice"
+import { setDataOwn } from "../store/ownStorageSlice"
 
 let path
 
@@ -32,36 +32,36 @@ const OwnerStorage = () => {
                 dispatch(setDataFiles(internalFile))
             })
             .then(() => {
-                dispatch(setData({ 'name' : name, 'type': type, 'owner': owner }))
+                dispatch(setDataOwn({ 'name': name, 'type': type, 'owner': owner }))
                 changePage(4)
             })
     }
 
     return activePage === 1 ? (
         <div className="create-storage-cont">
-        <div className="create-storage-interior">
-            <h2 id="header-create-page">Ваши хранилища</h2>
-            <div id="create-interior">
-                {
-                   storages.map((storages) => {
-                        return (
-                            <div className="button-storage-block" key={storages.id}>
-                                <label>
-                                    <button className="button-storage" onClick={() => handlerClick(storages.key, storages.type, storages.owner, storages.name)}>
-                                        <div className="button-storage-interior">
-                                            <div className="but-storage-name">{storages.name}</div>
-                                            <div className="but-storage-owner">Владелец: <b>{storages.owner}</b></div>
-                                            <div className="but-storage-owner">Тип: {storages.type}</div>
-                                        </div>
-                                    </button>
-                                </label>
-                            </div>
-                        )
-                    })
-                }
+            <div className="create-storage-interior">
+                <h2 id="header-create-page">Ваши хранилища</h2>
+                <div id="create-interior">
+                    {
+                        storages.map((storages) => {
+                            return (
+                                <div className="button-storage-block" key={storages.id}>
+                                    <label>
+                                        <button className="button-storage" onClick={() => handlerClick(storages.key, storages.type, storages.owner, storages.name)}>
+                                            <div className="button-storage-interior">
+                                                <div className="but-storage-name">{storages.name}</div>
+                                                <div className="but-storage-owner">Владелец: <b>{storages.owner}</b></div>
+                                                <div className="but-storage-owner">Тип: {storages.type}</div>
+                                            </div>
+                                        </button>
+                                    </label>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             </div>
         </div>
-    </div>
     ) : null
 }
 
