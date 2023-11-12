@@ -131,7 +131,6 @@ APP.post('/getEnableStorages', (req, res) => {
 })
 
 APP.post("/checkStorage", (req, res) => {
-    console.log({ "owner" : req.body.owner, "name" : req.body.name, "user" : req.session.login})
     collectionEnabledStorages.findOne({ "owner" : req.body.owner, "name" : req.body.name, "user" : req.session.login})
     .then((response) => {
         if (response != null){
@@ -140,7 +139,6 @@ APP.post("/checkStorage", (req, res) => {
         else{
             res.send({ "owner" : "", "name" : ""})
         }
-        console.log(response)
     })
 })
 

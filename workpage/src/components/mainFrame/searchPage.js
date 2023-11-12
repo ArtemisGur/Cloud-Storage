@@ -12,58 +12,61 @@ import axios from "axios"
 const SearchStorageCont = () => {
     const { activePage, changePage } = useContext(PageContext)
     const [storage, setStorage] = useState(-1)
-    const [showStorage, setShowStorage] = useState(false)
     const [hint, setHint] = useState(false)
     const dispatch = useDispatch()
     let searchedStorages = useSelector((store) => store.searchedStorages.data)
     let storageType = useSelector((store) => store.storageTypePassword.data)
     const handlerClick = (num, type, owner, name) => {
-        axios.post('http://localhost:5000/checkStorage', { "owner": searchedStorages[num].owner, "name": searchedStorages[num].name }, {withCredentials: true})
-        .then((res) => {
-            dispatch(setDataSubscribed({ "owner" : res.data.owner, "name" : res.data.name}))
-        })
-
         if (type === 'Closed') {
-            dispatch(setDataStorageType({ 'show' : true }))
+            dispatch(setDataStorageType({ 'show': true }))
             return -1
         }
-        axios.post('http://localhost:5000/showFiles', { "owner": searchedStorages[num].owner, "name": searchedStorages[num].name })
+
+        axios.post('http://localhost:5000/checkStorage', { "owner": searchedStorages[num].owner, "name": searchedStorages[num].name }, { withCredentials: true })
             .then((res) => {
-                let internalFile = creteObjInternalFiles(res.data)
-                dispatch(setDataFiles(internalFile))
-                dispatch(setDataOwn({ "name" : name, "type": type, "owner": owner }))
+                dispatch(setDataSubscribed({ "owner": res.data.owner, "name": res.data.name }))
             })
             .then(() => {
-                changePage(6)
+                axios.post('http://localhost:5000/showFiles', { "owner": searchedStorages[num].owner, "name": searchedStorages[num].name })
+                    .then((res) => {
+                        let internalFile = creteObjInternalFiles(res.data)
+                        dispatch(setDataFiles(internalFile))
+                        dispatch(setDataOwn({ "name": searchedStorages[num].name, "type": searchedStorages[num].type, "owner": searchedStorages[num].owner }))
+                    })
+                    .then(() => {
+                        changePage(6)
+                    })
             })
+
     }
 
     const submitPassword = (e) => {
         e.preventDefault()
 
-        axios.post('http://localhost:5000/checkStorage', { "owner": e.target.owner.value, "name": e.target.name.value }, {withCredentials: true})
-        .then((res) => {
-            dispatch(setDataSubscribed({ "owner" : res.data.owner, "name" : res.data.name}))
-        })
-
-        axios.post('http://localhost:5000/confirmPasswordStorage', { "owner": e.target.owner.value, "name": e.target.name.value, "password" : e.target.passwordStorage.value })
-        .then((res) => {
-            if (res.status === 202){
-                setHint(true)             
-                return -1
-            }
-            else{
-                let internalFile = creteObjInternalFiles(res.data)
-                dispatch(setDataFiles(internalFile))
-                dispatch(setDataOwn({ "name" : e.target.name.value, "type": e.target.type.value, "owner": e.target.owner.value }))
-            }
-        })
-        .then((res) => {
-            if(res === -1){
-                return 0
-            }
-            changePage(6)
-        })
+        axios.post('http://localhost:5000/checkStorage', { "owner": e.target.owner.value, "name": e.target.name.value }, { withCredentials: true })
+            .then((res) => {
+                dispatch(setDataSubscribed({ "owner": res.data.owner, "name": res.data.name }))
+            })
+            .then(() => {
+                axios.post('http://localhost:5000/confirmPasswordStorage', { "owner": e.target.owner.value, "name": e.target.name.value, "password": e.target.passwordStorage.value })
+                    .then((res) => {
+                        if (res.status === 202) {
+                            setHint(true)
+                            return -1
+                        }
+                        else {
+                            let internalFile = creteObjInternalFiles(res.data)
+                            dispatch(setDataFiles(internalFile))
+                            dispatch(setDataOwn({ "name": e.target.name.value, "type": e.target.type.value, "owner": e.target.owner.value }))
+                        }
+                    })
+                    .then((res) => {
+                        if (res === -1) {
+                            return 0
+                        }
+                        changePage(6)
+                    })
+            })
     }
 
     return activePage === 5 ? (
@@ -90,9 +93,9 @@ const SearchStorageCont = () => {
                                                 <br />
                                                 <div id="password-header-hint">Пароль для хранилища</div>
                                                 <input id="password-for-storage-hint" name="passwordStorage" type="password" />
-                                                <input className="hidden-data" name="owner" value={searchedStorages.owner}/>
-                                                <input className="hidden-data" name="name" value={searchedStorages.name}/>
-                                                <input className="hidden-data" name="type" value={searchedStorages.type}/>
+                                                <input className="hidden-data" name="owner" value={searchedStorages.owner} />
+                                                <input className="hidden-data" name="name" value={searchedStorages.name} />
+                                                <input className="hidden-data" name="type" value={searchedStorages.type} />
                                                 <button id="button-input-password-storage">Войти</button>
                                                 {hint && (
                                                     <div id="hint-password-message">

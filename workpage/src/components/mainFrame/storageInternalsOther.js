@@ -25,6 +25,7 @@ const ShowInternalFilesOthers = () => {
     let internalFiles = useSelector((store) => store.internalFile.data)
     let storages = useSelector((store) => store.ownStorages.data)
     let subscribedStorages = useSelector((store) => store.subscribedStorage.data)
+    console.log(subscribedStorages)
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
     const [progress, setProgess] = useState(0);
