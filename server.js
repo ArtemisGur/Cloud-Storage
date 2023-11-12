@@ -143,7 +143,7 @@ APP.post("/checkStorage", (req, res) => {
 })
 
 APP.post('/uploadNewFiles', (req, res) => {
-    const file = req.files
+    const file = req.files.file
 
     file.mv(`${__dirname}/server/files/${req.body.path}/${file.name}`,
         function (err) {
@@ -169,28 +169,26 @@ APP.post('/downloadFile', (req, res) => {
     })
 })
 
-APP.post('/downloadFileDragAndDrop', async (req, res) => {
+// APP.post('/downloadFileDragAndDrop', async (req, res) => {
 
-    const file = req.files.file
-    // console.log(file)
-    // console.log('aaaaaaaaaaaaadasdasdasdas')
-    file.mv(`${__dirname}/server/files/${req.body.path}/${file.name}`,
-        function (err) {
-            if (err) {
-                res.status(500).send({ msg: "Error occurred" })
-            }
-            let stat = fs.statSync(`${__dirname}/server/files/${req.body.path}/${file.name}`)
-            let size_ = Math.floor(stat.size / 1024)
-            let birthtime_ = stat.birthtime
-            let type_ = file.name.slice(file.name.lastIndexOf('.') + 1)
-            res.send({ fullName: `/${file.name}`, name: file.name, type: type_, size: size_, birthday: birthtime_ })
-        });
+//     const file = req.files.file
+//     file.mv(`${__dirname}/server/files/${req.body.path}/${file.name}`,
+//         function (err) {
+//             if (err) {
+//                 res.status(500).send({ msg: "Error occurred" })
+//             }
+//             let stat = fs.statSync(`${__dirname}/server/files/${req.body.path}/${file.name}`)
+//             let size_ = Math.floor(stat.size / 1024)
+//             let birthtime_ = stat.birthtime
+//             let type_ = file.name.slice(file.name.lastIndexOf('.') + 1)
+//             res.send({ fullName: `/${file.name}`, name: file.name, type: type_, size: size_, birthday: birthtime_ })
+//         });
 
-    //console.log(arrFiles)
-    //res.send(arrFiles)
+//     //console.log(arrFiles)
+//     //res.send(arrFiles)
 
 
-})
+// })
 
 
 

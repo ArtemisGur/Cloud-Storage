@@ -113,7 +113,7 @@ const ShowInternalFiles = () => {
         for (let i = 0; i < files.length; i++) {
             createFormData(files[i], i)
                 .then((res) => {
-                    axios.post('/downloadFileDragAndDrop', res)
+                    axios.post('/uploadNewFiles', res)
                         .then((response) => {
                             dispatch(addFile(response.data))
                         })
