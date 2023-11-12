@@ -6,6 +6,7 @@ import { setDataFiles } from "../store/internalFilesSlice"
 import { setData } from "../store/storagesSlice"
 import { setDataOwn } from "../store/ownStorageSlice"
 import { setDataSubscribed } from "../store/subscribedStorageSlice"
+import { setDataStorageType } from "../store/storageTypePasswordSlice"
 import axios from "axios"
 
 const SearchStorageCont = () => {
@@ -15,15 +16,15 @@ const SearchStorageCont = () => {
     const [hint, setHint] = useState(false)
     const dispatch = useDispatch()
     let searchedStorages = useSelector((store) => store.searchedStorages.data)
+    let storageType = useSelector((store) => store.storageTypePassword.data)
     const handlerClick = (num, type, owner, name) => {
         axios.post('http://localhost:5000/checkStorage', { "owner": searchedStorages[num].owner, "name": searchedStorages[num].name }, {withCredentials: true})
         .then((res) => {
             dispatch(setDataSubscribed({ "owner" : res.data.owner, "name" : res.data.name}))
         })
 
-        setHint(false)
         if (type === 'Closed') {
-            setShowStorage(!showStorage)
+            dispatch(setDataStorageType({ 'show' : true }))
             return -1
         }
         axios.post('http://localhost:5000/showFiles', { "owner": searchedStorages[num].owner, "name": searchedStorages[num].name })
@@ -83,7 +84,7 @@ const SearchStorageCont = () => {
                                             </div>
                                         </button>
                                     </label>
-                                    {storage === searchedStorages.key && showStorage && (
+                                    {storageType.show === true && (
                                         <form onSubmit={submitPassword}>
                                             <div>
                                                 <br />

@@ -4,6 +4,7 @@ import storagesSlice from "./storagesSlice";
 import searchStorages from "./searchSlice"
 import ownStorageSlice from "./ownStorageSlice";
 import subscribedStorageSlice from "./subscribedStorageSlice";
+import storageTypePasswordSlice from "./storageTypePasswordSlice";
 
 const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
         storages: storagesSlice,
         searchedStorages: searchStorages,
         ownStorages: ownStorageSlice,
-        subscribedStorage: subscribedStorageSlice
+        subscribedStorage: subscribedStorageSlice,
+        storageTypePassword: storageTypePasswordSlice
     }
 })
 

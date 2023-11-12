@@ -3,6 +3,7 @@ import { setData } from "./store/searchSlice"
 import { useContext, useState } from "react"
 import { createOwnStorageObject } from "./buttonsNavigate/buttonMyStorages"
 import { useDispatch, useSelector } from "react-redux"
+import { setDataStorageType } from "./store/storageTypePasswordSlice"
 import axios from 'axios';
 
 const SearchField = () => {
@@ -10,6 +11,7 @@ const SearchField = () => {
     let [click, setClick] = useState('Поиск хранилища')
     const { activePage, changePage } = useContext(PageContext)
     const handlerSearch = (e) => {
+        dispatch(setDataStorageType({ 'show' : false }))
         document.getElementById('nav-field').style.background = ""
         document.getElementById('nav-field-enable').style.background = ""
         e.preventDefault()
