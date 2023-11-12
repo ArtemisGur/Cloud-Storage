@@ -184,9 +184,7 @@ APP.post('/deleteStorage', (req, res) => {
     collectionStorages.deleteOne({ name: req.body.name, owner: req.body.owner })
     .then((response) => {
         if(fileController.deleteStorage(req.body.owner, req.body.name))
-             res.send(true)
-        else
-            false
+            res.send(true)
     })
 })
 

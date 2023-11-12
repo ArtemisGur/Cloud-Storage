@@ -72,7 +72,7 @@ const SearchStorageCont = () => {
     return activePage === 5 ? (
         <div className="create-storage-cont">
             <div className="create-storage-interior">
-                <h2 id="header-create-page">Найденные хранилища</h2>
+                <h2 id="header-create-page">Найденные хранилища: {searchedStorages[0] != null && <span>{searchedStorages[0].name}</span>}</h2>
                 <div id="create-interior">
                     {
                         searchedStorages.map((searchedStorages) => {

@@ -86,9 +86,6 @@ const ShowInternalFiles = () => {
                 setShowDelete(false)
                 changePage(0)
             }
-            else{
-                console.log('Хранилище не найдено')
-            }
         })
     }
 
