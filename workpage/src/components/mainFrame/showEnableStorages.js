@@ -26,11 +26,9 @@ const EnableStorages = () => {
     const { activePage, changePage } = useContext(PageContext)
 
     const handlerClick = (num, type, owner, name) => {
-        //console.log(num, type, owner, name)
 
         axios.post('http://localhost:5000/checkStorage', { "owner": storages[num].owner, "name": storages[num].name }, {withCredentials: true})
         .then((res) => {
-            console.log(res)
             dispatch(setDataSubscribed({ "owner" : res.data.owner, "name" : res.data.name}))
         })
         .then(() => {

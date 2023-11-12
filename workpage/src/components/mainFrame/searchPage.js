@@ -16,7 +16,7 @@ const SearchStorageCont = () => {
     const dispatch = useDispatch()
     let searchedStorages = useSelector((store) => store.searchedStorages.data)
     const handlerClick = (num, type, owner, name) => {
-        axios.post('http://localhost:5000/checkStorage', { "owner": owner, "name": name }, {withCredentials: true})
+        axios.post('http://localhost:5000/checkStorage', { "owner": searchedStorages[num].owner, "name": searchedStorages[num].name }, {withCredentials: true})
         .then((res) => {
             dispatch(setDataSubscribed({ "owner" : res.data.owner, "name" : res.data.name}))
         })

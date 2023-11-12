@@ -215,6 +215,25 @@ APP.post('/subscribeToStorage', (req, res) => {
         })
 })
 
+APP.post('/unsubscribeToStorage', (req, res) => {
+    collectionStorages.findOne({ owner: req.body.owner, name: req.body.name, type: req.body.type })
+        .then((response) => {
+            if (response === null) {
+                res.sendStatus(202)
+                return true
+            }
+            return false
+        })
+        .then((response) => {
+            if (!response) {
+                collectionEnabledStorages.deleteOne({ 'user': req.session.login, 'name': req.body.name, 'owner': req.body.owner, 'type': req.body.type })
+                    .then(() => {
+                        res.send({'message' : 'OK'})
+                    })
+            }
+        })
+})
+
 APP.post('/confirmPasswordStorage', (req, res) => {
     collectionStorages.findOne({ owner: req.body.owner, name: req.body.name })
         .then((storage) => {

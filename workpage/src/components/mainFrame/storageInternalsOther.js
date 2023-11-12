@@ -6,6 +6,7 @@ import fileDownload from 'js-file-download'
 import React, { useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import { deleteData, addFile } from '../store/internalFilesSlice'
+import { setDataSubscribed } from "../store/subscribedStorageSlice"
 import jpeg from '../../img/jpeg.png'
 import zip from '../../img/zip.png'
 import doc from '../../img/doc.png'
@@ -24,7 +25,6 @@ const ShowInternalFilesOthers = () => {
     let internalFiles = useSelector((store) => store.internalFile.data)
     let storages = useSelector((store) => store.ownStorages.data)
     let subscribedStorages = useSelector((store) => store.subscribedStorage.data)
-    console.log(subscribedStorages)
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
     const [progress, setProgess] = useState(0);
@@ -78,7 +78,19 @@ const ShowInternalFilesOthers = () => {
                 console.log('gg!')
             }
             if (res.data.message === 'OK'){
-                console.log('wp!')
+                dispatch(setDataSubscribed({ "owner" : storages.owner, "name" : storages.name}))
+            }
+        })
+    }
+
+    const unsubscribe = () => {
+        axios.post('/unsubscribeToStorage', { 'owner' : storages.owner, 'name' : storages.name, 'type' : storages.type})
+        .then((res) => {
+            if (res.status === 202) {
+                console.log('gg!')
+            }
+            if (res.data.message === 'OK'){
+                dispatch(setDataSubscribed({ "owner" : '', "name" : ''}))
             }
         })
     }
@@ -98,7 +110,7 @@ const ShowInternalFilesOthers = () => {
                                 <button id="subscribe-storage-2" onClick={() => subscribe()}>Подписаться на изменения</button>
                             </div>)}
                             {subscribedStorages.owner != "" && subscribedStorages.name != "" && <div className="file-upload">
-                            <button id="subscribe-storage-2" onClick={() => {}}>Отписаться</button>
+                            <button id="subscribe-storage-2" onClick={() => unsubscribe()}>Отписаться</button>
                             </div>}
                         </div>
                         <hr id="break-line-2" />
