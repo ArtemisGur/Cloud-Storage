@@ -124,26 +124,26 @@ APP.post('/getOwnerStorages', (req, res) => {
 })
 
 APP.post('/getEnableStorages', (req, res) => {
-    collectionEnabledStorages.find({ 'user' : req.session.login }).toArray()
-    .then((response) => {
-        res.send(response)
-    })
+    collectionEnabledStorages.find({ 'user': req.session.login }).toArray()
+        .then((response) => {
+            res.send(response)
+        })
 })
 
 APP.post("/checkStorage", (req, res) => {
-    collectionEnabledStorages.findOne({ "owner" : req.body.owner, "name" : req.body.name, "user" : req.session.login})
-    .then((response) => {
-        if (response != null){
-            res.send({ "owner" : response.user, "name" : response.name})
-        }
-        else{
-            res.send({ "owner" : "", "name" : ""})
-        }
-    })
+    collectionEnabledStorages.findOne({ "owner": req.body.owner, "name": req.body.name, "user": req.session.login })
+        .then((response) => {
+            if (response != null) {
+                res.send({ "owner": response.user, "name": response.name })
+            }
+            else {
+                res.send({ "owner": "", "name": "" })
+            }
+        })
 })
 
 APP.post('/uploadNewFiles', (req, res) => {
-    const file = req.files.file
+    const file = req.files
 
     file.mv(`${__dirname}/server/files/${req.body.path}/${file.name}`,
         function (err) {
@@ -169,6 +169,31 @@ APP.post('/downloadFile', (req, res) => {
     })
 })
 
+APP.post('/downloadFileDragAndDrop', async (req, res) => {
+
+    const file = req.files.file
+    // console.log(file)
+    // console.log('aaaaaaaaaaaaadasdasdasdas')
+    file.mv(`${__dirname}/server/files/${req.body.path}/${file.name}`,
+        function (err) {
+            if (err) {
+                res.status(500).send({ msg: "Error occurred" })
+            }
+            let stat = fs.statSync(`${__dirname}/server/files/${req.body.path}/${file.name}`)
+            let size_ = Math.floor(stat.size / 1024)
+            let birthtime_ = stat.birthtime
+            let type_ = file.name.slice(file.name.lastIndexOf('.') + 1)
+            res.send({ fullName: `/${file.name}`, name: file.name, type: type_, size: size_, birthday: birthtime_ })
+        });
+
+    //console.log(arrFiles)
+    //res.send(arrFiles)
+
+
+})
+
+
+
 APP.post('/deleteFile', (req, res) => {
     const fileName = req.body.fullPath
     try {
@@ -182,10 +207,10 @@ APP.post('/deleteFile', (req, res) => {
 
 APP.post('/deleteStorage', (req, res) => {
     collectionStorages.deleteOne({ name: req.body.name, owner: req.body.owner })
-    .then((response) => {
-        if(fileController.deleteStorage(req.body.owner, req.body.name))
-            res.send(true)
-    })
+        .then((response) => {
+            if (fileController.deleteStorage(req.body.owner, req.body.name))
+                res.send(true)
+        })
 })
 
 APP.post("/showFiles", (req, res) => {
@@ -215,7 +240,7 @@ APP.post('/subscribeToStorage', (req, res) => {
             if (!response) {
                 collectionEnabledStorages.insertOne({ 'user': req.session.login, 'name': req.body.name, 'owner': req.body.owner, 'type': req.body.type })
                     .then(() => {
-                        res.send({'message' : 'OK'})
+                        res.send({ 'message': 'OK' })
                     })
             }
         })
@@ -234,7 +259,7 @@ APP.post('/unsubscribeToStorage', (req, res) => {
             if (!response) {
                 collectionEnabledStorages.deleteOne({ 'user': req.session.login, 'name': req.body.name, 'owner': req.body.owner, 'type': req.body.type })
                     .then(() => {
-                        res.send({'message' : 'OK'})
+                        res.send({ 'message': 'OK' })
                     })
             }
         })

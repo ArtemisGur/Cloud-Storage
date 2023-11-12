@@ -41,6 +41,7 @@ const ShowInternalFiles = () => {
         const formData = new FormData()
         formData.append('file', file)
         formData.append('path', path)
+        console.log(formData)
         axios.post('http://localhost:5000/uploadNewFiles', formData, {
             onUploadProgress: (ProgressEvent) => {
                 let progress = Math.round(
@@ -79,19 +80,60 @@ const ShowInternalFiles = () => {
     }
 
     const deleteStorageConfirm = () => {
-        axios.post('/deleteStorage', { 'owner' : storages.owner, 'name' : storages.name })
-        .then((response) => {
-            if(response){
-                console.log(storages.key)
-                setShowDelete(false)
-                changePage(0)
-            }
-        })
+        axios.post('/deleteStorage', { 'owner': storages.owner, 'name': storages.name })
+            .then((response) => {
+                if (response) {
+                    console.log(storages.key)
+                    setShowDelete(false)
+                    changePage(0)
+                }
+            })
     }
 
     const handlerSetType = (type) => {
         setShowType(type)
     }
+
+    const [drag, setDrag] = useState(false)
+
+    const dragStartHandler = (e) => {
+        e.preventDefault()
+        setDrag(true)
+    }
+
+    const dragLeaveHandler = (e) => {
+        e.preventDefault()
+        setDrag(false)
+    }
+
+    const onDropHandler = (e) => {
+        e.preventDefault()
+        let files = [...e.dataTransfer.files]
+
+        for (let i = 0; i < files.length; i++) {
+            createFormData(files[i], i)
+                .then((res) => {
+                    axios.post('/downloadFileDragAndDrop', res)
+                        .then((response) => {
+                            dispatch(addFile(response.data))
+                        })
+                })
+        }
+
+
+        setDrag(false)
+    }
+
+    async function createFormData(files, i) {
+        return new Promise((resolve, reject) => {
+            const formData = new FormData()
+            formData.append('file', files)
+            formData.append('path', path)
+            resolve(formData)
+        })
+
+    }
+
 
     return activePage === 4 ? (
         <div className="show-file-cont">
@@ -105,11 +147,11 @@ const ShowInternalFiles = () => {
                                 Владелец: <span className="discription-storage">Вы</span>
                             </h4>
                             <div className="file-upload">
-                            {showDelete && (
+                                {showDelete && (
                                     <div id="delete-confirmation">Вы уверены?<button id="storage-delete" onClick={() => { deleteStorageConfirm() }}>Да</button></div>
                                 )}
                                 <button id="storage-delete" onClick={() => deleteStorage()}>Удалить Хранилище</button>
-                                
+
                             </div>
 
                         </div>
@@ -144,7 +186,10 @@ const ShowInternalFiles = () => {
                     </div>
                 </div>
             </div>
-            <div id="interior-block-files">
+            {drag && (
+                <div className="drop-area" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)} onDrop={e => onDropHandler(e)}>Отпустите файлы, чтобы загрузить их</div>
+            )}
+            {!drag && <div id="interior-block-files" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)}>
                 {showType === 1 && (
                     <div>
                         <div className="file-params">
@@ -243,7 +288,7 @@ const ShowInternalFiles = () => {
                         }
                     </div>)
                 }
-            </div>
+            </div>}
         </div>
     ) : null
 

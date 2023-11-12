@@ -25,7 +25,6 @@ const ShowInternalFilesOthers = () => {
     let internalFiles = useSelector((store) => store.internalFile.data)
     let storages = useSelector((store) => store.ownStorages.data)
     let subscribedStorages = useSelector((store) => store.subscribedStorage.data)
-    console.log(subscribedStorages)
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
     const [progress, setProgess] = useState(0);
@@ -73,27 +72,67 @@ const ShowInternalFilesOthers = () => {
     }
 
     const subscribe = () => {
-        axios.post('/subscribeToStorage', { 'owner' : storages.owner, 'name' : storages.name, 'type' : storages.type})
-        .then((res) => {
-            if (res.status === 202) {
-                console.log('gg!')
-            }
-            if (res.data.message === 'OK'){
-                dispatch(setDataSubscribed({ "owner" : storages.owner, "name" : storages.name}))
-            }
-        })
+        axios.post('/subscribeToStorage', { 'owner': storages.owner, 'name': storages.name, 'type': storages.type })
+            .then((res) => {
+                if (res.status === 202) {
+                    console.log('gg!')
+                }
+                if (res.data.message === 'OK') {
+                    dispatch(setDataSubscribed({ "owner": storages.owner, "name": storages.name }))
+                }
+            })
     }
 
     const unsubscribe = () => {
-        axios.post('/unsubscribeToStorage', { 'owner' : storages.owner, 'name' : storages.name, 'type' : storages.type})
-        .then((res) => {
-            if (res.status === 202) {
-                console.log('gg!')
-            }
-            if (res.data.message === 'OK'){
-                dispatch(setDataSubscribed({ "owner" : '', "name" : ''}))
-            }
+        axios.post('/unsubscribeToStorage', { 'owner': storages.owner, 'name': storages.name, 'type': storages.type })
+            .then((res) => {
+                if (res.status === 202) {
+                    console.log('gg!')
+                }
+                if (res.data.message === 'OK') {
+                    dispatch(setDataSubscribed({ "owner": '', "name": '' }))
+                }
+            })
+    }
+
+    const [drag, setDrag] = useState(false)
+
+    const dragStartHandler = (e) => {
+        e.preventDefault()
+        setDrag(true)
+    }
+
+    const dragLeaveHandler = (e) => {
+        e.preventDefault()
+        setDrag(false)
+    }
+
+    const onDropHandler = (e) => {
+        e.preventDefault()
+        let files = [...e.dataTransfer.files]
+
+        for (let i = 0; i < files.length; i++) {
+            createFormData(files[i], i)
+                .then((res) => {
+                    axios.post('/downloadFileDragAndDrop', res)
+                        .then((response) => {
+                            dispatch(addFile(response.data))
+                        })
+                })
+        }
+
+
+        setDrag(false)
+    }
+
+    async function createFormData(files, i) {
+        return new Promise((resolve, reject) => {
+            const formData = new FormData()
+            formData.append('file', files)
+            formData.append('path', `${storages.owner}/Storage_${storages.name}`)
+            resolve(formData)
         })
+
     }
 
     return activePage === 6 ? (
@@ -111,7 +150,7 @@ const ShowInternalFilesOthers = () => {
                                 <button id="subscribe-storage-2" onClick={() => subscribe()}>Подписаться на изменения</button>
                             </div>)}
                             {subscribedStorages.owner != "" && subscribedStorages.name != "" && <div className="file-upload">
-                            <button id="subscribe-storage-2" onClick={() => unsubscribe()}>Отписаться</button>
+                                <button id="subscribe-storage-2" onClick={() => unsubscribe()}>Отписаться</button>
                             </div>}
                         </div>
                         <hr id="break-line-2" />
@@ -146,7 +185,10 @@ const ShowInternalFilesOthers = () => {
                     </div>
                 </div>
             </div>
-            <div id="interior-block-files">
+            {drag && storages.type === 'Closed' && (
+                <div className="drop-area" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)} onDrop={e => onDropHandler(e)}>Отпустите файлы, чтобы загрузить их</div>
+            )}
+            {!drag && storages.type === 'Closed' && <div id="interior-block-files" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)}>
                 {showType === 1 && (
                     <div className="test">
                         <div className="file-params">
@@ -241,8 +283,103 @@ const ShowInternalFilesOthers = () => {
                         }
                     </div>)
                 }
-
-            </div>
+            </div>}
+            {storages.type === 'Open' && <div id="interior-block-files">
+                {showType === 1 && (
+                    <div className="test">
+                        <div className="file-params">
+                            <div id="file-prop-name">Название</div>
+                            <div id="file-prop-type">Тип</div>
+                            <div id="file-prop-date">Дата создания</div>
+                            <div id="file-prop-size">Размер(Кб)</div>
+                        </div>
+                        <div className="files-block">
+                            {
+                                internalFiles.map((internalFiles) => {
+                                    {
+                                        return (
+                                            <div id="file-interior" onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }}>
+                                                <div id="file-name" key={internalFiles.id}>{internalFiles.name}</div>
+                                                <div id="file-type" key={internalFiles.id}>{internalFiles.type}</div>
+                                                <div id="file-date" key={internalFiles.id}>{internalFiles.birthday}</div>
+                                                <div id="file-size" key={internalFiles.id}>{internalFiles.size}</div>
+                                                {menu === internalFiles.key && showMenu && (
+                                                    <div className="dropdown-content">
+                                                        <div className="file-menu-block">
+                                                            <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )
+                                    }
+                                })
+                            }
+                        </div>
+                    </div>)
+                }
+                {showType === 2 && (
+                    <div id="file-interior-with-img">
+                        {
+                            internalFiles.map((internalFiles) => {
+                                {
+                                    return (
+                                        <div className="file-block" onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }} >
+                                            <div className="test">
+                                                {internalFiles.type === 'jpeg' &&
+                                                    <img className="img-type" src={jpeg} />
+                                                }
+                                                {internalFiles.type === 'docx' &&
+                                                    <img className="img-type" src={doc} />
+                                                }
+                                                {internalFiles.type === 'gif' &&
+                                                    <img className="img-type" src={gif} />
+                                                }
+                                                {internalFiles.type === 'jpg' &&
+                                                    <img className="img-type" src={jpg} />
+                                                }
+                                                {internalFiles.type === 'pdf' &&
+                                                    <img className="img-type" src={pdf} />
+                                                }
+                                                {internalFiles.type === 'png' &&
+                                                    <img className="img-type" src={png} />
+                                                }
+                                                {internalFiles.type === 'txt' &&
+                                                    <img className="img-type" src={txt} />
+                                                }
+                                                {internalFiles.type === 'zip' &&
+                                                    <img className="img-type" src={zip} />
+                                                }
+                                                {internalFiles.type === 'html' &&
+                                                    <img className="img-type" src={html} />
+                                                }
+                                                {internalFiles.type === 'xml' &&
+                                                    <img className="img-type" src={xml} />
+                                                }
+                                                <div className="file-name-2">{internalFiles.name}</div>
+                                                <div className="dropdown-interior-2">
+                                                </div>
+                                                {menu === internalFiles.key && (
+                                                    <div className="dropdown-content-2">
+                                                        <div className="disctiption-block">
+                                                            <div className="discripion-file">Тип файла: {internalFiles.type}</div>
+                                                            <div className="discripion-file">Размер {internalFiles.size}Кб</div>
+                                                            <div className="discripion-file">Дата создания {internalFiles.birthday}</div>
+                                                        </div>
+                                                        <div className="file-menu-block">
+                                                            <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            })
+                        }
+                    </div>)
+                }
+            </div>}
         </div>
     ) : null
 
