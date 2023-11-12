@@ -34,6 +34,16 @@ const createStorageDir = (req, login) => {
     
 }
 
+const deleteStorage = (login, name) => {
+    try{
+        fs.rmSync(path.resolve(__dirname, '../') + `/files/${login}/Storage_${name}`, { recursive:true })
+        return true
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
 const showFiles = (req) => {
     
     let dirPath = (path.resolve(__dirname, '../')) + `/files/${req.body.owner}/Storage_${req.body.name}`
@@ -62,4 +72,4 @@ const showFiles = (req) => {
     return files
 }
 
-module.exports = { createStorageDir, showFiles }
+module.exports = { createStorageDir, showFiles, deleteStorage }

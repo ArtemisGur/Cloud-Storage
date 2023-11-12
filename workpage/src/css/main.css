@@ -485,6 +485,11 @@ body{
     max-height: 60vh;
 }
 
+#delete-confirmation{
+    margin-right: 2%;
+    font-weight: bold;
+}
+
 .file-block{
     margin-top: 1%;
     transition: 0.2s linear;
@@ -651,6 +656,20 @@ body{
     background-color: white;
     max-height: 50%;
     margin-top: 10%;
+}
+
+#storage-delete-сonfirm-button{
+    padding: 10px;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 10px #2d4a53; 
+    border-radius: 6px;
+    font-size: 16px;
+    transition: 0.2s linear;
+    font-family: system-ui;
+    background-color: white;
+}
+
+#storage-delete-сonfirm{
 }
 
 #storage-delete:hover{

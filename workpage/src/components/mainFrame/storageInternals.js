@@ -72,6 +72,26 @@ const ShowInternalFiles = () => {
             })
     }
 
+    const [showDelete, setShowDelete] = useState(false)
+
+    const deleteStorage = () => {
+        setShowDelete(!showDelete)
+    }
+
+    const deleteStorageConfirm = () => {
+        axios.post('/deleteStorage', { 'owner' : storages.owner, 'name' : storages.name })
+        .then((response) => {
+            if(response){
+                console.log(storages.key)
+                setShowDelete(false)
+                changePage(0)
+            }
+            else{
+                console.log('Хранилище не найдено')
+            }
+        })
+    }
+
     const handlerSetType = (type) => {
         setShowType(type)
     }
@@ -88,9 +108,15 @@ const ShowInternalFiles = () => {
                                 Владелец: <span className="discription-storage">Вы</span>
                             </h4>
                             <div className="file-upload">
-                                <button id="storage-delete">Удалить Хранилище</button>
+                            {showDelete && (
+                                    <div id="delete-confirmation">Вы уверены?<button id="storage-delete" onClick={() => { deleteStorageConfirm() }}>Да</button></div>
+                                )}
+                                <button id="storage-delete" onClick={() => deleteStorage()}>Удалить Хранилище</button>
+                                
                             </div>
+
                         </div>
+
                         <hr id="break-line-2" />
                         <div className="interor-block-menu">
                             <div className="button-change-view">

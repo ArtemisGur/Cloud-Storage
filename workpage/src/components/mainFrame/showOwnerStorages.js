@@ -32,7 +32,7 @@ const OwnerStorage = () => {
                 dispatch(setDataFiles(internalFile))
             })
             .then(() => {
-                dispatch(setDataOwn({ 'name': name, 'type': type, 'owner': owner }))
+                dispatch(setDataOwn({ 'name': name, 'type': type, 'owner': owner, 'key' : num }))
                 changePage(4)
             })
     }
