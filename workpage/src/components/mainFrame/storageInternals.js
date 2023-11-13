@@ -28,7 +28,7 @@ const ShowInternalFiles = () => {
     let storages = useSelector((store) => store.ownStorages.data)
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
-    const [progress, setProgess] = useState(0);
+    const [progress, setProgess] = useState('Прогресс загрузки файла: 0');
     const [menu, setMenu] = useState(-1)
     const [showMenu, setShowMenu] = useState(false)
     const [showType, setShowType] = useState(2)
@@ -50,7 +50,7 @@ const ShowInternalFiles = () => {
                 let progress = Math.round(
                     ProgressEvent.loaded / ProgressEvent.total * 100
                 ) + '%';
-                setProgess(progress)
+                setProgess(`Прогресс загрузки файла: ${progress}`)
             }
         })
             .then(res => {
@@ -192,15 +192,15 @@ const ShowInternalFiles = () => {
                             </div>
                             <div className="sec-interior-header">
                                 <label id="choose-file-label">
-                                    Выберите файл
-                                    <input type="file" ref={el} onChange={handleChange} id="butt-choose" />
+                                    <input type="file" ref={el} onChange={handleChange} id="butt-choose" />Выберите файл 
                                 </label>
+                                    <span id="hint-move-file">Или перетащите файлы в рабочую область</span>
+                                <button onClick={uploadFile} className="upbutton">
+                                    Загрузить
+                                </button>
                                 <span className="progessBar">
                                     {progress}
                                 </span>
-                                <button onClick={uploadFile} className="upbutton">
-                                    +
-                                </button>
                             </div>
                         </div>
                     </div>
