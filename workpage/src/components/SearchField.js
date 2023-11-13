@@ -29,7 +29,7 @@ const SearchField = () => {
     return(
         <div className="search-cont">
             <form onSubmit={handlerSearch} id="enter">
-                <input id="search-field" name="storageName" placeholder={click} onBlur={() => setClick(click='Поиск хранилища')} onClick={() => setClick(click='')}></input>
+                <input id="search-field" name="storageName"  placeholder={click} onBlur={() => setClick(click='Поиск хранилища')} onClick={() => setClick(click='')}></input>
             </form>
         </div>
     )

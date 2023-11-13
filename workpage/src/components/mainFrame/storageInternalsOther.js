@@ -7,6 +7,7 @@ import React, { useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import { deleteData, addFile } from '../store/internalFilesSlice'
 import { setDataSubscribed } from "../store/subscribedStorageSlice"
+import mimeFileType from "../store/mimeFileType"
 import jpeg from '../../img/jpeg.png'
 import zip from '../../img/zip.png'
 import doc from '../../img/doc.png'
@@ -31,7 +32,6 @@ const ShowInternalFilesOthers = () => {
     const [menu, setMenu] = useState(-1)
     const [showMenu, setShowMenu] = useState(false)
     const [showType, setShowType] = useState(2)
-    const [showButSub, setShowButSub] = useState(true)
     const el = useRef();
 
     const handleChange = (e) => {
@@ -132,8 +132,29 @@ const ShowInternalFilesOthers = () => {
             formData.append('path', `${storages.owner}/Storage_${storages.name}`)
             resolve(formData)
         })
-
     }
+
+    const viewFile = (fullName, type, name) => {
+        console.log('aaaaa')
+        const fileType = mimeFileType.get(type)
+        //console.log(fileType)
+        axios.post('/getFile', { 'name': fullName }, { responseType: 'blob' })
+            .then((response) => {
+                return response.data.arrayBuffer()
+            })
+            .then(arrayBuffer => {
+                if (fileType === undefined) {
+                    fileDownload(arrayBuffer, name)
+                    return 0
+                }
+                else {
+                    const blob = new Blob([arrayBuffer], {type: fileType})
+                    const fileUrl = URL.createObjectURL(blob)
+                    window.open(fileUrl, '_blank')
+                }
+            })
+    }
+
 
     return activePage === 6 ? (
         <div className="show-file-cont">
@@ -202,7 +223,7 @@ const ShowInternalFilesOthers = () => {
                                 internalFiles.map((internalFiles) => {
                                     {
                                         return (
-                                            <div id="file-interior" onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }}>
+                                            <div id="file-interior" onDoubleClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }} onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }}>
                                                 <div id="file-name" key={internalFiles.id}>{internalFiles.name}</div>
                                                 <div id="file-type" key={internalFiles.id}>{internalFiles.type}</div>
                                                 <div id="file-date" key={internalFiles.id}>{internalFiles.birthday}</div>
@@ -228,7 +249,7 @@ const ShowInternalFilesOthers = () => {
                             internalFiles.map((internalFiles) => {
                                 {
                                     return (
-                                        <div className="file-block" onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }} >
+                                        <div className="file-block" onDoubleClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }} onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }} >
                                             <div className="test">
                                                 {internalFiles.type === 'jpeg' &&
                                                     <img className="img-type" src={jpeg} />
@@ -298,7 +319,7 @@ const ShowInternalFilesOthers = () => {
                                 internalFiles.map((internalFiles) => {
                                     {
                                         return (
-                                            <div id="file-interior" onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }}>
+                                            <div id="file-interior" onDoubleClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }} onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }}>
                                                 <div id="file-name" key={internalFiles.id}>{internalFiles.name}</div>
                                                 <div id="file-type" key={internalFiles.id}>{internalFiles.type}</div>
                                                 <div id="file-date" key={internalFiles.id}>{internalFiles.birthday}</div>
@@ -324,7 +345,7 @@ const ShowInternalFilesOthers = () => {
                             internalFiles.map((internalFiles) => {
                                 {
                                     return (
-                                        <div className="file-block" onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }} >
+                                        <div className="file-block" onDoubleClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }} onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }} >
                                             <div className="test">
                                                 {internalFiles.type === 'jpeg' &&
                                                     <img className="img-type" src={jpeg} />

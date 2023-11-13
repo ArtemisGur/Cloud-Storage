@@ -48,7 +48,6 @@ const showFiles = (req) => {
     
     let dirPath = (path.resolve(__dirname, '../')) + `/files/${req.body.owner}/Storage_${req.body.name}`
     let files_ = fs.readdirSync(dirPath)
-    
     let files = []
 
     for (let i in files_){
@@ -72,4 +71,8 @@ const showFiles = (req) => {
     return files
 }
 
-module.exports = { createStorageDir, showFiles, deleteStorage }
+const getFile = (path) => {
+    return fs.readFileSync(path)
+}
+
+module.exports = { createStorageDir, showFiles, deleteStorage, getFile }
