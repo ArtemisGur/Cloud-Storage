@@ -144,17 +144,16 @@ APP.post("/checkStorage", (req, res) => {
 
 APP.post('/uploadNewFiles', (req, res) => {
     const file = req.files.file
-
-    file.mv(`${__dirname}/server/files/${req.body.path}/${file.name}`,
+    file.mv(`${__dirname}/server/files/${req.body.path}/${req.body.fileName}`,
         function (err) {
             if (err) {
                 res.status(500).send({ msg: "Error occurred" })
             }
-            let stat = fs.statSync(`${__dirname}/server/files/${req.body.path}/${file.name}`)
+            let stat = fs.statSync(`${__dirname}/server/files/${req.body.path}/${req.body.fileName}`)
             let size_ = Math.floor(stat.size / 1024)
             let birthtime_ = stat.birthtime
-            let type_ = file.name.slice(file.name.lastIndexOf('.') + 1)
-            res.send({ fullName: `/${file.name}`, name: file.name, type: type_, size: size_, birthday: birthtime_ })
+            let type_ = req.body.fileName.slice(req.body.fileName.lastIndexOf('.') + 1)
+            res.send({ fullName: `/${req.body.fileName}`, name: req.body.fileName, type: type_, size: size_, birthday: birthtime_ })
         });
 
 })

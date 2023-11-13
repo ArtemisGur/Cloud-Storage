@@ -20,6 +20,7 @@ import html from '../../img/html.png'
 import xml from '../../img/xml.png'
 import list from '../../img/list.png'
 import icons from '../../img/icons.png'
+import mp4 from '../../img/mp4.png'
 
 
 
@@ -43,8 +44,11 @@ const ShowInternalFiles = () => {
 
     const uploadFile = () => {
         const formData = new FormData()
+        console.log(file)
+        let str = file.name
         formData.append('file', file)
         formData.append('path', path)
+        formData.append('fileName', str)
         axios.post('http://localhost:5000/uploadNewFiles', formData, {
             onUploadProgress: (ProgressEvent) => {
                 let progress = Math.round(
@@ -156,11 +160,11 @@ const ShowInternalFiles = () => {
     }
 
     const searchFile = (e) => {
-        axios.post('/searchFile', {owner : storages.owner, storageName : storages.name, file : e.target.value})
-        .then(res => {
-            let internalFile = creteObjInternalFiles(res.data)
-            dispatch(setDataFiles(internalFile))
-        })
+        axios.post('/searchFile', { owner: storages.owner, storageName: storages.name, file: e.target.value })
+            .then(res => {
+                let internalFile = creteObjInternalFiles(res.data)
+                dispatch(setDataFiles(internalFile))
+            })
     }
 
     return activePage === 4 ? (
@@ -247,6 +251,9 @@ const ShowInternalFiles = () => {
                                                     <div className="file-menu-block">
                                                         <button className="file-menu-but" onClick={() => { deleteFile(internalFiles.fullName, internalFiles.name, internalFiles.key) }}>Удалить</button>
                                                     </div>
+                                                    <div className="file-menu-block">
+                                                        <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Предосмотр</button>
+                                                    </div>
                                                 </div>
                                             )}
                                         </div>
@@ -294,6 +301,9 @@ const ShowInternalFiles = () => {
                                                 {internalFiles.type === 'xml' &&
                                                     <img className="img-type" src={xml} />
                                                 }
+                                                {internalFiles.type === 'mp4' &&
+                                                    <img className="img-type" src={mp4} />
+                                                }
                                                 <div className="file-name-2">{internalFiles.name}</div>
                                                 <div className="dropdown-interior-2">
                                                 </div>
@@ -309,6 +319,9 @@ const ShowInternalFiles = () => {
                                                         </div>
                                                         <div className="file-menu-block">
                                                             <button className="file-menu-but" onClick={() => { deleteFile(internalFiles.fullName, internalFiles.name, internalFiles.key) }}>Удалить</button>
+                                                        </div>
+                                                        <div className="file-menu-block">
+                                                            <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Предосмотр</button>
                                                         </div>
                                                     </div>
                                                 )}

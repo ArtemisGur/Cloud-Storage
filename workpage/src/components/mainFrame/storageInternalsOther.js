@@ -21,6 +21,7 @@ import html from '../../img/html.png'
 import xml from '../../img/xml.png'
 import list from '../../img/list.png'
 import icons from '../../img/icons.png'
+import mp4 from '../../img/mp4.png'
 
 const ShowInternalFilesOthers = () => {
     const dispatch = useDispatch()
@@ -43,9 +44,12 @@ const ShowInternalFilesOthers = () => {
 
     const uploadFile = () => {
         const formData = new FormData()
+        console.log(file)
+        let str = file.name
         formData.append('file', file)
-        formData.append('path', `${storages.owner}/Storage_${storages.name}`)
-        axios.post('/uploadNewFiles', formData, {
+        formData.append('path', path)
+        formData.append('fileName', str)
+        axios.post('http://localhost:5000/uploadNewFiles', formData, {
             onUploadProgress: (ProgressEvent) => {
                 let progress = Math.round(
                     ProgressEvent.loaded / ProgressEvent.total * 100
@@ -244,6 +248,9 @@ const ShowInternalFilesOthers = () => {
                                                         <div className="file-menu-block">
                                                             <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
                                                         </div>
+                                                        <div className="file-menu-block">
+                                                            <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Предосмотр</button>
+                                                        </div>
                                                     </div>
                                                 )}
                                             </div>
@@ -292,6 +299,9 @@ const ShowInternalFilesOthers = () => {
                                                 {internalFiles.type === 'xml' &&
                                                     <img className="img-type" src={xml} />
                                                 }
+                                                {internalFiles.type === 'mp4' &&
+                                                    <img className="img-type" src={mp4} />
+                                                }
                                                 <div className="file-name-2">{internalFiles.name}</div>
                                                 <div className="dropdown-interior-2">
                                                 </div>
@@ -304,6 +314,9 @@ const ShowInternalFilesOthers = () => {
                                                         </div>
                                                         <div className="file-menu-block">
                                                             <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
+                                                        </div>
+                                                        <div className="file-menu-block">
+                                                            <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Предосмотр</button>
                                                         </div>
                                                     </div>
                                                 )}
@@ -340,6 +353,9 @@ const ShowInternalFilesOthers = () => {
                                                         <div className="file-menu-block">
                                                             <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
                                                         </div>
+                                                        <div className="file-menu-block">
+                                                            <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Предосмотр</button>
+                                                        </div>
                                                     </div>
                                                 )}
                                             </div>
@@ -388,6 +404,9 @@ const ShowInternalFilesOthers = () => {
                                                 {internalFiles.type === 'xml' &&
                                                     <img className="img-type" src={xml} />
                                                 }
+                                                {internalFiles.type === 'mp4' &&
+                                                    <img className="img-type" src={mp4} />
+                                                }
                                                 <div className="file-name-2">{internalFiles.name}</div>
                                                 <div className="dropdown-interior-2">
                                                 </div>
@@ -400,6 +419,9 @@ const ShowInternalFilesOthers = () => {
                                                         </div>
                                                         <div className="file-menu-block">
                                                             <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
+                                                        </div>
+                                                        <div className="file-menu-block">
+                                                            <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Предосмотр</button>
                                                         </div>
                                                     </div>
                                                 )}
