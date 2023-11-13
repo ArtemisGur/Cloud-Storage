@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { deleteData, addFile } from '../store/internalFilesSlice'
 import { setDataSubscribed } from "../store/subscribedStorageSlice"
 import mimeFileType from "../store/mimeFileType"
+import { setDataFiles } from '../store/internalFilesSlice'
 import jpeg from '../../img/jpeg.png'
 import zip from '../../img/zip.png'
 import doc from '../../img/doc.png'
@@ -148,13 +149,20 @@ const ShowInternalFilesOthers = () => {
                     return 0
                 }
                 else {
-                    const blob = new Blob([arrayBuffer], {type: fileType})
+                    const blob = new Blob([arrayBuffer], { type: fileType })
                     const fileUrl = URL.createObjectURL(blob)
                     window.open(fileUrl, '_blank')
                 }
             })
     }
 
+    const searchFile = (e) => {
+        axios.post('/searchFile', {owner : storages.owner, storageName : storages.name, file : e.target.value})
+        .then(res => {
+            let internalFile = creteObjInternalFiles(res.data)
+            dispatch(setDataFiles(internalFile))
+        })
+    }
 
     return activePage === 6 ? (
         <div className="show-file-cont">
@@ -201,8 +209,10 @@ const ShowInternalFilesOthers = () => {
                                     <span className="progessBar">
                                         {progress}
                                     </span>
-
                                 </div>)}
+                            <form id="search-file-form" >
+                                <input name="file" onChange={(e) => searchFile(e)} placeholder="Поиск файла" id="search-file" />
+                            </form>
                         </div>
                     </div>
                 </div>

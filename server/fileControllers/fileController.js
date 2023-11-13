@@ -6,7 +6,7 @@ const clientDB = new MongoClient("mongodb://127.0.0.1:27017/")
 const db = clientDB.db("DBUsers")
 const collectionStorages = db.collection("Storages")
 
-function File(fullName, name, type, size, createDate){
+function File(fullName, name, type, size, createDate) {
     this.fullName = fullName
     this.name = name
     this.type = type
@@ -15,7 +15,7 @@ function File(fullName, name, type, size, createDate){
 }
 
 const createStorageDir = (req, login) => {
-    try{
+    try {
         fs.mkdirSync(path.resolve(__dirname, '../') + `/files/${login}/Storage_${req.body.newStorage.nameStorage}`)
         let passwordTemp
         req.body.newStorage.password != undefined ? passwordTemp = req.body.newStorage.password : passwordTemp = null
@@ -24,49 +24,48 @@ const createStorageDir = (req, login) => {
             name: req.body.newStorage.nameStorage,
             type: req.body.newStorage.typeStorage,
             password: passwordTemp
-    
+
         }
-        collectionStorages.insertOne(storage)   
+        collectionStorages.insertOne(storage)
     }
-    catch(err){
+    catch (err) {
         console.log(err)
     }
-    
+
 }
 
 const deleteStorage = (login, name) => {
-    try{
-        fs.rmSync(path.resolve(__dirname, '../') + `/files/${login}/Storage_${name}`, { recursive:true })
+    try {
+        fs.rmSync(path.resolve(__dirname, '../') + `/files/${login}/Storage_${name}`, { recursive: true })
         return true
     }
-    catch(err){
+    catch (err) {
         console.log(err)
     }
 }
 
 const showFiles = (req) => {
-    
+
     let dirPath = (path.resolve(__dirname, '../')) + `/files/${req.body.owner}/Storage_${req.body.name}`
     let files_ = fs.readdirSync(dirPath)
     let files = []
 
-    for (let i in files_){
+    for (let i in files_) {
         let fullName = dirPath + '/' + files_[i]
         let name = files_[i]
-        let stat = fs.statSync(dirPath + '/' +files_[i])
+        let stat = fs.statSync(dirPath + '/' + files_[i])
         let size = stat.size
-        let birthtime = stat.birthtime  
-        if (fs.statSync(fullName).isDirectory()){
+        let birthtime = stat.birthtime
+        if (fs.statSync(fullName).isDirectory()) {
             let type = ''
             let file = new File(fullName, name, type, size, birthtime)
             files.push(file)
         }
-        else{
+        else {
             let type = name.slice(name.lastIndexOf('.') + 1)
             let file = new File(fullName, name, type, size, birthtime)
             files.push(file)
         }
-        //console.log(files)
     }
     return files
 }
@@ -75,4 +74,36 @@ const getFile = (path) => {
     return fs.readFileSync(path)
 }
 
-module.exports = { createStorageDir, showFiles, deleteStorage, getFile }
+const searchFiles = (owner, storageName, file) => {
+    let dirPath = (path.resolve(__dirname, '../')) + `/files/${owner}/Storage_${storageName}`
+    let files_ = fs.readdirSync(dirPath)
+    subStr = file.toLowerCase()
+    let files = []
+    for (let i in files_) {
+        let str = files_[i]
+        str = str.toLowerCase()
+        let res = str.indexOf(subStr)
+
+        if (res != -1) {
+            let fullName = dirPath + '/' + files_[i]
+            let name = files_[i]
+            let stat = fs.statSync(dirPath + '/' + files_[i])
+            let size = stat.size
+            let birthtime = stat.birthtime
+            if (fs.statSync(fullName).isDirectory()) {
+                let type = ''
+                let file = new File(fullName, name, type, size, birthtime)
+                files.push(file)
+            }
+            else {
+                let type = name.slice(name.lastIndexOf('.') + 1)
+                let file = new File(fullName, name, type, size, birthtime)
+                files.push(file)
+            }
+            console.log(i)
+        }
+    }
+    return files
+}
+
+module.exports = { createStorageDir, showFiles, deleteStorage, getFile, searchFiles }

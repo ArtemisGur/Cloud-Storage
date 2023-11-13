@@ -123,7 +123,7 @@ body{
     border-radius: 6px;
     width: 79.2%;
     margin-top: 1%;
-    min-height: 85vh;
+    min-height: 90vh;
     font-family: system-ui;
 }
 
@@ -146,6 +146,26 @@ body{
     margin-top: 0.5%;
     margin-bottom: 1%;
     font-weight: 500;
+}
+
+#search-file{
+    height: 10%;
+    font-size: 14px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 20px;
+    background-color: #f9faff;
+    font-weight: 600;
+    border: 1px solid #2d4a53;
+    box-shadow: 0 0 10px #2d4a53; 
+    outline: none;
+    font-family: system-ui;
+    float: right;
+}
+
+#search-file-form{
+   width: 30%;
+   margin-left: auto;
 }
 
 #name-storage-create{
@@ -410,7 +430,7 @@ body{
         font-size: 16px;
         text-align: center;
         cursor: pointer;
-        width: 45%;
+        width: 50%;
         padding: 10px;
 }
 
@@ -433,7 +453,7 @@ body{
     cursor: pointer;
     transition: 0.2s linear;
     font-size: 16px;
-    padding: 5px;
+    padding: 10px;
     width: 30%;
     font-family: system-ui;
     align-items: center;
@@ -697,13 +717,13 @@ body{
 }
 
 #break-line-2{
-    margin-top: 2%;
     border: 1px solid lightgrey;
     box-shadow: 0 0 20px 2px lightgrey; 
 }
 
 .interor-block-menu{
     display: flex;
+    align-items: center;
 }
 
 .drop-area{

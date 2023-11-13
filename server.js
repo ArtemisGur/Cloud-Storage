@@ -203,9 +203,13 @@ APP.post('/searchStorages', (req, res) => {
 })
 
 APP.post('/getFile', (req, res) => {
-    console.log(req.body.name)
     const file = fileController.getFile(req.body.name)
     res.send(file)
+})
+
+APP.post('/searchFile', (req, res) => {
+    let files = fileController.searchFiles(req.body.owner, req.body.storageName, req.body.file)
+    res.send(files)
 })
 
 APP.post('/subscribeToStorage', (req, res) => {

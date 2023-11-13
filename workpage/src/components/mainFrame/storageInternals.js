@@ -7,6 +7,7 @@ import React, { useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import { deleteData, addFile } from '../store/internalFilesSlice'
 import mimeFileType from "../store/mimeFileType"
+import { setDataFiles } from '../store/internalFilesSlice'
 import jpeg from '../../img/jpeg.png'
 import zip from '../../img/zip.png'
 import doc from '../../img/doc.png'
@@ -44,7 +45,6 @@ const ShowInternalFiles = () => {
         const formData = new FormData()
         formData.append('file', file)
         formData.append('path', path)
-        console.log(formData)
         axios.post('http://localhost:5000/uploadNewFiles', formData, {
             onUploadProgress: (ProgressEvent) => {
                 let progress = Math.round(
@@ -148,11 +148,19 @@ const ShowInternalFiles = () => {
                     return 0
                 }
                 else {
-                    const blob = new Blob([arrayBuffer], {type: fileType})
+                    const blob = new Blob([arrayBuffer], { type: fileType })
                     const fileUrl = URL.createObjectURL(blob)
                     window.open(fileUrl, '_blank')
                 }
             })
+    }
+
+    const searchFile = (e) => {
+        axios.post('/searchFile', {owner : storages.owner, storageName : storages.name, file : e.target.value})
+        .then(res => {
+            let internalFile = creteObjInternalFiles(res.data)
+            dispatch(setDataFiles(internalFile))
+        })
     }
 
     return activePage === 4 ? (
@@ -192,9 +200,9 @@ const ShowInternalFiles = () => {
                             </div>
                             <div className="sec-interior-header">
                                 <label id="choose-file-label">
-                                    <input type="file" ref={el} onChange={handleChange} id="butt-choose" />Выберите файл 
+                                    <input type="file" ref={el} onChange={handleChange} id="butt-choose" />Выберите файл
                                 </label>
-                                    <span id="hint-move-file">Или перетащите файлы в рабочую область</span>
+                                <span id="hint-move-file">Или перетащите файлы в рабочую область</span>
                                 <button onClick={uploadFile} className="upbutton">
                                     Загрузить
                                 </button>
@@ -202,8 +210,12 @@ const ShowInternalFiles = () => {
                                     {progress}
                                 </span>
                             </div>
+                            <form id="search-file-form">
+                                <input name="file" onChange={(e) => searchFile(e)} placeholder="Поиск файла" id="search-file" />
+                            </form>
                         </div>
                     </div>
+
                 </div>
             </div>
             {drag && (
