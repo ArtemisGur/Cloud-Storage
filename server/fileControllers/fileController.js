@@ -45,6 +45,32 @@ const deleteStorage = (login, name) => {
 }
 
 const showFiles = (req) => {
+    
+    let dirPath = (path.resolve(__dirname, '../')) + `/files/${req.body.path}`
+    let files_ = fs.readdirSync(dirPath)
+    let files = []
+
+    for (let i in files_) {
+        let fullName = dirPath + '/' + files_[i]
+        let name = files_[i]
+        let stat = fs.statSync(dirPath + '/' + files_[i])
+        let size = stat.size
+        let birthtime = stat.birthtime
+        if (fs.statSync(fullName).isDirectory()) {
+            let type = 'folder'
+            let file = new File(fullName, name, type, size, birthtime)
+            files.push(file)
+        }
+        else {
+            let type = name.slice(name.lastIndexOf('.') + 1)
+            let file = new File(fullName, name, type, size, birthtime)
+            files.push(file)
+        }
+    }
+    return files
+}
+
+const showFiles_2 = (req) => {
 
     let dirPath = (path.resolve(__dirname, '../')) + `/files/${req.body.owner}/Storage_${req.body.name}`
     let files_ = fs.readdirSync(dirPath)
@@ -57,7 +83,7 @@ const showFiles = (req) => {
         let size = stat.size
         let birthtime = stat.birthtime
         if (fs.statSync(fullName).isDirectory()) {
-            let type = ''
+            let type = 'folder'
             let file = new File(fullName, name, type, size, birthtime)
             files.push(file)
         }
@@ -74,36 +100,66 @@ const getFile = (path) => {
     return fs.readFileSync(path)
 }
 
-const searchFiles = (owner, storageName, file) => {
-    let dirPath = (path.resolve(__dirname, '../')) + `/files/${owner}/Storage_${storageName}`
+const searchFiles = (path_, file) => {
+    let dirPath = (path.resolve(__dirname, '../')) + `/files/${path_}`
     let files_ = fs.readdirSync(dirPath)
     subStr = file.toLowerCase()
-    let files = []
-    for (let i in files_) {
-        let str = files_[i]
-        str = str.toLowerCase()
-        let res = str.indexOf(subStr)
+    if (subStr === '') {
+        let files = []
+        for (let i in files_) {
+            let str = files_[i]
+            str = str.toLowerCase()
+            let res = str.indexOf(subStr)
 
-        if (res != -1) {
-            let fullName = dirPath + '/' + files_[i]
-            let name = files_[i]
-            let stat = fs.statSync(dirPath + '/' + files_[i])
-            let size = stat.size
-            let birthtime = stat.birthtime
-            if (fs.statSync(fullName).isDirectory()) {
-                let type = ''
-                let file = new File(fullName, name, type, size, birthtime)
-                files.push(file)
+            if (res != -1) {
+                let fullName = dirPath + '/' + files_[i]
+                let name = files_[i]
+                let stat = fs.statSync(dirPath + '/' + files_[i])
+                let size = stat.size
+                let birthtime = stat.birthtime
+                if (fs.statSync(fullName).isDirectory()) {
+                    let type = 'folder'
+                    let file = new File(fullName, name, type, size, birthtime)
+                    files.push(file)
+                }
+                else {
+                    let type = name.slice(name.lastIndexOf('.') + 1)
+                    let file = new File(fullName, name, type, size, birthtime)
+                    files.push(file)
+                }
             }
-            else {
-                let type = name.slice(name.lastIndexOf('.') + 1)
-                let file = new File(fullName, name, type, size, birthtime)
-                files.push(file)
-            }
-            console.log(i)
         }
+        return files
     }
-    return files
+    else {
+        let files = []
+        for (let i in files_) {
+            let str = files_[i]
+            str = str.toLowerCase()
+            let res = str.indexOf(subStr)
+
+            if (res != -1) {
+                let fullName = dirPath + '/' + files_[i]
+                let name = files_[i]
+                let stat = fs.statSync(dirPath + '/' + files_[i])
+                let size = stat.size
+                let birthtime = stat.birthtime
+                if (fs.statSync(fullName).isDirectory()) {
+                }
+                else {
+                    let type = name.slice(name.lastIndexOf('.') + 1)
+                    let file = new File(fullName, name, type, size, birthtime)
+                    files.push(file)
+                }
+            }
+        }
+        return files
+    }
+
 }
 
-module.exports = { createStorageDir, showFiles, deleteStorage, getFile, searchFiles }
+const createDir = (newPath) => {
+    fs.mkdirSync(path.resolve(__dirname, '../') + `/files/${newPath}`)
+}
+
+module.exports = { createStorageDir, showFiles, showFiles_2, deleteStorage, getFile, searchFiles, createDir }

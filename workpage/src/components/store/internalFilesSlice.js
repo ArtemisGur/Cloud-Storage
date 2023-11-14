@@ -8,6 +8,7 @@ const internalFilesSlice = createSlice({
 
     reducers: {
         setDataFiles: (state, action) => {
+            console.log(action.payload)
             state.data = action.payload
         },
         getData: (state) => {

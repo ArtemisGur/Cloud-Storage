@@ -123,7 +123,8 @@ body{
     border-radius: 6px;
     width: 79.2%;
     margin-top: 1%;
-    min-height: 90vh;
+    max-height: 85vh;
+    min-height: 85vh;
     font-family: system-ui;
 }
 
@@ -339,13 +340,11 @@ body{
 
 .file-params{
     display: flex;
-    margin-top: 2%;
 }
 
 #file-prop-name{
     margin-left: 5%;
     width: 54%;
-    margin-top: 3%;
 }
 
 #file-name{
@@ -354,17 +353,14 @@ body{
 
 #file-prop-type{
     width: 9%;
-    margin-top: 3%;
 }
 
 #file-prop-date{
     width: 15%;
-    margin-top: 3%;
 }
 
 #file-prop-size{
     width: 10%;
-    margin-top: 3%;
 }
 
 #file-type{
@@ -405,7 +401,11 @@ body{
     border-radius: 6px;
     margin-left: 2%;
     margin-right: 8%;
-    min-height: 60%;
+    max-height: 60vh;
+}
+#interior-block-files-2{
+    overflow: auto;
+    height: 50vh;;
 }
 
 #butt-choose{
@@ -508,7 +508,9 @@ body{
     overflow: auto;
     display: flex;
     flex-wrap: wrap;
-    max-height: 60vh;
+    max-height: 50vh;
+    min-height: 50vh;
+    margin-bottom: 5%;
 }
 
 #delete-confirmation{
@@ -601,7 +603,6 @@ body{
 
 .sec-interior-header{
     display: flex;
-    margin-left: 5%;
     width: 40%;
 }
 
@@ -702,6 +703,7 @@ body{
 .button-change-view{
     display: flex;
     align-items: center;
+    margin-left: auto;
 }
 
 #subscribe-storage:hover, #subscribe-storage-2:hover, #choose-file-label:hover{
@@ -737,4 +739,126 @@ body{
     font-size: 40px;
     border: 3px dashed black;
     background-color: #ddecf5;
+}
+
+#popup{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content{
+    width: 20%;
+    min-height: 10%;
+    background-color: #ddecf5;
+    padding: 20px;
+    border-radius: 12px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup-create{
+    align-self: flex-end;
+    margin-top: 2%;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53; 
+    background: #f9faff;
+    border-radius: 6px;
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: 0.2s linear;
+}
+
+.popup-create:hover{
+    background-color: #ddecf5;
+    box-shadow: 0 0 5px #2d4a53;
+}
+
+.popup-close{
+    align-self: flex-end;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53; 
+    background: #f9faff;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: 0.2s linear;
+}
+
+.popup-close:hover{
+    background-color: rgb(214, 74, 74);
+    transform: perspective(400px) rotate(180deg);
+}
+
+.popup-input{
+    margin-top: 8%;
+    border-radius: 12px;
+    font-size: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53; 
+    background: #f9faff;
+    border-radius: 6px;
+}
+
+.popup-title{
+    font-size: 16px;
+}
+
+.block-nav-but{
+    padding-top: 2%;
+    padding-left: 2%;
+    padding-bottom: 2%;
+}
+
+.but-nav-storage{
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53;
+    background-color: lightgrey;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s linear;
+    font-size: 14px;
+    padding: 10px;
+    font-family: system-ui;
+    align-items: center;
+    transition: 0.2s linear;
+}
+
+.but-nav-storage-2{
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53;
+    background-color: lightgrey;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s linear;
+    font-size: 14px;
+    padding: 5px;
+    padding: 10px;
+    font-family: system-ui;
+    align-items: center;
+    margin-left: 2%;
+    transition: 0.2s linear;
+}
+
+.but-nav-storage:hover, .but-nav-storage-2:hover{
+    background-color: #f1f1f1;
 }

@@ -21,7 +21,6 @@ const SearchField = () => {
             dispatch(setData(data))
         })
         .then(() => {
-            //document.getElementById("search-field").value = ''
             changePage(5)
         })
     }

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { setDataFiles } from '../store/internalFilesSlice'
 import { setDataOwn } from "../store/ownStorageSlice"
 import { setDataSubscribed } from "../store/subscribedStorageSlice"
+import { setDataFolder, getDataFolder, setDataFolderFirst } from "../store/foldersSlice"
+import { setDataCurrentFolder } from "../store/currentFolderSlice"
 
 let path
 
@@ -32,13 +34,15 @@ const EnableStorages = () => {
             dispatch(setDataSubscribed({ "owner" : res.data.owner, "name" : res.data.name}))
         })
         .then(() => {
-            axios.post('http://localhost:5000/showFiles', { "owner": owner, "name": name })
+            axios.post('http://localhost:5000/showFiles', { "path": owner + '/Storage_' + name })
             .then((res) => {
                 let internalFile = creteObjInternalFiles(res.data)
                 path = `${storages[num].owner}/Storage_${storages[num].name}`
                 dispatch(setDataFiles(internalFile))
             })
             .then(() => {
+                dispatch(setDataFolderFirst(owner + '/' + 'Storage_' + name))
+                dispatch(setDataCurrentFolder('Storage_' + name + '/'))
                 dispatch(setDataOwn({ 'name': name, 'type': type, 'owner': owner }))
             })
             .then(() => {

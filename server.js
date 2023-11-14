@@ -144,6 +144,7 @@ APP.post("/checkStorage", (req, res) => {
 
 APP.post('/uploadNewFiles', (req, res) => {
     const file = req.files.file
+    console.log(file)
     file.mv(`${__dirname}/server/files/${req.body.path}/${req.body.fileName}`,
         function (err) {
             if (err) {
@@ -155,7 +156,6 @@ APP.post('/uploadNewFiles', (req, res) => {
             let type_ = req.body.fileName.slice(req.body.fileName.lastIndexOf('.') + 1)
             res.send({ fullName: `/${req.body.fileName}`, name: req.body.fileName, type: type_, size: size_, birthday: birthtime_ })
         });
-
 })
 
 APP.post('/downloadFile', (req, res) => {
@@ -166,6 +166,11 @@ APP.post('/downloadFile', (req, res) => {
         }
         res.send(data)
     })
+})
+
+APP.post('/createDir', (req, res) => {
+    fileController.createDir(req.body.path)
+    res.send('OK')
 })
 
 APP.post('/deleteFile', (req, res) => {
@@ -188,7 +193,7 @@ APP.post('/deleteStorage', (req, res) => {
 })
 
 APP.post("/showFiles", (req, res) => {
-
+    console.log('pathhhhh', req.body.path)
     let files = fileController.showFiles(req)
     res.send(files)
 
@@ -207,7 +212,8 @@ APP.post('/getFile', (req, res) => {
 })
 
 APP.post('/searchFile', (req, res) => {
-    let files = fileController.searchFiles(req.body.owner, req.body.storageName, req.body.file)
+    let files = fileController.searchFiles(req.body.path, req.body.file)
+    console.log(files)
     res.send(files)
 })
 
@@ -256,7 +262,7 @@ APP.post('/confirmPasswordStorage', (req, res) => {
                 res.sendStatus(202)
             }
             else {
-                let files = fileController.showFiles(req)
+                let files = fileController.showFiles_2(req)
                 res.send(files)
             }
         })

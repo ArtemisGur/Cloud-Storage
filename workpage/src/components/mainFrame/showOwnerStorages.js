@@ -4,6 +4,8 @@ import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { setDataFiles } from '../store/internalFilesSlice'
 import { setDataOwn } from "../store/ownStorageSlice"
+import { setDataFolder, getDataFolder, setDataFolderFirst } from "../store/foldersSlice"
+import { setDataCurrentFolder } from "../store/currentFolderSlice"
 
 let path
 
@@ -23,18 +25,21 @@ const OwnerStorage = () => {
 
     let storages = useSelector((store) => store.storages.data)
     const { activePage, changePage } = useContext(PageContext)
+    let folder = useSelector((store) => store.folder.data)
 
     const handlerClick = (num, type, owner, name) => {
-        axios.post('http://localhost:5000/showFiles', { "owner": storages[num].owner, "name": storages[num].name })
+        axios.post('http://localhost:5000/showFiles', { "path": storages[num].owner + '/Storage_' + storages[num].name })
             .then((res) => {
                 let internalFile = creteObjInternalFiles(res.data)
                 path = `${storages[num].owner}/Storage_${storages[num].name}`
                 dispatch(setDataFiles(internalFile))
             })
             .then(() => {
+                dispatch(setDataFolderFirst(owner + '/' + 'Storage_' + name))
+                dispatch(setDataCurrentFolder('Storage_' + name))
                 dispatch(setDataOwn({ 'name': name, 'type': type, 'owner': owner, 'key' : num }))
                 changePage(4)
-            })
+            })      
     }
 
     return activePage === 1 ? (

@@ -7,6 +7,8 @@ import { setData } from "../store/storagesSlice"
 import { setDataOwn } from "../store/ownStorageSlice"
 import { setDataSubscribed } from "../store/subscribedStorageSlice"
 import { setDataStorageType } from "../store/storageTypePasswordSlice"
+import { setDataFolder, getDataFolder, setDataFolderFirst } from "../store/foldersSlice"
+import { setDataCurrentFolder } from "../store/currentFolderSlice"
 import axios from "axios"
 
 const SearchStorageCont = () => {
@@ -21,16 +23,18 @@ const SearchStorageCont = () => {
             dispatch(setDataStorageType({ 'show': true }))
             return -1
         }
-
         axios.post('http://localhost:5000/checkStorage', { "owner": searchedStorages[num].owner, "name": searchedStorages[num].name }, { withCredentials: true })
             .then((res) => {
+                console.log(res)
                 dispatch(setDataSubscribed({ "owner": res.data.owner, "name": res.data.name }))
             })
             .then(() => {
-                axios.post('http://localhost:5000/showFiles', { "owner": searchedStorages[num].owner, "name": searchedStorages[num].name })
+                axios.post('http://localhost:5000/showFiles', { "path": searchedStorages[num].owner + '/Storage_' + searchedStorages[num].name })
                     .then((res) => {
                         let internalFile = creteObjInternalFiles(res.data)
                         dispatch(setDataFiles(internalFile))
+                        dispatch(setDataFolderFirst(owner + '/' + 'Storage_' + name))
+                        dispatch(setDataCurrentFolder('Storage_' + name))
                         dispatch(setDataOwn({ "name": searchedStorages[num].name, "type": searchedStorages[num].type, "owner": searchedStorages[num].owner }))
                     })
                     .then(() => {
@@ -57,6 +61,8 @@ const SearchStorageCont = () => {
                         else {
                             let internalFile = creteObjInternalFiles(res.data)
                             dispatch(setDataFiles(internalFile))
+                            dispatch(setDataFolderFirst(e.target.owner.value + '/' + 'Storage_' + e.target.name.value))
+                            dispatch(setDataCurrentFolder('Storage_' + e.target.name.value))
                             dispatch(setDataOwn({ "name": e.target.name.value, "type": e.target.type.value, "owner": e.target.owner.value }))
                         }
                     })

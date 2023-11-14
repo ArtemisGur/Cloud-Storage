@@ -8,6 +8,7 @@ import { ShowInternalFiles } from './components/mainFrame/storageInternals';
 import { SearchStorageCont } from './components/mainFrame/searchPage'
 import { ShowInternalFilesOthers} from './components/mainFrame/storageInternalsOther'
 import { EnableStorages } from './components/mainFrame/showEnableStorages';
+import { CreateDirPopup } from './components/mainFrame/createDirPopUp';
 import { Provider } from 'react-redux';
 import store from '../src/components/store/store'
 import './css/main.css'
@@ -19,6 +20,7 @@ function App() {
       <div className='App'>
           <PageProvider>
             <Header />
+              <CreateDirPopup />
             <div className='work-page-container'>
               <NavigateMenu />
               <CreateStorage />
