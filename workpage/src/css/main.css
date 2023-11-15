@@ -254,6 +254,11 @@ body{
     color: crimson;
 }
 
+#hint-storage-create-right{
+    margin-bottom: 2%;
+    color: rgb(28, 133, 28);
+}
+
 .button-storage{
     width: 90%;
     border: 0px solid #2d4a53;
@@ -703,7 +708,7 @@ body{
 .button-change-view{
     display: flex;
     align-items: center;
-    margin-left: auto;
+    
 }
 
 #subscribe-storage:hover, #subscribe-storage-2:hover, #choose-file-label:hover{
@@ -851,7 +856,6 @@ body{
     cursor: pointer;
     transition: 0.2s linear;
     font-size: 14px;
-    padding: 5px;
     padding: 10px;
     font-family: system-ui;
     align-items: center;
@@ -861,4 +865,17 @@ body{
 
 .but-nav-storage:hover, .but-nav-storage-2:hover{
     background-color: #f1f1f1;
+}
+
+#path-navigation{
+    font-family: system-ui;
+    margin-left: 5%;
+    font-weight: 500;
+    font-size: 14px;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53;
+    background-color: rgba(211, 211, 211, 0.144);
+    border-radius: 6px;
+    padding: 10px;
+    align-items: center;
 }

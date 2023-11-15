@@ -7,6 +7,9 @@ import subscribedStorageSlice from "./subscribedStorageSlice";
 import storageTypePasswordSlice from "./storageTypePasswordSlice";
 import foldersSlice from "./foldersSlice";
 import currentFolderSlice from "./currentFolderSlice";
+import hintEmptySlice from "./hintEmptySlice";
+import hintIncorrectSlice from "./hintIncorrectSlice";
+import hintCorrectSlice from "./hintCorrectSlice";
 
 const store = configureStore({
     reducer: {
@@ -17,7 +20,10 @@ const store = configureStore({
         subscribedStorage: subscribedStorageSlice,
         storageTypePassword: storageTypePasswordSlice,
         folder: foldersSlice,
-        currentFolder: currentFolderSlice
+        currentFolder: currentFolderSlice,
+        hintEmpty : hintEmptySlice,
+        hintIncorrect : hintIncorrectSlice,
+        hintCorrect : hintCorrectSlice
     }
 })
 

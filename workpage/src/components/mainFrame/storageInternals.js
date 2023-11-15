@@ -292,7 +292,9 @@ const ShowInternalFiles = () => {
                 <div className="block-nav-but">
                     <button className="but-nav-storage" onClick={() => {setModalWin(true); setDirName('')}}>Создать каталог</button>
                     <button className="but-nav-storage-2" onClick={() => navigateBack()}>Назад</button>
+                    <span id="path-navigation">{folder}</span>
                 </div>
+                
                 {showType === 1 && (
                     <div id="interior-block-files-2">
                     <div className="test_2">

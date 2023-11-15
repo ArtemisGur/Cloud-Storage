@@ -4,10 +4,12 @@ const cors = require("cors");
 const fs = require('fs')
 const bcrypt = require('bcrypt')
 const fileUpload = require('express-fileupload');
+var path = require("path");
 
 const fileController = require('./server/fileControllers/fileController')
 const userController = require('./server/userConrol/userControl');
 const { randomInt } = require('crypto');
+const { resolve } = require('path');
 
 const MongoClient = require('mongodb').MongoClient
 const clientDB = new MongoClient("mongodb://127.0.0.1:27017/")
@@ -110,11 +112,33 @@ APP.get('/work', (req, res) => {
 APP.post("/getNewStorage", (req, res) => {
 
     if (req.body.newStorage.nameStorage == '' || req.body.newStorage.typeStorage == null) {
-        res.sendStatus(202)
+        res.send({ 'stat': 202 })
+        return -1
     }
-    else {
-        fileController.createStorageDir(req, req.session.login)
-    }
+    collectionStorages.findOne({ owner: req.session.login, name: req.body.newStorage.nameStorage })
+    .then((response) => {
+        if (response != null) {
+            res.send({'isEmpty' : false})
+            return -1
+        }
+        else {
+            let passwordTemp
+            req.body.newStorage.password != undefined ? passwordTemp = req.body.newStorage.password : passwordTemp = null
+            let storage = {
+                owner: req.session.login,
+                name: req.body.newStorage.nameStorage,
+                type: req.body.newStorage.typeStorage,
+                password: passwordTemp
+
+            }
+            collectionStorages.insertOne(storage)
+                .then(() => {
+                    fs.mkdirSync(path.resolve(__dirname) + `/server/files/${req.session.login}/Storage_${req.body.newStorage.nameStorage}`)
+                    res.send({'isEmpty' : true})
+                    return 0
+                })
+        }
+    })
 })
 
 APP.post('/getOwnerStorages', (req, res) => {
@@ -175,7 +199,7 @@ APP.post('/downloadFile', (req, res) => {
 APP.post('/createDir', (req, res) => {
     fileController.createDir(req.body.path)
     dirname = `${__dirname}/server/files/${req.body.path}/${req.body.name}`
-    res.send({ key: randomInt(1000), fullName: dirname, name: req.body.name, type: 'folder'})
+    res.send({ key: randomInt(1000), fullName: dirname, name: req.body.name, type: 'folder' })
 })
 
 APP.post('/deleteFile', (req, res) => {

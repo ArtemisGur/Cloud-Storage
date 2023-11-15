@@ -15,22 +15,8 @@ function File(fullName, name, type, size, createDate) {
 }
 
 const createStorageDir = (req, login) => {
-    try {
-        fs.mkdirSync(path.resolve(__dirname, '../') + `/files/${login}/Storage_${req.body.newStorage.nameStorage}`)
-        let passwordTemp
-        req.body.newStorage.password != undefined ? passwordTemp = req.body.newStorage.password : passwordTemp = null
-        let storage = {
-            owner: login,
-            name: req.body.newStorage.nameStorage,
-            type: req.body.newStorage.typeStorage,
-            password: passwordTemp
-
-        }
-        collectionStorages.insertOne(storage)
-    }
-    catch (err) {
-        console.log(err)
-    }
+    console.log({ owner: login, name: req.body.newStorage.nameStorage })
+   
 
 }
 
@@ -45,7 +31,7 @@ const deleteStorage = (login, name) => {
 }
 
 const showFiles = (req) => {
-    
+
     let dirPath = (path.resolve(__dirname, '../')) + `/files/${req.body.path}`
     let files_ = fs.readdirSync(dirPath)
     let files = []
