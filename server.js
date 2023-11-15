@@ -6,7 +6,8 @@ const bcrypt = require('bcrypt')
 const fileUpload = require('express-fileupload');
 
 const fileController = require('./server/fileControllers/fileController')
-const userController = require('./server/userConrol/userControl')
+const userController = require('./server/userConrol/userControl');
+const { randomInt } = require('crypto');
 
 const MongoClient = require('mongodb').MongoClient
 const clientDB = new MongoClient("mongodb://127.0.0.1:27017/")
@@ -144,7 +145,9 @@ APP.post("/checkStorage", (req, res) => {
 
 APP.post('/uploadNewFiles', (req, res) => {
     const file = req.files.file
-    console.log(file)
+    numFiles = req.body.numFiles
+    console.log(req.body.numFiles)
+    dirname = `${__dirname}/server/files/${req.body.path}/${req.body.fileName}`
     file.mv(`${__dirname}/server/files/${req.body.path}/${req.body.fileName}`,
         function (err) {
             if (err) {
@@ -154,7 +157,8 @@ APP.post('/uploadNewFiles', (req, res) => {
             let size_ = Math.floor(stat.size / 1024)
             let birthtime_ = stat.birthtime
             let type_ = req.body.fileName.slice(req.body.fileName.lastIndexOf('.') + 1)
-            res.send({ fullName: `/${req.body.fileName}`, name: req.body.fileName, type: type_, size: size_, birthday: birthtime_ })
+            console.log({ key: randomInt(1000), fullName: dirname, name: req.body.fileName, type: type_, size: size_, birthday: birthtime_ })
+            res.send({ key: randomInt(1000), fullName: dirname, name: req.body.fileName, type: type_, size: size_, birthday: birthtime_ })
         });
 })
 
@@ -170,7 +174,8 @@ APP.post('/downloadFile', (req, res) => {
 
 APP.post('/createDir', (req, res) => {
     fileController.createDir(req.body.path)
-    res.send('OK')
+    dirname = `${__dirname}/server/files/${req.body.path}/${req.body.name}`
+    res.send({ key: randomInt(1000), fullName: dirname, name: req.body.name, type: 'folder'})
 })
 
 APP.post('/deleteFile', (req, res) => {
@@ -185,6 +190,7 @@ APP.post('/deleteFile', (req, res) => {
 })
 
 APP.post('/deleteStorage', (req, res) => {
+    collectionEnabledStorages.deleteMany({ name: req.body.name, owner: req.body.owner })
     collectionStorages.deleteOne({ name: req.body.name, owner: req.body.owner })
         .then((response) => {
             if (fileController.deleteStorage(req.body.owner, req.body.name))
@@ -193,7 +199,6 @@ APP.post('/deleteStorage', (req, res) => {
 })
 
 APP.post("/showFiles", (req, res) => {
-    console.log('pathhhhh', req.body.path)
     let files = fileController.showFiles(req)
     res.send(files)
 

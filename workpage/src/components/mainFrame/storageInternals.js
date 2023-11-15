@@ -40,6 +40,7 @@ const ShowInternalFiles = () => {
     const [menu, setMenu] = useState(-1)
     const [showMenu, setShowMenu] = useState(false)
     const [showType, setShowType] = useState(2)
+    const [modalWin, setModalWin] = useState(false)
     const el = useRef();
 
     const handleChange = (e) => {
@@ -69,7 +70,6 @@ const ShowInternalFiles = () => {
     }
 
     const downloadFile = (fullName, fileName) => {
-
         axios.post('/downloadFile', { 'fullPath': fullName }, { responseType: 'blob' })
             .then((res) => {
                 fileDownload(res.data, fileName)
@@ -118,6 +118,8 @@ const ShowInternalFiles = () => {
     }
 
     const onDropHandler = (e) => {
+        console.log(internalFiles.length)
+        
         e.preventDefault()
         let files = [...e.dataTransfer.files]
         for (let i = 0; i < files.length; i++) {
@@ -138,6 +140,7 @@ const ShowInternalFiles = () => {
             formData.append('file', files)
             formData.append('path', folder)
             formData.append('fileName', files.name)
+            formData.append('numFiles', internalFiles.length + i)
             resolve(formData)
         })
 
@@ -170,10 +173,6 @@ const ShowInternalFiles = () => {
             })
     }
 
-    const createDir = () => {
-        changePage(7)
-    }
-
     const changeDir = (name) => {
         dispatch(setDataFolder(name))
         dispatch(setDataCurrentFolder(name))
@@ -201,8 +200,37 @@ const ShowInternalFiles = () => {
             })
     }
 
+    const [ dirName, setDirName ] = useState()
+
+    const createDir = () => {
+        if (dirName === ''){
+            return -1
+        }
+        axios.post('/createDir', {path : folder + '/' + dirName, name: dirName})
+        .then(() => {
+            axios.post('http://localhost:5000/showFiles', { "path": folder })
+            .then((res) => {
+                let internalFile = creteObjInternalFiles(res.data)
+                dispatch(setDataFiles(internalFile))
+            })
+        })
+        .then(() => {
+            setModalWin(false)
+        })
+    }
+
     return activePage === 4 ? (
         <div className="show-file-cont">
+            {modalWin && (<div id="popup">
+                <div className="popup-content">
+                    <div className="popup-header">
+                        <div className="popup-title">Создать новый каталог</div>
+                        <button className="popup-close" onClick={() => {setModalWin(false)}}>X</button>
+                    </div>
+                    <input className="popup-input" type="text" placeholder="Введите название папки..." onChange={(e) => {setDirName(e.target.value)}}/>
+                    <button className="popup-create" onClick={() => {createDir()}}>Создать</button>
+                </div>
+            </div>)}
             <div className="show-files-interior">
                 <div className="upload_file">
                     <div id="block-interior-submenu">
@@ -257,13 +285,12 @@ const ShowInternalFiles = () => {
                 </div>
             </div>
 
-            {drag && (
+            {drag && !modalWin && (
                 <div className="drop-area" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)} onDrop={e => onDropHandler(e)}>Отпустите файлы, чтобы загрузить их</div>
-            )}
-
-            {!drag && <div id="interior-block-files" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)}>
+            )} 
+            {!drag && !modalWin && <div id="interior-block-files" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)}>
                 <div className="block-nav-but">
-                    <button className="but-nav-storage" onClick={() => createDir()}>Создать каталог</button>
+                    <button className="but-nav-storage" onClick={() => {setModalWin(true); setDirName('')}}>Создать каталог</button>
                     <button className="but-nav-storage-2" onClick={() => navigateBack()}>Назад</button>
                 </div>
                 {showType === 1 && (
@@ -357,8 +384,6 @@ const ShowInternalFiles = () => {
                                                     <img className="img-type" src={mp4} />
                                                 }
                                                 <div className="file-name-2">{internalFiles.name}</div>
-                                                <div className="dropdown-interior-2">
-                                                </div>
                                                 {menu === internalFiles.key && internalFiles.type !== 'folder' && (
                                                     <div className="dropdown-content-2">
                                                         <div className="disctiption-block">

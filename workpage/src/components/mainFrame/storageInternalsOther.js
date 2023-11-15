@@ -201,12 +201,38 @@ const ShowInternalFilesOthers = () => {
             })
     }
 
+    const [ dirName, setDirName ] = useState()
+    const [modalWin, setModalWin] = useState(false)
+
     const createDir = () => {
-        changePage(7)
+        if (dirName === ''){
+            return -1
+        }
+        axios.post('/createDir', {path : folder + '/' + dirName, name: dirName})
+        .then(() => {
+            axios.post('http://localhost:5000/showFiles', { "path": folder })
+            .then((res) => {
+                let internalFile = creteObjInternalFiles(res.data)
+                dispatch(setDataFiles(internalFile))
+            })
+        })
+        .then(() => {
+            setModalWin(false)
+        })
     }
 
     return activePage === 6 ? (
         <div className="show-file-cont">
+        {modalWin && (<div id="popup">
+                <div className="popup-content">
+                    <div className="popup-header">
+                        <div className="popup-title">Создать новый каталог</div>
+                        <button className="popup-close" onClick={() => {setModalWin(false)}}>X</button>
+                    </div>
+                    <input className="popup-input" type="text" placeholder="Введите название папки..." onChange={(e) => {setDirName(e.target.value)}}/>
+                    <button className="popup-create" onClick={() => {createDir()}}>Создать</button>
+                </div>
+            </div>)}
             <div className="show-files-interior">
                 <div className="upload_file">
                     <div id="block-interior-submenu">
@@ -259,12 +285,12 @@ const ShowInternalFilesOthers = () => {
                     </div>
                 </div>
             </div>
-            {drag && storages.type === 'Closed' && (
+            {drag && !modalWin && storages.type === 'Closed' && (
                 <div className="drop-area" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)} onDrop={e => onDropHandler(e)}>Отпустите файлы, чтобы загрузить их</div>
             )}
-            {!drag && storages.type === 'Closed' && <div id="interior-block-files" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)}>
+            {!drag && !modalWin && storages.type === 'Closed' && <div id="interior-block-files" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)}>
                 <div className="block-nav-but">
-                    <button className="but-nav-storage" onClick={() => createDir()}>Создать каталог</button>
+                    <button className="but-nav-storage" onClick={() => {setModalWin(true); setDirName('')}}>Создать каталог</button>
                     <button className="but-nav-storage-2" onClick={() => navigateBack()}>Назад</button>
                 </div>
                 {showType === 1 && (
