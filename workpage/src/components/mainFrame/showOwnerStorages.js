@@ -25,7 +25,6 @@ const OwnerStorage = () => {
 
     let storages = useSelector((store) => store.storages.data)
     const { activePage, changePage } = useContext(PageContext)
-    let folder = useSelector((store) => store.folder.data)
 
     const handlerClick = (num, type, owner, name) => {
         axios.post('http://localhost:5000/showFiles', { "path": storages[num].owner + '/Storage_' + storages[num].name })

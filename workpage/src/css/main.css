@@ -191,7 +191,7 @@ html{
     box-shadow: 0 0 2px #2d4a53;
     outline: none;
     font-family: system-ui;
-    float: right;
+    float: left;
 }
 
 #search-file:hover{
@@ -443,7 +443,7 @@ html{
 }
 
 #interior-block-files {
-    margin-top: 2%;
+    margin-top: 1%;
     box-shadow: 0 0 3px #2d4a53;
     background-color: white;
     border-radius: 20px;
@@ -469,21 +469,16 @@ html{
 }
 
 #choose-file-label {
-    display: flex;
-    align-items: center;
     border: 0px solid #2d4a53;
-    box-shadow: 0 0 2px #2d4a53;
-    border-radius: 12px;
-    transition: 0.2s linear;
+    box-shadow: 0 0 3px #2d4a53;
     background-color: white;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    text-align: center;
+    border-radius: 12px;
     cursor: pointer;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    font-size: 14px;
+    padding: 10px;
+    font-family: system-ui;
+    align-items: center;
+    margin-left: 2%;
 }
 
 #butt-choose-1 {
@@ -571,7 +566,6 @@ html{
 
 #delete-confirmation {
     margin-right: 2%;
-    font-weight: bold;
 }
 
 .file-block {
@@ -721,7 +715,7 @@ html{
 #subscribe-storage-2 {
     padding: 10px;
     border: 0px solid #2d4a53;
-    box-shadow: 0 0 10px #2d4a53;
+    box-shadow: 0 0 3px #2d4a53;
     border-radius: 6px;
     font-size: 14px;
     transition: 0.2s linear;
@@ -732,20 +726,32 @@ html{
 }
 
 #storage-delete {
-    padding-left: 10px;
-    padding-right: 10px;
-    border: 0px solid #2d4a53;
-    box-shadow: 0 0 5px #2d4a53;
     border-radius: 12px;
+    border: 0px solid #2d4a53;
+    background-color: white;
     font-size: 14px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     transition: 0.2s linear;
     font-family: system-ui;
-    background-color: white;
     max-height: 60%;
     cursor: pointer;
+    scale: 1.4;
+    transition: 0.3s linear;
+}
+
+#storage-delete-2 {
+    border-radius: 12px;
+    border: 0px solid #2d4a53;
+    background-color: white;
+    font-size: 14px;
     transition: 0.2s linear;
+    font-family: system-ui;
+    max-height: 60%;
+    cursor: pointer;
+    scale: 1.4;
+    transition: 0.3s linear;
+    margin-top: 5%;
 }
 
 #logoName{
@@ -759,13 +765,13 @@ html{
 }
 
 #hrefSetting{
-    margin-right: 20%; 
     scale: 1.5;
     border-radius: 12px;
     transition: 0.3s linear;
     cursor: pointer;
     content: '\f013';
     font: normal normal normal 15px/1 FontAwesome;
+    margin-right: 35px;
 }
 
 #hrefSetting:hover{
@@ -802,7 +808,7 @@ html{
     background-color: white;
 }
 
-#storage-delete:hover {
+#storage-delete:hover, #storage-delete-2:hover {
     background-color: rgba(220, 20, 60, 0.438);
 }
 
@@ -810,12 +816,11 @@ html{
     display: flex;
     align-items: center;
     margin-left: auto;
-    margin-right: 3%;
+    margin-right: 1%;
 }
 
 #subscribe-storage:hover,
-#subscribe-storage-2:hover,
-#choose-file-label:hover {
+#subscribe-storage-2:hover {
     background-color: #d0e8f7;
     cursor: pointer;
 }
@@ -829,12 +834,12 @@ html{
 
 #break-line-2 {
     border: 1px solid lightgrey;
-    box-shadow: 0 0 20px 2px lightgrey;
 }
 
 .interor-block-menu {
     display: flex;
     align-items: center;
+    margin-top: 1%;
 }
 
 .drop-area {
@@ -1106,20 +1111,24 @@ html{
     font-size: 20px;
 }
 
+.test_3{
+    display: contents;
+}
+
 .block-nav-but {
     padding-top: 2%;
     padding-left: 2%;
     padding-bottom: 2%;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    background-color: white
+    background-color: white;
 }
 
 .but-nav-storage {
     border: 0px solid #2d4a53;
     box-shadow: 0 0 3px #2d4a53;
     background-color: white;
-    border-radius: 6px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 14px;
     padding: 10px;
@@ -1132,7 +1141,7 @@ html{
     border: 0px solid #2d4a53;
     box-shadow: 0 0 3px #2d4a53;
     background-color: white;
-    border-radius: 6px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 18px;
     padding: 6px;
@@ -1143,7 +1152,8 @@ html{
 }
 
 .but-nav-storage:hover,
-.but-nav-storage-2:hover {
+.but-nav-storage-2:hover,
+#choose-file-label:hover {
     background-color: #f1f1f1;
     box-shadow: 0 0 7px #2d4a53;
 }

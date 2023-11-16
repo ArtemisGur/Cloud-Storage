@@ -41,17 +41,17 @@ const ShowInternalFilesOthers = () => {
     const [showType, setShowType] = useState(2)
     const el = useRef();
 
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         setProgess(0)
         const file = e.target.files[0];
-        setFile(file);
+        setFile(file)
+        uploadFile(file)
     }
 
-    const uploadFile = () => {
+    const uploadFile = (file_) => {
         const formData = new FormData()
-        let str = file.name
-        console.log(folder)
-        formData.append('file', file)
+        let str = file_.name
+        formData.append('file', file_)
         formData.append('path', folder)
         formData.append('fileName', str)
         axios.post('http://localhost:5000/uploadNewFiles', formData, {
@@ -148,7 +148,6 @@ const ShowInternalFilesOthers = () => {
     const viewFile = (fullName, type, name) => {
         console.log('aaaaa')
         const fileType = mimeFileType.get(type)
-        //console.log(fileType)
         axios.post('/getFile', { 'name': fullName }, { responseType: 'blob' })
             .then((response) => {
                 return response.data.arrayBuffer()
@@ -251,20 +250,9 @@ const ShowInternalFilesOthers = () => {
                         </div>
                         <hr id="break-line-2" />
                         <div className="interor-block-menu">
-
-                            {storages.type === 'Closed' && (
-                                <div className="sec-interior-header">
-                                    <label id="choose-file-label">
-                                        +
-                                        <input type="file" ref={el} onChange={handleChange} id="butt-choose" />
-                                    </label>
-                                    <button onClick={uploadFile} className="upbutton">
-                                        Загрузить
-                                    </button>
-                                    <span className="progessBar">
-                                        {progress}
-                                    </span>
-                                </div>)}
+                            <form id="search-file-form" >
+                                <input name="file" onChange={(e) => searchFile(e)} placeholder="Поиск файла" id="search-file" />
+                            </form>
                             <div className="button-change-view">
                                 <button className="icon-1" id="icon" onClick={() => handlerSetType(1)}>
                                     <img src={list}>
@@ -277,9 +265,6 @@ const ShowInternalFilesOthers = () => {
                                     </img>
                                 </button>
                             </div>
-                            <form id="search-file-form" >
-                                <input name="file" onChange={(e) => searchFile(e)} placeholder="Поиск файла" id="search-file" />
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -291,6 +276,16 @@ const ShowInternalFilesOthers = () => {
                 <div className="block-nav-but">
                     <button className="but-nav-storage-2" onClick={() => navigateBack()}>↶</button>
                     <button className="but-nav-storage" onClick={() => { setModalWin(true); setDirName('') }}>Создать каталог</button>
+                    {storages.type === 'Closed' && (
+                        <div className="test_3">
+                            <label id="choose-file-label">
+                                +
+                                <input type="file" ref={el} onChange={handleChange} id="butt-choose" />
+                            </label>
+                            <span className="progessBar">
+                                {progress}
+                            </span>
+                        </div>)}
                     <span id="path-navigation">{folder}</span>
                 </div>
                 {showType === 1 && (

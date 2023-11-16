@@ -46,16 +46,17 @@ const ShowInternalFiles = () => {
     const [modalWinControll, setModalWinControll] = useState(false)
     const el = useRef();
 
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         setProgess(0)
         const file = e.target.files[0];
-        setFile(file);
+        setFile(file)
+        uploadFile(file)
     }
 
-    const uploadFile = () => {
+    const uploadFile = (file_) => {
         const formData = new FormData()
-        let str = file.name
-        formData.append('file', file)
+        let str = file_.name
+        formData.append('file', file_)
         formData.append('path', folder)
         formData.append('fileName', str)
         axios.post('http://localhost:5000/uploadNewFiles', formData, {
@@ -335,7 +336,7 @@ const ShowInternalFiles = () => {
                             </div>
                             <div className="interior-controll-users">
                                 <div className="span-users-list">Вы можете назначить роль сразу для всех пользователей</div>
-                                <div><button className="button-change-role">Только просмотр</button></div>          
+                                <div><button className="button-change-role">Только просмотр</button></div>
                                 <div><button className="button-change-role">Редактирование содержимого хранилища</button></div>
                             </div>
                         </div>
@@ -344,7 +345,7 @@ const ShowInternalFiles = () => {
 
                 </div>
             </div>)}
-            <div className="show-files-interior">
+            {!modalWinControll && <div className="show-files-interior">
                 <div className="upload_file">
                     <div id="block-interior-submenu">
                         <div className="block-top-files">
@@ -356,24 +357,17 @@ const ShowInternalFiles = () => {
                             <div className="file-upload">
                                 <div id="hrefSetting" onClick={() => setModalWinControll(true)}>&#9881;</div>
                                 {showDelete && (
-                                    <div id="delete-confirmation">Вы уверены?<button id="storage-delete" onClick={() => { deleteStorageConfirm() }}>✓</button></div>
+                                    <div id="delete-confirmation">Вы уверены?<button id="storage-delete-2" onClick={() => { deleteStorageConfirm() }}>✓</button></div>
                                 )}
-                                <button id="storage-delete" onClick={() => deleteStorage()}>Удалить Хранилище</button>
+                                <button id="storage-delete" onClick={() => deleteStorage()}>🗑️</button>
                             </div>
                         </div>
                         <hr id="break-line-2" />
                         <div className="interor-block-menu">
-                            <div className="sec-interior-header">
-                                <label id="choose-file-label">
-                                    <input type="file" ref={el} onChange={handleChange} id="butt-choose" />+
-                                </label>
-                                <button onClick={uploadFile} className="upbutton">
-                                    Загрузить
-                                </button>
-                                <span className="progessBar">
-                                    {progress}
-                                </span>
-                            </div>
+                            <form id="search-file-form">
+                                <input name="file" onChange={(e) => searchFile(e)} placeholder="Поиск файла" id="search-file" />
+                            </form>
+
                             <div className="button-change-view">
                                 <button className="icon-1" id="icon" onClick={() => handlerSetType(1)}>
                                     <img src={list}>
@@ -384,15 +378,13 @@ const ShowInternalFiles = () => {
                                     </img>
                                 </button>
                             </div>
-                            <form id="search-file-form">
-                                <input name="file" onChange={(e) => searchFile(e)} placeholder="Поиск файла" id="search-file" />
-                            </form>
+
                         </div>
 
                     </div>
 
                 </div>
-            </div>
+            </div>}
 
             {drag && !modalWin && (
                 <div className="drop-area" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)} onDrop={e => onDropHandler(e)}>Отпустите файлы, чтобы загрузить их</div>
@@ -401,6 +393,12 @@ const ShowInternalFiles = () => {
                 <div className="block-nav-but">
                     <button className="but-nav-storage-2" onClick={() => navigateBack()}>↶</button>
                     <button className="but-nav-storage" onClick={() => { setModalWin(true); setDirName('') }}>Создать каталог</button>
+                    <label id="choose-file-label">
+                        <input type="file" ref={el} onChange={handleChange} id="butt-choose" />+
+                    </label>
+                    <span className="progessBar">
+                        {progress}
+                    </span>
                     <span id="path-navigation">{folder}</span>
                 </div>
 
