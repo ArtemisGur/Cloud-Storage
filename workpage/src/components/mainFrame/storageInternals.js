@@ -24,6 +24,8 @@ import xml from '../../img/xml.png'
 import list from '../../img/list.png'
 import icons from '../../img/icons.png'
 import mp4 from '../../img/mp4.png'
+import cross from '../../img/cross.png'
+import settings from '../../img/setting.png'
 
 
 
@@ -41,6 +43,7 @@ const ShowInternalFiles = () => {
     const [showMenu, setShowMenu] = useState(false)
     const [showType, setShowType] = useState(2)
     const [modalWin, setModalWin] = useState(false)
+    const [modalWinControll, setModalWinControll] = useState(false)
     const el = useRef();
 
     const handleChange = (e) => {
@@ -235,6 +238,112 @@ const ShowInternalFiles = () => {
                     <button className="popup-create" onClick={() => { createDir() }}>Создать</button>
                 </div>
             </div>)}
+            {modalWinControll && (<div id="popup">
+                <div className="popup-content-controll">
+                    <div className="popup-header">
+                        <div className="popup-title-2">Управление хранилищем <b>{storages.name}</b></div>
+                        <button className="popup-close" onClick={() => { setModalWinControll(false) }}>X</button>
+                    </div>
+                    <div className="interior-controll">
+                        <div className="interior-controll-2">
+                            <input className="popup-input-field" type="text" placeholder="Введите новое название хранилища..." onChange={(e) => { setDirName(e.target.value) }} />
+                            <button className="popup-create-submit" onClick={() => { createDir() }}>Сменить имя</button>
+                        </div>
+                        <div className="interior-controll-2">
+                            <input className="popup-input-field" type="text" placeholder="Введите новый пароль хранилища..." onChange={(e) => { setDirName(e.target.value) }} />
+                            <button className="popup-create-submit" onClick={() => { createDir() }}>Сменить пароль</button>
+                        </div>
+                        <div className="interior-controll-users-block">
+                            <div className="interior-controll-users">
+                                <div className="span-users-list">Список пользователей</div>
+                                <div className="users-interior">
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role">Роль</button>
+                                        <img className="cross-pic" src={cross} />
+                                    </div>
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role">Роль</button>
+                                        <img className="cross-pic" src={cross} />
+                                    </div>
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role">Роль</button>
+                                        <img className="cross-pic" src={cross} />
+                                    </div>
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role">Роль</button>
+                                        <img className="cross-pic" src={cross} />
+                                    </div>
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role">Роль</button>
+                                        <img className="cross-pic" src={cross} />
+                                    </div>
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role">Роль</button>
+                                        <img className="cross-pic" src={cross} />
+                                    </div>
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role">Роль</button>
+                                        <img className="cross-pic" src={cross} />
+                                    </div>
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role">Роль</button>
+                                        <img className="cross-pic" src={cross} />
+                                    </div>
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role">Роль</button>
+                                        <img className="cross-pic" src={cross} />
+                                    </div>
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role">Роль</button>
+                                        <img className="cross-pic" src={cross} />
+                                    </div>
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role">Роль</button>
+                                        <img className="cross-pic" src={cross} />
+                                    </div>
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role">Роль</button>
+                                        <img className="cross-pic" src={cross} />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div className="interior-controll-users">
+                                <div className="span-users-list">Исключенные пользователи</div>
+                                <div className="users-interior">
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role-2">Вернуть доступ</button>
+                                    </div>
+                                    <div className="user-in-list">
+                                        <span>a</span>
+                                        <button className="change-role-2">Вернуть доступ</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="interior-controll-users">
+                                <div className="span-users-list">Вы можете назначить роль сразу для всех пользователей</div>
+                                <div><button className="button-change-role">Только просмотр</button></div>          
+                                <div><button className="button-change-role">Редактирование содержимого хранилища</button></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>)}
             <div className="show-files-interior">
                 <div className="upload_file">
                     <div id="block-interior-submenu">
@@ -245,20 +354,19 @@ const ShowInternalFiles = () => {
                                 Владелец: <span className="discription-storage">Вы</span>
                             </h4>
                             <div className="file-upload">
+                                <div id="hrefSetting" onClick={() => setModalWinControll(true)}>&#9881;</div>
                                 {showDelete && (
-                                    <div id="delete-confirmation">Вы уверены?<button id="storage-delete" onClick={() => { deleteStorageConfirm() }}>Да</button></div>
+                                    <div id="delete-confirmation">Вы уверены?<button id="storage-delete" onClick={() => { deleteStorageConfirm() }}>✓</button></div>
                                 )}
                                 <button id="storage-delete" onClick={() => deleteStorage()}>Удалить Хранилище</button>
                             </div>
                         </div>
-
                         <hr id="break-line-2" />
                         <div className="interor-block-menu">
                             <div className="sec-interior-header">
                                 <label id="choose-file-label">
-                                    <input type="file" ref={el} onChange={handleChange} id="butt-choose" />Выберите файл
+                                    <input type="file" ref={el} onChange={handleChange} id="butt-choose" />+
                                 </label>
-                                <span id="hint-move-file">Или перетащите файлы в рабочую область</span>
                                 <button onClick={uploadFile} className="upbutton">
                                     Загрузить
                                 </button>
@@ -289,10 +397,10 @@ const ShowInternalFiles = () => {
             {drag && !modalWin && (
                 <div className="drop-area" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)} onDrop={e => onDropHandler(e)}>Отпустите файлы, чтобы загрузить их</div>
             )}
-            {!drag && !modalWin && <div id="interior-block-files" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)}>
+            {!drag && !modalWin && !modalWinControll && <div id="interior-block-files" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)}>
                 <div className="block-nav-but">
+                    <button className="but-nav-storage-2" onClick={() => navigateBack()}>↶</button>
                     <button className="but-nav-storage" onClick={() => { setModalWin(true); setDirName('') }}>Создать каталог</button>
-                    <button className="but-nav-storage-2" onClick={() => navigateBack()}>Назад</button>
                     <span id="path-navigation">{folder}</span>
                 </div>
 

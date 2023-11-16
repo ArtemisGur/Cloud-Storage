@@ -1,22 +1,23 @@
 import axios from 'axios'
-import logo from '../img/logo.jpg'
+import logo from '../img/logoSite.png'
 import profileLogo from '../img/profile-logo.png'
 import SearchField from "./SearchField"
 
 const Header = () => {
 
-    return(
+    return (
         <div className="header-container">
+                    <img src={logo} id="logo-img" />
             <div className="logo-block">
-                <a href="">
-                    <img src={logo} id="logo-img"/>
+                <a id='logoName' href="">
+                    <span id='logo_2'>MyStorage</span>
                 </a>
             </div>
             <SearchField />
             <div className='logo-profile'>
-                <img src={profileLogo}/>
+                <img src={profileLogo} />
             </div>
-            <button id='button-exit'>Выйти</button>
+                <button id='button-exit'>Выйти</button>
         </div>
     )
 }

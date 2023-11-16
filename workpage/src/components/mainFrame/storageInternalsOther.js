@@ -201,36 +201,36 @@ const ShowInternalFilesOthers = () => {
             })
     }
 
-    const [ dirName, setDirName ] = useState()
+    const [dirName, setDirName] = useState()
     const [modalWin, setModalWin] = useState(false)
 
     const createDir = () => {
-        if (dirName === ''){
+        if (dirName === '') {
             return -1
         }
-        axios.post('/createDir', {path : folder + '/' + dirName, name: dirName})
-        .then(() => {
-            axios.post('http://localhost:5000/showFiles', { "path": folder })
-            .then((res) => {
-                let internalFile = creteObjInternalFiles(res.data)
-                dispatch(setDataFiles(internalFile))
+        axios.post('/createDir', { path: folder + '/' + dirName, name: dirName })
+            .then(() => {
+                axios.post('http://localhost:5000/showFiles', { "path": folder })
+                    .then((res) => {
+                        let internalFile = creteObjInternalFiles(res.data)
+                        dispatch(setDataFiles(internalFile))
+                    })
             })
-        })
-        .then(() => {
-            setModalWin(false)
-        })
+            .then(() => {
+                setModalWin(false)
+            })
     }
 
     return activePage === 6 ? (
         <div className="show-file-cont">
-        {modalWin && (<div id="popup">
+            {modalWin && (<div id="popup">
                 <div className="popup-content">
                     <div className="popup-header">
                         <div className="popup-title">Создать новый каталог</div>
-                        <button className="popup-close" onClick={() => {setModalWin(false)}}>X</button>
+                        <button className="popup-close" onClick={() => { setModalWin(false) }}>X</button>
                     </div>
-                    <input className="popup-input" type="text" placeholder="Введите название папки..." onChange={(e) => {setDirName(e.target.value)}}/>
-                    <button className="popup-create" onClick={() => {createDir()}}>Создать</button>
+                    <input className="popup-input" type="text" placeholder="Введите название папки..." onChange={(e) => { setDirName(e.target.value) }} />
+                    <button className="popup-create" onClick={() => { createDir() }}>Создать</button>
                 </div>
             </div>)}
             <div className="show-files-interior">
@@ -255,10 +255,9 @@ const ShowInternalFilesOthers = () => {
                             {storages.type === 'Closed' && (
                                 <div className="sec-interior-header">
                                     <label id="choose-file-label">
-                                        Выберите файл
+                                        +
                                         <input type="file" ref={el} onChange={handleChange} id="butt-choose" />
                                     </label>
-                                    <span id="hint-move-file">Или перетащите файлы в рабочую область</span>
                                     <button onClick={uploadFile} className="upbutton">
                                         Загрузить
                                     </button>
@@ -290,8 +289,8 @@ const ShowInternalFilesOthers = () => {
             )}
             {!drag && !modalWin && storages.type === 'Closed' && <div id="interior-block-files" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)}>
                 <div className="block-nav-but">
-                    <button className="but-nav-storage" onClick={() => {setModalWin(true); setDirName('')}}>Создать каталог</button>
-                    <button className="but-nav-storage-2" onClick={() => navigateBack()}>Назад</button>
+                    <button className="but-nav-storage-2" onClick={() => navigateBack()}>↶</button>
+                    <button className="but-nav-storage" onClick={() => { setModalWin(true); setDirName('') }}>Создать каталог</button>
                     <span id="path-navigation">{folder}</span>
                 </div>
                 {showType === 1 && (
@@ -315,16 +314,16 @@ const ShowInternalFilesOthers = () => {
                                                 <div id="file-size" key={internalFiles.id}>{internalFiles.size}</div>
                                                 {menu === internalFiles.key && showMenu && (
                                                     <div className="dropdown-content">
-                                                    { internalFiles.type != 'folder' && (
-                                                    <div className="file-menu-block">
-                                                        <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
-                                                    </div>
-                                                   )}
-                                                    { internalFiles.type != 'folder' && (
-                                                        <div className="file-menu-block">
-                                                        <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Открыть</button>
-                                                    </div>
-                                                    )}
+                                                        {internalFiles.type != 'folder' && (
+                                                            <div className="file-menu-block">
+                                                                <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
+                                                            </div>
+                                                        )}
+                                                        {internalFiles.type != 'folder' && (
+                                                            <div className="file-menu-block">
+                                                                <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Открыть</button>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 )}
                                             </div>
@@ -413,7 +412,7 @@ const ShowInternalFilesOthers = () => {
             </div>}
             {storages.type === 'Open' && <div id="interior-block-files">
                 <div className="block-nav-but">
-                    <button className="but-nav-storage-2" onClick={() => navigateBack()}>Назад</button>
+                    <button className="but-nav-storage-2" onClick={() => navigateBack()}>↶</button>
                     <span id="path-navigation">{folder}</span>
                 </div>
                 {showType === 1 && (

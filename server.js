@@ -9,7 +9,6 @@ var path = require("path");
 const fileController = require('./server/fileControllers/fileController')
 const userController = require('./server/userConrol/userControl');
 const { randomInt } = require('crypto');
-const { resolve } = require('path');
 
 const MongoClient = require('mongodb').MongoClient
 const clientDB = new MongoClient("mongodb://127.0.0.1:27017/")
