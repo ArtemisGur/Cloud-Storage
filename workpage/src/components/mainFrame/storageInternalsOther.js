@@ -315,12 +315,16 @@ const ShowInternalFilesOthers = () => {
                                                 <div id="file-size" key={internalFiles.id}>{internalFiles.size}</div>
                                                 {menu === internalFiles.key && showMenu && (
                                                     <div className="dropdown-content">
+                                                    { internalFiles.type != 'folder' && (
+                                                    <div className="file-menu-block">
+                                                        <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
+                                                    </div>
+                                                   )}
+                                                    { internalFiles.type != 'folder' && (
                                                         <div className="file-menu-block">
-                                                            <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
-                                                        </div>
-                                                        <div className="file-menu-block">
-                                                            <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Открыть</button>
-                                                        </div>
+                                                        <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Открыть</button>
+                                                    </div>
+                                                    )}
                                                     </div>
                                                 )}
                                             </div>

@@ -14,12 +14,6 @@ function File(fullName, name, type, size, createDate) {
     this.createDate = createDate
 }
 
-const createStorageDir = (req, login) => {
-    console.log({ owner: login, name: req.body.newStorage.nameStorage })
-   
-
-}
-
 const deleteStorage = (login, name) => {
     try {
         fs.rmSync(path.resolve(__dirname, '../') + `/files/${login}/Storage_${name}`, { recursive: true })
@@ -145,7 +139,14 @@ const searchFiles = (path_, file) => {
 }
 
 const createDir = (newPath) => {
-    fs.mkdirSync(path.resolve(__dirname, '../') + `/files/${newPath}`)
+    fs.readdir(path.resolve(__dirname, '../') + `/files/${newPath}`, function(err, dirs) {
+        if (!err) {
+            
+        }
+        else if (err.code === 'ENOENT') {
+            fs.mkdirSync(path.resolve(__dirname, '../') + `/files/${newPath}`)
+        }
+    });
 }
 
-module.exports = { createStorageDir, showFiles, showFiles_2, deleteStorage, getFile, searchFiles, createDir }
+module.exports = { showFiles, showFiles_2, deleteStorage, getFile, searchFiles, createDir }

@@ -79,7 +79,15 @@ const ShowInternalFiles = () => {
 
     const deleteFile = (fullName, fileName, key) => {
 
-        axios.post('/deleteFile', { 'fullPath': fullName }, { responseType: 'blob' })
+        axios.post('/deleteFile', { 'fullPath': fullName })
+            .then(() => {
+                dispatch(deleteData(key))
+            })
+    }
+
+    const deleteFolder = (fullName, key) => {
+        console.log(key)
+        axios.post('/deleteFolder', { 'fullPath': fullName })
             .then(() => {
                 dispatch(deleteData(key))
             })
@@ -118,8 +126,7 @@ const ShowInternalFiles = () => {
     }
 
     const onDropHandler = (e) => {
-        console.log(internalFiles.length)
-        
+
         e.preventDefault()
         let files = [...e.dataTransfer.files]
         for (let i = 0; i < files.length; i++) {
@@ -184,14 +191,11 @@ const ShowInternalFiles = () => {
     }
 
     const navigateBack = async () => {
-        console.log(folder, storages.owner + '/' + 'Storage_' + storages.name)
-        console.log('cur', currentFolder)
         if (folder === storages.owner + '/' + 'Storage_' + storages.name) {
             return -1
         }
         dispatch(navFolder(currentFolder))
         const tempData = folder.slice(0, folder.length - currentFolder.length - 1)
-        console.log(tempData)
         axios.post('http://localhost:5000/showFiles', { "path": tempData })
             .then((res) => {
                 let internalFile = creteObjInternalFiles(res.data)
@@ -200,23 +204,23 @@ const ShowInternalFiles = () => {
             })
     }
 
-    const [ dirName, setDirName ] = useState()
+    const [dirName, setDirName] = useState()
 
     const createDir = () => {
-        if (dirName === ''){
+        if (dirName === '') {
             return -1
         }
-        axios.post('/createDir', {path : folder + '/' + dirName, name: dirName})
-        .then(() => {
-            axios.post('http://localhost:5000/showFiles', { "path": folder })
-            .then((res) => {
-                let internalFile = creteObjInternalFiles(res.data)
-                dispatch(setDataFiles(internalFile))
+        axios.post('/createDir', { path: folder + '/' + dirName, name: dirName })
+            .then(() => {
+                axios.post('http://localhost:5000/showFiles', { "path": folder })
+                    .then((res) => {
+                        let internalFile = creteObjInternalFiles(res.data)
+                        dispatch(setDataFiles(internalFile))
+                    })
             })
-        })
-        .then(() => {
-            setModalWin(false)
-        })
+            .then(() => {
+                setModalWin(false)
+            })
     }
 
     return activePage === 4 ? (
@@ -225,10 +229,10 @@ const ShowInternalFiles = () => {
                 <div className="popup-content">
                     <div className="popup-header">
                         <div className="popup-title">Создать новый каталог</div>
-                        <button className="popup-close" onClick={() => {setModalWin(false)}}>X</button>
+                        <button className="popup-close" onClick={() => { setModalWin(false) }}>X</button>
                     </div>
-                    <input className="popup-input" type="text" placeholder="Введите название папки..." onChange={(e) => {setDirName(e.target.value)}}/>
-                    <button className="popup-create" onClick={() => {createDir()}}>Создать</button>
+                    <input className="popup-input" type="text" placeholder="Введите название папки..." onChange={(e) => { setDirName(e.target.value) }} />
+                    <button className="popup-create" onClick={() => { createDir() }}>Создать</button>
                 </div>
             </div>)}
             <div className="show-files-interior">
@@ -245,14 +249,11 @@ const ShowInternalFiles = () => {
                                     <div id="delete-confirmation">Вы уверены?<button id="storage-delete" onClick={() => { deleteStorageConfirm() }}>Да</button></div>
                                 )}
                                 <button id="storage-delete" onClick={() => deleteStorage()}>Удалить Хранилище</button>
-
                             </div>
-
                         </div>
 
                         <hr id="break-line-2" />
                         <div className="interor-block-menu">
-
                             <div className="sec-interior-header">
                                 <label id="choose-file-label">
                                     <input type="file" ref={el} onChange={handleChange} id="butt-choose" />Выберите файл
@@ -287,51 +288,58 @@ const ShowInternalFiles = () => {
 
             {drag && !modalWin && (
                 <div className="drop-area" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)} onDrop={e => onDropHandler(e)}>Отпустите файлы, чтобы загрузить их</div>
-            )} 
+            )}
             {!drag && !modalWin && <div id="interior-block-files" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)}>
                 <div className="block-nav-but">
-                    <button className="but-nav-storage" onClick={() => {setModalWin(true); setDirName('')}}>Создать каталог</button>
+                    <button className="but-nav-storage" onClick={() => { setModalWin(true); setDirName('') }}>Создать каталог</button>
                     <button className="but-nav-storage-2" onClick={() => navigateBack()}>Назад</button>
                     <span id="path-navigation">{folder}</span>
                 </div>
-                
+
                 {showType === 1 && (
                     <div id="interior-block-files-2">
-                    <div className="test_2">
-                        <div className="file-params">
-                            <div id="file-prop-name">Название</div>
-                            <div id="file-prop-type">Тип</div>
-                            <div id="file-prop-date">Дата создания</div>
-                            <div id="file-prop-size">Размер(Кб)</div>
+                        <div className="test_2">
+                            <div className="file-params">
+                                <div id="file-prop-name">Название</div>
+                                <div id="file-prop-type">Тип</div>
+                                <div id="file-prop-date">Дата создания</div>
+                                <div id="file-prop-size">Размер(Кб)</div>
+                            </div>
+                            {
+                                internalFiles.map((internalFiles) => {
+                                    {
+                                        return (
+                                            <div id="file-interior" onDoubleClick={() => { internalFiles.type !== 'folder' && viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name); internalFiles.type === 'folder' && changeDir(internalFiles.name) }} onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }}>
+                                                <div id="file-name" key={internalFiles.id}>{internalFiles.name}</div>
+                                                <div id="file-type" key={internalFiles.id}>{internalFiles.type}</div>
+                                                <div id="file-date" key={internalFiles.id}>{internalFiles.birthday}</div>
+                                                <div id="file-size" key={internalFiles.id}>{internalFiles.size}</div>
+                                                {menu === internalFiles.key && showMenu && internalFiles.type !== 'folder' && (
+                                                    <div id="myDropdown" className="dropdown-content">
+                                                        <div className="file-menu-block">
+                                                            <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
+                                                        </div>
+                                                        <div className="file-menu-block">
+                                                            <button className="file-menu-but" onClick={() => { deleteFile(internalFiles.fullName, internalFiles.name, internalFiles.key) }}>Удалить</button>
+                                                        </div>
+                                                        <div className="file-menu-block">
+                                                            <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Открыть</button>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                {menu === internalFiles.key && internalFiles.type === 'folder' && (
+                                                    <div id="myDropdown" className="dropdown-content">
+                                                        <div className="file-menu-block">
+                                                            <button className="file-menu-but" onClick={() => { deleteFolder(internalFiles.fullName, internalFiles.key) }}>Удалить</button>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )
+                                    }
+                                })
+                            }
                         </div>
-                        {
-                            internalFiles.map((internalFiles) => {
-                                {
-                                    return (
-                                        <div id="file-interior" onDoubleClick={() => { internalFiles.type !== 'folder' && viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name); internalFiles.type === 'folder' && changeDir(internalFiles.name) }} onMouseEnter={() => { setMenu(internalFiles.key); setShowMenu(true) }} onMouseLeave={() => { setShowMenu(false); setMenu(-1) }}>
-                                            <div id="file-name" key={internalFiles.id}>{internalFiles.name}</div>
-                                            <div id="file-type" key={internalFiles.id}>{internalFiles.type}</div>
-                                            <div id="file-date" key={internalFiles.id}>{internalFiles.birthday}</div>
-                                            <div id="file-size" key={internalFiles.id}>{internalFiles.size}</div>
-                                            {menu === internalFiles.key && showMenu && (
-                                                <div id="myDropdown" className="dropdown-content">
-                                                    <div className="file-menu-block">
-                                                        <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
-                                                    </div>
-                                                    <div className="file-menu-block">
-                                                        <button className="file-menu-but" onClick={() => { deleteFile(internalFiles.fullName, internalFiles.name, internalFiles.key) }}>Удалить</button>
-                                                    </div>
-                                                    <div className="file-menu-block">
-                                                        <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Открыть</button>
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )
-                                }
-                            })
-                        }
-                    </div>
                     </div>)
                 }
 
@@ -347,11 +355,10 @@ const ShowInternalFiles = () => {
                                                 {internalFiles.type === 'folder' && (
                                                     <div>
                                                         <img className="img-type" src={folderIcon} />
-                                                        <div className="file-name-2">{internalFiles.name}</div>
                                                     </div>
                                                 )}
                                             </div>
-                                            {internalFiles.type != 'folder' && (<div className="test">
+                                            {(<div className="test">
                                                 {internalFiles.type === 'jpeg' &&
                                                     <img className="img-type" src={jpeg} />
                                                 }
@@ -401,6 +408,17 @@ const ShowInternalFiles = () => {
                                                         </div>
                                                         <div className="file-menu-block">
                                                             <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Открыть</button>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                {menu === internalFiles.key && internalFiles.type === 'folder' && (
+                                                    <div className="dropdown-content-2">
+                                                        <div className="disctiption-block">
+                                                            <div className="discripion-file">Тип файла: {internalFiles.type}</div>
+                                                            <div className="discripion-file">Дата создания {internalFiles.birthday}</div>
+                                                        </div>
+                                                        <div className="file-menu-block">
+                                                            <button className="file-menu-but" onClick={() => { deleteFolder(internalFiles.fullName, internalFiles.key) }}>Удалить</button>
                                                         </div>
                                                     </div>
                                                 )}

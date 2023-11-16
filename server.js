@@ -170,7 +170,6 @@ APP.post("/checkStorage", (req, res) => {
 APP.post('/uploadNewFiles', (req, res) => {
     const file = req.files.file
     numFiles = req.body.numFiles
-    console.log(req.body.numFiles)
     dirname = `${__dirname}/server/files/${req.body.path}/${req.body.fileName}`
     file.mv(`${__dirname}/server/files/${req.body.path}/${req.body.fileName}`,
         function (err) {
@@ -181,7 +180,6 @@ APP.post('/uploadNewFiles', (req, res) => {
             let size_ = Math.floor(stat.size / 1024)
             let birthtime_ = stat.birthtime
             let type_ = req.body.fileName.slice(req.body.fileName.lastIndexOf('.') + 1)
-            console.log({ key: randomInt(1000), fullName: dirname, name: req.body.fileName, type: type_, size: size_, birthday: birthtime_ })
             res.send({ key: randomInt(1000), fullName: dirname, name: req.body.fileName, type: type_, size: size_, birthday: birthtime_ })
         });
 })
@@ -213,6 +211,13 @@ APP.post('/deleteFile', (req, res) => {
     }
 })
 
+APP.post('/deleteFolder', (req, res) => {
+    const fileName = req.body.fullPath
+        fs.rmSync(fileName, {recursive: true})      
+        res.send('deleted')
+    }
+)
+
 APP.post('/deleteStorage', (req, res) => {
     collectionEnabledStorages.deleteMany({ name: req.body.name, owner: req.body.owner })
     collectionStorages.deleteOne({ name: req.body.name, owner: req.body.owner })
@@ -242,7 +247,6 @@ APP.post('/getFile', (req, res) => {
 
 APP.post('/searchFile', (req, res) => {
     let files = fileController.searchFiles(req.body.path, req.body.file)
-    console.log(files)
     res.send(files)
 })
 
