@@ -10,6 +10,9 @@ import currentFolderSlice from "./currentFolderSlice";
 import hintEmptySlice from "./hintEmptySlice";
 import hintIncorrectSlice from "./hintIncorrectSlice";
 import hintCorrectSlice from "./hintCorrectSlice";
+import roleSlice from "./roleSlice";
+import userListSlice from "./userListSlice";
+import changePasswordSlice from "./changePasswordSlice";
 
 const store = configureStore({
     reducer: {
@@ -23,7 +26,10 @@ const store = configureStore({
         currentFolder: currentFolderSlice,
         hintEmpty : hintEmptySlice,
         hintIncorrect : hintIncorrectSlice,
-        hintCorrect : hintCorrectSlice
+        hintCorrect : hintCorrectSlice,
+        role : roleSlice,
+        userList : userListSlice,
+        changePassword : changePasswordSlice
     }
 })
 

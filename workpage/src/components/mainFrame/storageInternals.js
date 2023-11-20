@@ -11,6 +11,9 @@ import { deleteData, addFile } from '../store/internalFilesSlice'
 import mimeFileType from "../store/mimeFileType"
 import { setDataFiles } from '../store/internalFilesSlice'
 import folderIcon from '../../img/folder.png'
+import { changeDataUser, changeAllRoles, deleteDataUser } from "../store/userListSlice"
+import { setDataUsers } from "../store/userListSlice"
+import { setDataPasswordStorage } from "../store/changePasswordSlice"
 import jpeg from '../../img/jpeg.png'
 import zip from '../../img/zip.png'
 import doc from '../../img/doc.png'
@@ -25,9 +28,14 @@ import list from '../../img/list.png'
 import icons from '../../img/icons.png'
 import mp4 from '../../img/mp4.png'
 import cross from '../../img/cross.png'
-import settings from '../../img/setting.png'
 
-
+const creteObjUsers = (data) => {
+    let userList = []
+    for (let i = 0; i < data.length; i++) {
+        userList.push({ key: i, userName: data[i].user, role: data[i].role })
+    }
+    return userList
+}
 
 const ShowInternalFiles = () => {
     const dispatch = useDispatch()
@@ -35,6 +43,8 @@ const ShowInternalFiles = () => {
     let storages = useSelector((store) => store.ownStorages.data)
     let currentFolder = useSelector((store) => store.currentFolder.data)
     let folder = useSelector((store) => store.folder.data)
+    let usersList = useSelector((store) => store.userList.data)
+    let passwordStorage = useSelector((store) => store.changePassword.data)
 
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
@@ -145,6 +155,20 @@ const ShowInternalFiles = () => {
         setDrag(false)
     }
 
+    const getUserList = () => {
+        axios.post('http://localhost:5000/getUsersList', { "owner": storages.owner, "name": storages.name })
+            .then((res) => {
+                let userList = creteObjUsers(res.data)
+                console.log(userList)
+                dispatch(setDataUsers(userList))
+                dispatch(setDataPasswordStorage(null))
+            })
+            .then(() => {
+                setModalWinControll(true); 
+                setNewPassword(null);
+            })
+    }
+
     async function createFormData(files, i) {
         return new Promise((resolve, reject) => {
             const formData = new FormData()
@@ -209,6 +233,7 @@ const ShowInternalFiles = () => {
     }
 
     const [dirName, setDirName] = useState()
+    const [newPassword, setNewPassword] = useState()
 
     const createDir = () => {
         if (dirName === '') {
@@ -225,6 +250,39 @@ const ShowInternalFiles = () => {
             .then(() => {
                 setModalWin(false)
             })
+    }
+
+    const changePassword = () => {
+        if (newPassword === null || newPassword === '') {
+            return -1
+        }
+        axios.post('/changeStoragePassword', { 'owner': storages.owner, 'name': storages.name, 'password': newPassword })
+            .then(() => {
+                dispatch(setDataPasswordStorage('Пароль успешно сменен'))
+            })
+    }
+
+    const changeRole = (newRole, key, name) => {
+        axios.post('/changeUserRole', { 'owner': storages.owner, 'name': storages.name, 'user': name, 'newRole': newRole })
+            .then(() => {
+                dispatch(changeDataUser({ 'key': key, 'role': newRole }))
+            })
+    }
+
+    const changeRoleToAll = (newRole) => {
+        axios.post('/changeAllRoles', { 'owner': storages.owner, 'name': storages.name, 'newRole': newRole })
+        .then(() => {
+            dispatch(changeAllRoles({ 'role': newRole }))
+        })
+    }
+
+    const deleteUser = (name, key) => {
+        axios.post('/excludeUser', { 'owner': storages.owner, 'name': storages.name, 'user': name })
+        .then((res) => {
+            if (res.data = 'OK'){
+                dispatch(deleteDataUser(key))
+            }
+        })
     }
 
     return activePage === 4 ? (
@@ -246,98 +304,43 @@ const ShowInternalFiles = () => {
                         <button className="popup-close" onClick={() => { setModalWinControll(false) }}>X</button>
                     </div>
                     <div className="interior-controll">
-                        <div className="interior-controll-2">
-                            <input className="popup-input-field" type="text" placeholder="Введите новое название хранилища..." onChange={(e) => { setDirName(e.target.value) }} />
-                            <button className="popup-create-submit" onClick={() => { createDir() }}>Сменить имя</button>
-                        </div>
-                        <div className="interior-controll-2">
-                            <input className="popup-input-field" type="text" placeholder="Введите новый пароль хранилища..." onChange={(e) => { setDirName(e.target.value) }} />
-                            <button className="popup-create-submit" onClick={() => { createDir() }}>Сменить пароль</button>
-                        </div>
+                        {storages.type != 'Open' && <div className="interior-controll-2">
+                            <input className="popup-input-field" type="text" placeholder="Введите новый пароль хранилища..." onChange={(e) => { setNewPassword(e.target.value) }} />
+                            <button className="popup-create-submit" onClick={() => { changePassword() }}>Сменить пароль</button>
+                            <span className="success-change">{passwordStorage}</span>
+                        </div>}
                         <div className="interior-controll-users-block">
                             <div className="interior-controll-users">
                                 <div className="span-users-list">Список пользователей</div>
                                 <div className="users-interior">
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role">Роль</button>
-                                        <img className="cross-pic" src={cross} />
-                                    </div>
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role">Роль</button>
-                                        <img className="cross-pic" src={cross} />
-                                    </div>
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role">Роль</button>
-                                        <img className="cross-pic" src={cross} />
-                                    </div>
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role">Роль</button>
-                                        <img className="cross-pic" src={cross} />
-                                    </div>
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role">Роль</button>
-                                        <img className="cross-pic" src={cross} />
-                                    </div>
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role">Роль</button>
-                                        <img className="cross-pic" src={cross} />
-                                    </div>
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role">Роль</button>
-                                        <img className="cross-pic" src={cross} />
-                                    </div>
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role">Роль</button>
-                                        <img className="cross-pic" src={cross} />
-                                    </div>
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role">Роль</button>
-                                        <img className="cross-pic" src={cross} />
-                                    </div>
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role">Роль</button>
-                                        <img className="cross-pic" src={cross} />
-                                    </div>
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role">Роль</button>
-                                        <img className="cross-pic" src={cross} />
-                                    </div>
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role">Роль</button>
-                                        <img className="cross-pic" src={cross} />
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div className="interior-controll-users">
-                                <div className="span-users-list">Исключенные пользователи</div>
-                                <div className="users-interior">
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role-2">Вернуть доступ</button>
-                                    </div>
-                                    <div className="user-in-list">
-                                        <span>a</span>
-                                        <button className="change-role-2">Вернуть доступ</button>
-                                    </div>
+                                    {
+                                        usersList.map((userList) => {
+                                            return (
+                                                <div className="user-in-list" key={userList.key}>
+                                                    <span>{userList.userName}</span>
+                                                    <div className="dropdown-role-block">
+                                                        <button className="change-role">{userList.role === 'default' && 'Только просмотр'}
+                                                            {userList.role === 'full' && 'Редактирование'}</button>
+                                                        <div className="dropdown-role">
+                                                            <div>
+                                                                <button className="change-role-field" onClick={() => { changeRole('default', userList.key, userList.userName) }}>Только просмотр</button>
+                                                            </div>
+                                                            <div>
+                                                                <button className="change-role-field" onClick={() => { changeRole('full', userList.key, userList.userName) }}>Редактирование</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <img className="cross-pic" src={cross} onClick={() => deleteUser(userList.userName, userList.key)}/>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                             </div>
                             <div className="interior-controll-users">
                                 <div className="span-users-list">Вы можете назначить роль сразу для всех пользователей</div>
-                                <div><button className="button-change-role">Только просмотр</button></div>
-                                <div><button className="button-change-role">Редактирование содержимого хранилища</button></div>
+                                <div><button className="button-change-role" onClick={() => changeRoleToAll('default')}>Только просмотр</button></div>
+                                <div><button className="button-change-role" onClick={() => changeRoleToAll('full')}>Редактирование содержимого хранилища</button></div>
                             </div>
                         </div>
 
@@ -355,7 +358,7 @@ const ShowInternalFiles = () => {
                                 Владелец: <span className="discription-storage">Вы</span>
                             </h4>
                             <div className="file-upload">
-                                <div id="hrefSetting" onClick={() => setModalWinControll(true)}>&#9881;</div>
+                                {storages.type != 'Personality' && <div id="hrefSetting" onClick={() => { getUserList() }}>&#9881;</div>}
                                 {showDelete && (
                                     <div id="delete-confirmation">Вы уверены?<button id="storage-delete-2" onClick={() => { deleteStorageConfirm() }}>✓</button></div>
                                 )}

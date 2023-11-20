@@ -9,6 +9,7 @@ import { setDataSubscribed } from "../store/subscribedStorageSlice"
 import { setDataStorageType } from "../store/storageTypePasswordSlice"
 import { setDataFolder, getDataFolder, setDataFolderFirst } from "../store/foldersSlice"
 import { setDataCurrentFolder } from "../store/currentFolderSlice"
+import { setUserRole } from "../store/roleSlice"
 import axios from "axios"
 
 const SearchStorageCont = () => {
@@ -25,8 +26,9 @@ const SearchStorageCont = () => {
         }
         axios.post('http://localhost:5000/checkStorage', { "owner": searchedStorages[num].owner, "name": searchedStorages[num].name }, { withCredentials: true })
             .then((res) => {
-                console.log(res)
+                console.log('gavno')
                 dispatch(setDataSubscribed({ "owner": res.data.owner, "name": res.data.name }))
+                dispatch(setUserRole(res.data.role))
             })
             .then(() => {
                 axios.post('http://localhost:5000/showFiles', { "path": searchedStorages[num].owner + '/Storage_' + searchedStorages[num].name })
@@ -50,6 +52,7 @@ const SearchStorageCont = () => {
         axios.post('http://localhost:5000/checkStorage', { "owner": e.target.owner.value, "name": e.target.name.value }, { withCredentials: true })
             .then((res) => {
                 dispatch(setDataSubscribed({ "owner": res.data.owner, "name": res.data.name }))
+                dispatch(setUserRole(res.data.role))
             })
             .then(() => {
                 axios.post('http://localhost:5000/confirmPasswordStorage', { "owner": e.target.owner.value, "name": e.target.name.value, "password": e.target.passwordStorage.value })

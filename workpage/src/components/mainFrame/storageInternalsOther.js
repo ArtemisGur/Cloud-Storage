@@ -32,6 +32,7 @@ const ShowInternalFilesOthers = () => {
     let storages = useSelector((store) => store.ownStorages.data)
     let subscribedStorages = useSelector((store) => store.subscribedStorage.data)
     let currentFolder = useSelector((store) => store.currentFolder.data)
+    let role = useSelector((store) => store.role.data)
     let folder = useSelector((store) => store.folder.data)
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
@@ -146,7 +147,6 @@ const ShowInternalFilesOthers = () => {
     }
 
     const viewFile = (fullName, type, name) => {
-        console.log('aaaaa')
         const fileType = mimeFileType.get(type)
         axios.post('/getFile', { 'name': fullName }, { responseType: 'blob' })
             .then((response) => {
@@ -164,6 +164,15 @@ const ShowInternalFilesOthers = () => {
                 }
             })
     }
+
+    const deleteFile = (fullName, fileName, key) => {
+
+        axios.post('/deleteFile', { 'fullPath': fullName })
+            .then(() => {
+                dispatch(deleteData(key))
+            })
+    }
+
 
     const searchFile = (e) => {
         axios.post('/searchFile', { path: folder, file: e.target.value })
@@ -269,10 +278,10 @@ const ShowInternalFilesOthers = () => {
                     </div>
                 </div>
             </div>
-            {drag && !modalWin && storages.type === 'Closed' && (
+            {drag && !modalWin && role === 'full' && (
                 <div className="drop-area" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)} onDrop={e => onDropHandler(e)}>Отпустите файлы, чтобы загрузить их</div>
             )}
-            {!drag && !modalWin && storages.type === 'Closed' && <div id="interior-block-files" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)}>
+            {!drag && !modalWin && role === 'full' && <div id="interior-block-files" onDragStart={e => dragStartHandler(e)} onDragLeave={e => dragLeaveHandler(e)} onDragOver={e => dragStartHandler(e)}>
                 <div className="block-nav-but">
                     <button className="but-nav-storage-2" onClick={() => navigateBack()}>↶</button>
                     <button className="but-nav-storage" onClick={() => { setModalWin(true); setDirName('') }}>Создать каталог</button>
@@ -312,6 +321,11 @@ const ShowInternalFilesOthers = () => {
                                                         {internalFiles.type != 'folder' && (
                                                             <div className="file-menu-block">
                                                                 <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
+                                                            </div>
+                                                        )}
+                                                        {internalFiles.type != 'folder' && (
+                                                            <div className="file-menu-block">
+                                                                <button className="file-menu-but" onClick={() => { deleteFile(internalFiles.fullName, internalFiles.name, internalFiles.key) }}>Удалить</button>
                                                             </div>
                                                         )}
                                                         {internalFiles.type != 'folder' && (
@@ -392,6 +406,9 @@ const ShowInternalFilesOthers = () => {
                                                             <button className="file-menu-but" onClick={() => { downloadFile(internalFiles.fullName, internalFiles.name) }}>Скачать</button>
                                                         </div>
                                                         <div className="file-menu-block">
+                                                            <button className="file-menu-but" onClick={() => { deleteFile(internalFiles.fullName, internalFiles.name, internalFiles.key) }}>Удалить</button>
+                                                        </div>
+                                                        <div className="file-menu-block">
                                                             <button className="file-menu-but" onClick={() => { viewFile(internalFiles.fullName, internalFiles.type, internalFiles.name) }}>Открыть</button>
                                                         </div>
                                                     </div>
@@ -405,7 +422,7 @@ const ShowInternalFilesOthers = () => {
                     </div>)
                 }
             </div>}
-            {storages.type === 'Open' && <div id="interior-block-files">
+            {role === 'default' && <div id="interior-block-files">
                 <div className="block-nav-but">
                     <button className="but-nav-storage-2" onClick={() => navigateBack()}>↶</button>
                     <span id="path-navigation">{folder}</span>

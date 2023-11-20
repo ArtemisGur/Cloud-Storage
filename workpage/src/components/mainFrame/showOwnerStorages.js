@@ -6,6 +6,7 @@ import { setDataFiles } from '../store/internalFilesSlice'
 import { setDataOwn } from "../store/ownStorageSlice"
 import { setDataFolder, getDataFolder, setDataFolderFirst } from "../store/foldersSlice"
 import { setDataCurrentFolder } from "../store/currentFolderSlice"
+import { setDataUsers } from "../store/userListSlice"
 
 let path
 
@@ -36,9 +37,11 @@ const OwnerStorage = () => {
             .then(() => {
                 dispatch(setDataFolderFirst(owner + '/' + 'Storage_' + name))
                 dispatch(setDataCurrentFolder('Storage_' + name))
-                dispatch(setDataOwn({ 'name': name, 'type': type, 'owner': owner, 'key' : num }))
+                dispatch(setDataOwn({ 'name': name, 'type': type, 'owner': owner, 'key': num }))
+            })
+            .then(() => {
                 changePage(4)
-            })      
+            })
     }
 
     return activePage === 1 ? (

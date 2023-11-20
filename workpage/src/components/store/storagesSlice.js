@@ -12,13 +12,7 @@ const searchStorages = createSlice({
         },
         getData: (state) => {
             return state.data.data
-        },
-        // deleteData: (state, action) => {
-        //     state.data = state.data.filter((item) => item.key !== action.payload)
-        // },
-        // addFile: (state, action) => {
-        //     state.data.push(action.payload)
-        // } 
+        }
     }
 })
 

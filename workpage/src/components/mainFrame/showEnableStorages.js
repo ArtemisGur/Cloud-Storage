@@ -7,6 +7,7 @@ import { setDataOwn } from "../store/ownStorageSlice"
 import { setDataSubscribed } from "../store/subscribedStorageSlice"
 import { setDataFolder, getDataFolder, setDataFolderFirst } from "../store/foldersSlice"
 import { setDataCurrentFolder } from "../store/currentFolderSlice"
+import { setUserRole } from "../store/roleSlice"
 
 let path
 
@@ -32,6 +33,8 @@ const EnableStorages = () => {
         axios.post('http://localhost:5000/checkStorage', { "owner": storages[num].owner, "name": storages[num].name }, {withCredentials: true})
         .then((res) => {
             dispatch(setDataSubscribed({ "owner" : res.data.owner, "name" : res.data.name}))
+            console.log(res.data.role)
+            dispatch(setUserRole(res.data.role))
         })
         .then(() => {
             axios.post('http://localhost:5000/showFiles', { "path": owner + '/Storage_' + name })
