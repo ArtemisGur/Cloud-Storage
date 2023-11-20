@@ -48,7 +48,7 @@ const ShowInternalFiles = () => {
 
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
-    const [progress, setProgess] = useState('Прогресс загрузки файла: 0');
+    const [progress, setProgess] = useState('');
     const [menu, setMenu] = useState(-1)
     const [showMenu, setShowMenu] = useState(false)
     const [showType, setShowType] = useState(2)

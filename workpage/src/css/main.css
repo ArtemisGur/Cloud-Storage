@@ -152,7 +152,6 @@ body {
     margin-top: 1%;
     height: 85vh;
     font-family: system-ui;
-    overflow: auto;
 }
 
 html{
@@ -579,7 +578,8 @@ html{
     height: 28vh;
     backface-visibility: hidden;
     overflow: hidden;
-    width: 10%;
+    min-width: 10%;
+    max-width: 15%;
     background-color: #f9faff;
     margin-left: 1%;
 }

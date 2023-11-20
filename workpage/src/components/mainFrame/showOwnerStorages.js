@@ -30,6 +30,7 @@ const OwnerStorage = () => {
     const handlerClick = (num, type, owner, name) => {
         axios.post('http://localhost:5000/showFiles', { "path": storages[num].owner + '/Storage_' + storages[num].name })
             .then((res) => {
+                console.log(res)
                 let internalFile = creteObjInternalFiles(res.data)
                 path = `${storages[num].owner}/Storage_${storages[num].name}`
                 dispatch(setDataFiles(internalFile))
