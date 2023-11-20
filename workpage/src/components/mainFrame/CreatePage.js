@@ -11,8 +11,12 @@ const CreateStorage = () => {
     const [checked, setChecked] = useState(false)
     const [type, setType] = useState(null)
     const [password, setPassword] = useState(false)
-    const [hint, setHint] = useState(false)
     const [hintEmpty, setHintEmpty] = useState(false)
+
+    const [statusPersonality, setStatusPersonality] = useState(false)
+    const [statusClosed, setStatusClosed] = useState(false)
+    const [statusOpen, setStatusOpen] = useState(false)
+
     const { activePage, changePage } = useContext(PageContext)
     const dispatch = useDispatch()
 
@@ -25,24 +29,8 @@ const CreateStorage = () => {
     let hintName = null
     let hintNameEmpty = null
 
-    const hintHandler_2 = () => {
-        setHintEmpty(true)
-    }
-
-    const hintHandler = () => {
-        setHint(true)
-    }
-
     const clickHandler = () => {
         setChecked(!checked)
-    }
-
-    if (hint) {
-        hintName = (
-            <div id="hint-storage-create">
-                <div>Не было указано имя хранилища или его тип</div>
-            </div>
-        )
     }
 
     if (hintEmpty) {
@@ -66,6 +54,14 @@ const CreateStorage = () => {
     const handlerSubmit = (event) => {
         let data
         event.preventDefault()
+        console.log(statusPersonality, statusOpen, statusClosed)
+        console.log(type)
+        if (!statusPersonality && !statusOpen && !statusClosed){
+            console.log("ASSSSSSSDASDASDASDASD")
+            dispatch(setDataHintIncorrect("Не было указано имя хранилища или его тип"))
+            return -1
+        }
+
         if (password) {
             data = {
                 "nameStorage": event.target.nameStorage.value,
@@ -118,7 +114,7 @@ const CreateStorage = () => {
                                     <input type="checkbox" className="checkbox-type" id="first-checkbox"
                                         onClick={() => {
                                             if (checked) { clickHandler() }; document.getElementById('second-checkbox').checked = false; document.getElementById('third-checkbox').checked = false;
-                                            setType('Open'); setPassword(false)
+                                            setStatusOpen(!statusOpen); setStatusClosed(false); setStatusPersonality(false); setType('Open'); setPassword(false)
                                         }}
                                     />
                                     <span className="type-storage-promt">Любой пользователь MyStorage сможет просматривать содержимое хранилища</span>
@@ -130,7 +126,7 @@ const CreateStorage = () => {
                                     <input type="checkbox" className="checkbox-type" id="second-checkbox"
                                         onClick={() => {
                                             clickHandler(); document.getElementById('first-checkbox').checked = false; document.getElementById('third-checkbox').checked = false;
-                                            setType('Closed'); setPassword(true)
+                                            setStatusClosed(!statusClosed); setStatusOpen(false); setStatusPersonality(false); setType('Closed'); setPassword(true)
                                         }} />
                                     <span className="type-storage-promt">Для входа в хранилище другим пользователям потребуется пароль</span>
                                     {passwordForStorage}
@@ -142,7 +138,7 @@ const CreateStorage = () => {
                                     <input type="checkbox" className="checkbox-type" id="third-checkbox"
                                         onClick={() => {
                                             if (checked) { clickHandler() }; document.getElementById('first-checkbox').checked = false; document.getElementById('second-checkbox').checked = false;
-                                            setType('Personality'); setPassword(false)
+                                            setStatusPersonality(!statusPersonality); setStatusClosed(false); setStatusOpen(false); setType('Personality'); setPassword(false)
                                         }}
                                     />
                                     <span className="type-storage-promt"> Содержимое хранилища доступно только его создателю</span>

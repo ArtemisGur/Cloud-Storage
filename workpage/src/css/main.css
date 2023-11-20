@@ -21,7 +21,7 @@ body {
 }
 
 .logo-block {
-    flex-basis: 25%;
+    flex-basis: 11%;
     align-items: center;
     justify-content: center;
     vertical-align: middle;
@@ -576,10 +576,12 @@ html{
     border-radius: 12px;
     border-radius: 20px;
     position: relative;
-    min-height: 25vh;
+    height: 28vh;
     backface-visibility: hidden;
     overflow: hidden;
     width: 10%;
+    background-color: #f9faff;
+    margin-left: 1%;
 }
 
 .file-block:hover {
@@ -689,7 +691,7 @@ html{
 }
 
 #discription-block {
-    width: 20%;
+    width: 30%;
     padding: 10px;
     border: 0px solid #2d4a53;
     box-shadow: 0 0 5px #2d4a53;
