@@ -6,9 +6,12 @@ import { PageContext } from "../PageContext"
 import { useDispatch } from "react-redux"
 
 const ButtonCreateStorage = () => {
+    
     const {activePage, changePage} = useContext(PageContext)
     const dispatch = useDispatch()
     const clickHandler = () => {
+        document.getElementById('nav-field-my').style.background = ""
+        document.getElementById('nav-field-enable').style.background = ""
         dispatch(setDataHintIncorrect(""))
         dispatch(setDataHintEmpty(""))
         dispatch(setDataHintCorrect(""))

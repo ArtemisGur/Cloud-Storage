@@ -9,7 +9,7 @@ const MyStorages = () => {
     const dispatch = useDispatch()
 
     const handlerClick = () => {
-        document.getElementById('nav-field-my').style.background = "#d0e8f7"
+        document.getElementById('nav-field-my').style.background = "#E6D1FF"
         document.getElementById('nav-field-enable').style.background = ""
         axios.post('http://localhost:5000/getOwnerStorages', '', { withCredentials: true })
        .then((res) => {

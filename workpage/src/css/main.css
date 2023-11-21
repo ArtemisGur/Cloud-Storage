@@ -42,7 +42,7 @@ body {
     padding-left: 40px;
     border-radius: 20px;
     width: 100%;
-    background-color: #f9faff;
+    background-color: white;
     font-weight: 600;
     border: 0px solid #2d4a53;
     box-shadow: 0 0 2px #2d4a53;
@@ -80,7 +80,7 @@ body {
 }
 
 .App{
-    background-color: #ebf1f5;
+    background: -webkit-linear-gradient(90deg, #f4ebff,#c0e3f2,#f4ebff);/* Chrome 10-25, Safari 5.1-6 */                          background: linear-gradient(90deg, #f4ebff,#c0e3f2,#f4ebff);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */                                                                                  
     height: 100vh;
 }
 
@@ -95,8 +95,8 @@ body {
     font-family: system-ui;
     font-weight: 500;
     border: 0px solid #2d4a53;
-    box-shadow: 0 0 5px #2d4a53;
-    background: #f9faff;
+    box-shadow: 0 1px 3px #2d4a53;
+    background: white;
     border-radius: 12px;
     transition: 0.2s linear;
     outline: none;
@@ -105,8 +105,8 @@ body {
 
 #but-create:hover,
 #button-exit:hover {
-    background-color: #d0e8f7;
-    box-shadow: 0 0 5px #2d4a53;
+    background-color: rgb(230, 209, 255);
+    box-shadow: 0 1px 3px #2d4a53;
 }
 
 .nav-menu-cont {
@@ -129,11 +129,11 @@ body {
     transition: 0.2s linear;
     width: 85%;
     cursor: pointer;
-    background-color: #ebf1f5;
+    background: none;
 }
 
 #nav-field-my:hover, #nav-field-enable:hover{
-    background-color: lightgrey;
+    background-color: #f9faff;
 }
 
 #nav-field:hover {
@@ -146,7 +146,7 @@ body {
 
 .create-storage-cont,
 .show-file-cont {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border-radius: 20px;
     width: 79.2%;
     margin-top: 1%;
@@ -185,7 +185,7 @@ html{
     padding: 10px;
     width: 100%;
     border-radius: 20px;
-    background-color: #f9faff;
+    background-color: white;
     font-weight: 600;
     border: 0px solid #2d4a53;
     box-shadow: 0 0 2px #2d4a53;
@@ -246,7 +246,7 @@ html{
 
 #button-create-storage-interior:hover,
 #button-input-password-storage:hover {
-    background-color: #d0e8f7;
+    background-color: rgb(236, 227, 247);
 }
 
 .checkbox-type {
@@ -258,7 +258,7 @@ html{
     margin-top: 1%;
     border: 0px solid #2d4a53;
     box-shadow: 0 0 5px #2d4a53;
-    background: #f9faff;
+    background: white;
     border-radius: 6px;
     font-size: 20px;
     padding-left: 10px;
@@ -305,12 +305,13 @@ html{
     border-radius: 20px;
     transition: 0.1s linear;
     cursor: pointer;
+    background-color: white;
 }
 
 .button-storage:hover,
 .upbutton:hover,
 .upbutton-1:hover {
-    background: #d0e8f7;
+    background: #f5e6fa;
 }
 
 .but-storage-name {
@@ -445,7 +446,7 @@ html{
 #interior-block-files {
     margin-top: 1%;
     box-shadow: 0 0 3px #2d4a53;
-    background-color: white;
+    background-color: #fbf9fd;
     border-radius: 20px;
     margin-left: 2%;
     margin-right: 8%;
@@ -455,7 +456,7 @@ html{
 #interior-block-files-2 {
     overflow: auto;
     height: 50vh;
-    background-color: white;
+    background-color: white
 }
 
 #butt-choose {
@@ -471,7 +472,7 @@ html{
 #choose-file-label {
     border: 0px solid #2d4a53;
     box-shadow: 0 0 3px #2d4a53;
-    background-color: white;
+    background-color: rgba(242, 236, 250, 0.438);
     border-radius: 12px;
     cursor: pointer;
     font-size: 14px;
@@ -540,7 +541,7 @@ html{
 }
 
 .file-menu-but:hover {
-    background-color: #ddecf5;
+    background-color: rgb(236, 227, 247)
 }
 
 .file-menu-but {
@@ -551,6 +552,7 @@ html{
     border: none;
     transition: 0.2s linear;
     cursor: pointer;
+    background-color: rgb(255, 255, 255);
 }
 
 #file-interior-with-img {
@@ -580,12 +582,11 @@ html{
     overflow: hidden;
     min-width: 10%;
     max-width: 15%;
-    background-color: #f9faff;
     margin-left: 1%;
 }
 
 .file-block:hover {
-    background-color: lightgray;
+    background-color: rgb(236, 227, 247)
 }
 
 .file-name-2 {
@@ -607,7 +608,7 @@ html{
 
 .test {
     transform: perspective(400px) rotateY(0deg);
-    transition: 0.4s linear;
+    transition: 0.25s linear;
 }
 
 
@@ -625,7 +626,7 @@ html{
 }
 
 .discripion-file {
-    background-color: rgb(243, 242, 242);
+    background-color: white;
     padding-left: 5%;
     padding-right: 5%;
     padding-bottom: 2.5%;
@@ -652,7 +653,7 @@ html{
 }
 
 #icon:hover {
-    background-color: #ddecf5;
+    background-color: rgb(236, 227, 247);
     transform: translate();
 }
 
@@ -668,10 +669,10 @@ html{
     font-family: system-ui;
     border: 0px solid #2d4a53;
     box-shadow: 0 0 5px #2d4a53;
-    background: #f9faff;
+    background: white;
     border-radius: 6px;
     transition: 0.2s linear;
-    width: 10%;
+    width: 6%;
     margin-left: 2%;
 }
 
@@ -694,9 +695,10 @@ html{
     width: 30%;
     padding: 10px;
     border: 0px solid #2d4a53;
-    box-shadow: 0 0 5px #2d4a53;
+    box-shadow: 0 0 2px #2d4a53;
     border-radius: 12px;
     margin-top: 2%;
+    background-color: white;
 }
 
 #block-inter {
@@ -843,6 +845,7 @@ html{
     display: flex;
     align-items: center;
     margin-top: 1%;
+    
 }
 
 .drop-area {
@@ -875,7 +878,7 @@ html{
 .popup-content {
     width: 20%;
     min-height: 10%;
-    background-color: #ddecf5;
+    background-color: white;
     padding: 20px;
     border-radius: 12px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -886,7 +889,7 @@ html{
 .popup-content-controll {
     width: 60%;
     min-height: 60%;
-    background-color: #ebf1f5;
+    background-color: white;
     padding: 20px;
     border-radius: 12px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -901,6 +904,8 @@ html{
     width: 100%;
     min-height: 60vh;
     background-color: #f9faff;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 5px #2d4a53;
     margin-top: 2%;
     border-radius: 12px;
 }
@@ -1088,12 +1093,12 @@ html{
 }
 
 .change-role-field:hover{
-    background-color: #ddecf5;
+    background-color: rgb(236, 227, 247);
 }
 
 .popup-create:hover,
 .popup-create-submit:hover, .change-role:hover, .change-role-2:hover, .button-change-role:hover {
-    background-color: #ddecf5;
+    background-color: rgb(236, 227, 247);
     box-shadow: 0 0 5px #2d4a53;
 }
 
@@ -1168,7 +1173,7 @@ html{
 .but-nav-storage {
     border: 0px solid #2d4a53;
     box-shadow: 0 0 3px #2d4a53;
-    background-color: white;
+    background-color: rgba(242, 236, 250, 0.438);
     border-radius: 12px;
     cursor: pointer;
     font-size: 14px;
@@ -1181,7 +1186,7 @@ html{
 .but-nav-storage-2 {
     border: 0px solid #2d4a53;
     box-shadow: 0 0 3px #2d4a53;
-    background-color: white;
+    background-color: rgba(242, 236, 250, 0.438);
     border-radius: 12px;
     cursor: pointer;
     font-size: 18px;
@@ -1195,7 +1200,7 @@ html{
 .but-nav-storage:hover,
 .but-nav-storage-2:hover,
 #choose-file-label:hover {
-    background-color: #f1f1f1;
+    background-color: white;
     box-shadow: 0 0 7px #2d4a53;
 }
 
@@ -1208,7 +1213,7 @@ html{
     font-size: 14px;
     border: 0px solid #2d4a53;
     box-shadow: 0 0 5px #2d4a53;
-    background-color: rgba(211, 211, 211, 0.144);
+    background-color: rgba(242, 236, 250, 0.438);
     border-radius: 6px;
     padding: 10px;
     align-items: center;
