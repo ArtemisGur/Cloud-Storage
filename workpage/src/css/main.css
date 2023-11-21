@@ -21,7 +21,7 @@ body {
 }
 
 .logo-block {
-    flex-basis: 11%;
+    flex-basis: 12.5%;
     align-items: center;
     justify-content: center;
     vertical-align: middle;
@@ -29,7 +29,7 @@ body {
 }
 
 .search-cont {
-    flex-basis: 25%;
+    flex-basis: 20%;
 }
 
 #search-field {
@@ -56,11 +56,11 @@ body {
 
 .logo-profile {
     margin-left: auto;
-    margin-right: 3%;
+    margin-right: 2%;
 }
 
 #button-exit {
-    margin-right: 6%;
+    margin-right: 12%;
     padding-left: 10px;
     padding-right: 10px;
     height: 37px;
@@ -68,7 +68,7 @@ body {
     font-family: system-ui;
     border: 0px solid #2d4a53;
     box-shadow: 0 0 5px #2d4a53;
-    background: #f9faff;
+    background: white;
     border-radius: 6px;
     transition: 0.2s linear;
     outline: none;
@@ -146,7 +146,6 @@ body {
 
 .create-storage-cont,
 .show-file-cont {
-    background-color: rgb(255, 255, 255);
     border-radius: 20px;
     width: 79.2%;
     margin-top: 1%;
@@ -180,7 +179,6 @@ html{
 }
 
 #search-file {
-    height: 10%;
     font-size: 14px;
     padding: 10px;
     width: 100%;
@@ -192,6 +190,7 @@ html{
     outline: none;
     font-family: system-ui;
     float: left;
+    
 }
 
 #search-file:hover{
@@ -199,7 +198,8 @@ html{
 }
 
 #search-file-form {
-    width: 30%;
+    width: 55%;
+    margin-left: 2%;
 }
 
 #name-storage-create {
@@ -237,7 +237,7 @@ html{
     font-family: system-ui;
     border: 0px solid #2d4a53;
     box-shadow: 0 0 2px #2d4a53;
-    background: #f9faff;
+    background: white;
     border-radius: 6px;
     transition: 0.2s linear;
     width: 8%;
@@ -444,19 +444,19 @@ html{
 }
 
 #interior-block-files {
-    margin-top: 1%;
     box-shadow: 0 0 3px #2d4a53;
-    background-color: #fbf9fd;
+    background-color: white;
     border-radius: 20px;
     margin-left: 2%;
     margin-right: 8%;
-    max-height: 60vh;
+    height: 70vh;
 }
 
 #interior-block-files-2 {
     overflow: auto;
-    height: 50vh;
-    background-color: white
+    height: 55vh;
+    background-color: white;
+    border-radius: 20px;
 }
 
 #butt-choose {
@@ -490,6 +490,8 @@ html{
 .block-top-files {
     display: flex;
     width: 100%;
+    justify-content: center;
+    align-items:center;
 }
 
 .upbutton {
@@ -559,11 +561,24 @@ html{
     overflow: auto;
     display: flex;
     flex-wrap: wrap;
-    max-height: 50vh;
-    min-height: 50vh;
-    margin-bottom: 5%;
+    height: 55vh;
     border-radius: 20px;
     background-color: white;
+}
+
+#file-interior-with-img::-webkit-scrollbar {
+    width: 10px;
+}
+
+#file-interior-with-img::-webkit-scrollbar-track {
+    -webkit-box-shadow: 5px 5px 5px -5px rgba(80, 34, 70, 0.2) inset;
+    background-color: #f9f9fd;
+    border-radius: 10px;
+}
+
+#file-interior-with-img::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(180deg, #f5ddf5, #e7b0ec);
 }
 
 #delete-confirmation {
@@ -640,8 +655,7 @@ html{
 
 
 #icon {
-    border: 0px solid #2d4a53;
-    box-shadow: 0 0 2px #2d4a53;
+    border: none;
     background-color: white;
     border-radius: 6px;
     transition: 0.1s linear;
@@ -733,7 +747,7 @@ html{
 #storage-delete {
     border-radius: 12px;
     border: 0px solid #2d4a53;
-    background-color: white;
+    background: none;
     font-size: 14px;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -748,7 +762,7 @@ html{
 #storage-delete-2 {
     border-radius: 12px;
     border: 0px solid #2d4a53;
-    background-color: white;
+    background: none;
     font-size: 14px;
     transition: 0.2s linear;
     font-family: system-ui;
@@ -820,13 +834,12 @@ html{
 .button-change-view {
     display: flex;
     align-items: center;
-    margin-left: auto;
     margin-right: 1%;
 }
 
 #subscribe-storage:hover,
 #subscribe-storage-2:hover {
-    background-color: #d0e8f7;
+    background-color: rgb(236, 227, 247);
     cursor: pointer;
 }
 
@@ -844,8 +857,8 @@ html{
 .interor-block-menu {
     display: flex;
     align-items: center;
-    margin-top: 1%;
-    
+    margin-right: 2%;
+    float: right;
 }
 
 .drop-area {
@@ -924,7 +937,7 @@ html{
     border-radius: 6px;
     overflow: auto;
     border: 0px solid #2d4a53;
-    box-shadow: 0 0 5px #2d4a53;
+    box-shadow: 0 0 2px #2d4a53;
     background: #f9faff;
 }
 
@@ -933,14 +946,14 @@ html{
 }
 
 .users-interior::-webkit-scrollbar-track {
-    -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
+    -webkit-box-shadow: 5px 5px 5px -5px rgba(80, 34, 70, 0.2) inset;
     background-color: #f9f9fd;
     border-radius: 10px;
 }
 
 .users-interior::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: linear-gradient(180deg, #ddecf5, #b0c7ec);
+    background: linear-gradient(180deg, #f5ddf5, #e7b0ec);
 }
 
 .interior-controll-users-block {
@@ -961,7 +974,7 @@ html{
 }
 
 .change-role-field{
-    background: #f9faff;
+    background: white;
     border: 0px;
     width: 100%;
     padding: 5px;
@@ -1049,7 +1062,7 @@ html{
     padding-left: 10px;
     border: 0px solid #2d4a53;
     box-shadow: 0 0 5px #2d4a53;
-    background: #f9faff;
+    background: white;
     border-radius: 20px;
     width: 40%;
 }
@@ -1057,7 +1070,7 @@ html{
 .popup-create-submit {
     border: 0px solid #2d4a53;
     box-shadow: 0 0 5px #2d4a53;
-    background: #f9faff;
+    background: white;
     border-radius: 12px;
     font-size: 14px;
     padding-left: 5px;
@@ -1106,7 +1119,7 @@ html{
     margin-top: 10%;
     border: 0px solid #2d4a53;
     box-shadow: 0 0 5px #2d4a53;
-    background: #f9faff;
+    background: white;
     border-radius: 6px;
     padding: 8px;
     width: 50%;

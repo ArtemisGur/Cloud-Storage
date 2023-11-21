@@ -36,7 +36,7 @@ const ShowInternalFilesOthers = () => {
     let folder = useSelector((store) => store.folder.data)
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
-    const [progress, setProgess] = useState('Прогресс загрузки файла: 0');
+    const [progress, setProgess] = useState('');
     const [menu, setMenu] = useState(-1)
     const [showMenu, setShowMenu] = useState(false)
     const [showType, setShowType] = useState(2)
@@ -250,6 +250,9 @@ const ShowInternalFilesOthers = () => {
                                 <br />
                                 Владелец: <span className="discription-storage">{storages.owner}</span>
                             </h4>
+                            <form id="search-file-form" >
+                                <input name="file" onChange={(e) => searchFile(e)} placeholder="Поиск файла" id="search-file" />
+                            </form>
                             {subscribedStorages.owner === '' && subscribedStorages.name === '' && (<div className="file-upload">
                                 <button id="subscribe-storage-2" onClick={() => subscribe()}>Подписаться на изменения</button>
                             </div>)}
@@ -257,23 +260,8 @@ const ShowInternalFilesOthers = () => {
                                 <button id="subscribe-storage-2" onClick={() => unsubscribe()}>Отписаться</button>
                             </div>}
                         </div>
-                        <hr id="break-line-2" />
                         <div className="interor-block-menu">
-                            <form id="search-file-form" >
-                                <input name="file" onChange={(e) => searchFile(e)} placeholder="Поиск файла" id="search-file" />
-                            </form>
-                            <div className="button-change-view">
-                                <button className="icon-1" id="icon" onClick={() => handlerSetType(1)}>
-                                    <img src={list}>
 
-                                    </img>
-                                </button>
-                                <button id="icon" onClick={() => handlerSetType(2)}>
-                                    <img src={icons}>
-
-                                    </img>
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -294,6 +282,7 @@ const ShowInternalFilesOthers = () => {
                             <span className="progessBar">
                                 {progress}
                             </span>
+                            
                         </div>)}
                     <span id="path-navigation">{folder}</span>
                 </div>
@@ -340,6 +329,7 @@ const ShowInternalFilesOthers = () => {
                                     }
                                 })
                             }
+                            
                         </div>
                     </div>)
                 }
@@ -419,9 +409,11 @@ const ShowInternalFilesOthers = () => {
                                 }
                             })
                         }
+                        
                     </div>)
                 }
             </div>}
+            
             {role === 'default' && <div id="interior-block-files">
                 <div className="block-nav-but">
                     <button className="but-nav-storage-2" onClick={() => navigateBack()}>↶</button>
@@ -540,8 +532,10 @@ const ShowInternalFilesOthers = () => {
                             })
                         }
                     </div>)
+                    
                 }
             </div>}
+            
         </div>
     ) : null
 

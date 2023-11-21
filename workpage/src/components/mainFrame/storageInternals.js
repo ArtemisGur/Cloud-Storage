@@ -164,7 +164,7 @@ const ShowInternalFiles = () => {
                 dispatch(setDataPasswordStorage(null))
             })
             .then(() => {
-                setModalWinControll(true); 
+                setModalWinControll(true);
                 setNewPassword(null);
             })
     }
@@ -271,18 +271,18 @@ const ShowInternalFiles = () => {
 
     const changeRoleToAll = (newRole) => {
         axios.post('/changeAllRoles', { 'owner': storages.owner, 'name': storages.name, 'newRole': newRole })
-        .then(() => {
-            dispatch(changeAllRoles({ 'role': newRole }))
-        })
+            .then(() => {
+                dispatch(changeAllRoles({ 'role': newRole }))
+            })
     }
 
     const deleteUser = (name, key) => {
         axios.post('/excludeUser', { 'owner': storages.owner, 'name': storages.name, 'user': name })
-        .then((res) => {
-            if (res.data = 'OK'){
-                dispatch(deleteDataUser(key))
-            }
-        })
+            .then((res) => {
+                if (res.data = 'OK') {
+                    dispatch(deleteDataUser(key))
+                }
+            })
     }
 
     return activePage === 4 ? (
@@ -330,7 +330,7 @@ const ShowInternalFiles = () => {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <img className="cross-pic" src={cross} onClick={() => deleteUser(userList.userName, userList.key)}/>
+                                                    <img className="cross-pic" src={cross} onClick={() => deleteUser(userList.userName, userList.key)} />
                                                 </div>
                                             )
                                         })
@@ -357,6 +357,9 @@ const ShowInternalFiles = () => {
                                 <br />
                                 Владелец: <span className="discription-storage">Вы</span>
                             </h4>
+                            <form id="search-file-form">
+                                <input name="file" onChange={(e) => searchFile(e)} placeholder="Поиск файла" id="search-file" />
+                            </form>
                             <div className="file-upload">
                                 {storages.type != 'Personality' && <div id="hrefSetting" onClick={() => { getUserList() }}>&#9881;</div>}
                                 {showDelete && (
@@ -365,25 +368,6 @@ const ShowInternalFiles = () => {
                                 <button id="storage-delete" onClick={() => deleteStorage()}>🗑️</button>
                             </div>
                         </div>
-                        <hr id="break-line-2" />
-                        <div className="interor-block-menu">
-                            <form id="search-file-form">
-                                <input name="file" onChange={(e) => searchFile(e)} placeholder="Поиск файла" id="search-file" />
-                            </form>
-
-                            <div className="button-change-view">
-                                <button className="icon-1" id="icon" onClick={() => handlerSetType(1)}>
-                                    <img src={list}>
-                                    </img>
-                                </button>
-                                <button id="icon" onClick={() => handlerSetType(2)}>
-                                    <img src={icons}>
-                                    </img>
-                                </button>
-                            </div>
-
-                        </div>
-
                     </div>
 
                 </div>
@@ -404,6 +388,7 @@ const ShowInternalFiles = () => {
                     </span>
                     <span id="path-navigation">{folder}</span>
                 </div>
+                
 
                 {showType === 1 && (
                     <div id="interior-block-files-2">
@@ -536,10 +521,28 @@ const ShowInternalFiles = () => {
                                     )
                                 }
                             })
+
                         }
+
                     </div>)
+
                 }
+                <div className="interor-block-menu">
+
+                    <div className="button-change-view">
+                        <button className="icon-1" id="icon" onClick={() => handlerSetType(1)}>
+                            <img src={list}>
+                            </img>
+                        </button>
+                        <button id="icon" onClick={() => handlerSetType(2)}>
+                            <img src={icons}>
+                            </img>
+                        </button>
+                    </div>
+
+                </div>
             </div>}
+
         </div>
     ) : null
 
