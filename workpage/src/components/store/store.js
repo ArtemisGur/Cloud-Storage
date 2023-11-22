@@ -13,6 +13,8 @@ import hintCorrectSlice from "./hintCorrectSlice";
 import roleSlice from "./roleSlice";
 import userListSlice from "./userListSlice";
 import changePasswordSlice from "./changePasswordSlice";
+import currentStoragesSlice from "./currentStoragesSlice";
+import userSlice from "./userSlice";
 
 const store = configureStore({
     reducer: {
@@ -29,7 +31,9 @@ const store = configureStore({
         hintCorrect : hintCorrectSlice,
         role : roleSlice,
         userList : userListSlice,
-        changePassword : changePasswordSlice
+        changePassword : changePasswordSlice,
+        currentStorage : currentStoragesSlice,
+        user : userSlice
     }
 })
 

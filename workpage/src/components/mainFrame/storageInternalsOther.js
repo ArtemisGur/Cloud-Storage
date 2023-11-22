@@ -11,6 +11,7 @@ import mimeFileType from "../store/mimeFileType"
 import { setDataFolder, getDataFolder, setDataFolderFirst, navFolder } from "../store/foldersSlice"
 import { setDataCurrentFolder, setDataCurrentFolder_2 } from "../store/currentFolderSlice"
 import { setDataFiles } from '../store/internalFilesSlice'
+import Chat from "./chat"
 import folderIcon from '../../img/folder.png'
 import jpeg from '../../img/jpeg.png'
 import zip from '../../img/zip.png'
@@ -40,6 +41,7 @@ const ShowInternalFilesOthers = () => {
     const [menu, setMenu] = useState(-1)
     const [showMenu, setShowMenu] = useState(false)
     const [showType, setShowType] = useState(2)
+    const [chatStatus, setChatStatus] = useState(false)
     const el = useRef();
 
     const handleChange = async (e) => {
@@ -227,6 +229,10 @@ const ShowInternalFilesOthers = () => {
             .then(() => {
                 setModalWin(false)
             })
+    }
+
+    const handlerClick = () => {
+        setChatStatus(!chatStatus)
     }
 
     return activePage === 6 ? (
@@ -535,7 +541,10 @@ const ShowInternalFilesOthers = () => {
                     
                 }
             </div>}
-            
+            <div className="open-chat">
+                {chatStatus && <Chat />}
+                <div className="convert" onClick={() => handlerClick() }>&#9993;</div>
+            </div>
         </div>
     ) : null
 

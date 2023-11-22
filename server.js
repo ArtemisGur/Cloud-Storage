@@ -148,6 +148,10 @@ APP.post('/getOwnerStorages', (req, res) => {
         })
 })
 
+APP.post('/getUser', (req, res) => {
+    res.send({'user' : req.session.login})
+})
+
 APP.post('/getEnableStorages', (req, res) => {
     collectionEnabledStorages.find({ 'user': req.session.login }).toArray()
         .then((response) => {

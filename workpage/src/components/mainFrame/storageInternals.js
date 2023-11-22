@@ -14,6 +14,7 @@ import folderIcon from '../../img/folder.png'
 import { changeDataUser, changeAllRoles, deleteDataUser } from "../store/userListSlice"
 import { setDataUsers } from "../store/userListSlice"
 import { setDataPasswordStorage } from "../store/changePasswordSlice"
+import Chat from "./chat"
 import jpeg from '../../img/jpeg.png'
 import zip from '../../img/zip.png'
 import doc from '../../img/doc.png'
@@ -53,6 +54,7 @@ const ShowInternalFiles = () => {
     const [showMenu, setShowMenu] = useState(false)
     const [showType, setShowType] = useState(2)
     const [modalWin, setModalWin] = useState(false)
+    const [chatStatus, setChatStatus] = useState(false)
     const [modalWinControll, setModalWinControll] = useState(false)
     const el = useRef();
 
@@ -285,6 +287,10 @@ const ShowInternalFiles = () => {
             })
     }
 
+    const handlerClick = () => {
+        setChatStatus(!chatStatus)
+    }
+
     return activePage === 4 ? (
         <div className="show-file-cont">
             {modalWin && (<div id="popup">
@@ -388,7 +394,7 @@ const ShowInternalFiles = () => {
                     </span>
                     <span id="path-navigation">{folder}</span>
                 </div>
-                
+
 
                 {showType === 1 && (
                     <div id="interior-block-files-2">
@@ -542,7 +548,10 @@ const ShowInternalFiles = () => {
 
                 </div>
             </div>}
-
+            <div className="open-chat">
+                {chatStatus && <Chat />}
+                <div className="convert" onClick={() => handlerClick() }>&#9993;</div>
+            </div>
         </div>
     ) : null
 

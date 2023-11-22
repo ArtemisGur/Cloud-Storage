@@ -7,6 +7,7 @@ import { setDataOwn } from "../store/ownStorageSlice"
 import { setDataFolder, getDataFolder, setDataFolderFirst } from "../store/foldersSlice"
 import { setDataCurrentFolder } from "../store/currentFolderSlice"
 import { setDataUsers } from "../store/userListSlice"
+import { setDataCurrentStorage } from "../store/currentStoragesSlice"
 
 let path
 
@@ -36,6 +37,7 @@ const OwnerStorage = () => {
                 dispatch(setDataFiles(internalFile))
             })
             .then(() => {
+                dispatch(setDataCurrentStorage({'owner' : owner, 'name' : name}))
                 dispatch(setDataFolderFirst(owner + '/' + 'Storage_' + name))
                 dispatch(setDataCurrentFolder('Storage_' + name))
                 dispatch(setDataOwn({ 'name': name, 'type': type, 'owner': owner, 'key': num }))

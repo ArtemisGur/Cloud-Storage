@@ -54,10 +54,7 @@ const CreateStorage = () => {
     const handlerSubmit = (event) => {
         let data
         event.preventDefault()
-        console.log(statusPersonality, statusOpen, statusClosed)
-        console.log(type)
         if (!statusPersonality && !statusOpen && !statusClosed){
-            console.log("ASSSSSSSDASDASDASDASD")
             dispatch(setDataHintIncorrect("Не было указано имя хранилища или его тип"))
             return -1
         }
@@ -93,7 +90,7 @@ const CreateStorage = () => {
     }
 
     let CreateStorageBlock = (
-        <div className="create-storage-cont">
+        <div className="create-storage-cont-2">
             <div className="create-storage-interior">
                 <h2 id="header-create-page">Создание хранилища</h2>
                 <div id="create-interior">

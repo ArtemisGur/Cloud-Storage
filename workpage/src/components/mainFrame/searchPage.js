@@ -10,6 +10,7 @@ import { setDataStorageType } from "../store/storageTypePasswordSlice"
 import { setDataFolder, getDataFolder, setDataFolderFirst } from "../store/foldersSlice"
 import { setDataCurrentFolder } from "../store/currentFolderSlice"
 import { setUserRole } from "../store/roleSlice"
+import { setDataCurrentStorage } from "../store/currentStoragesSlice"
 import axios from "axios"
 
 const SearchStorageCont = () => {
@@ -34,6 +35,7 @@ const SearchStorageCont = () => {
                 axios.post('http://localhost:5000/showFiles', { "path": searchedStorages[num].owner + '/Storage_' + searchedStorages[num].name })
                     .then((res) => {
                         let internalFile = creteObjInternalFiles(res.data)
+                        dispatch(setDataCurrentStorage({'owner' : owner, 'name' : name}))
                         dispatch(setDataFiles(internalFile))
                         dispatch(setDataFolderFirst(owner + '/' + 'Storage_' + name))
                         dispatch(setDataCurrentFolder('Storage_' + name))
@@ -63,6 +65,7 @@ const SearchStorageCont = () => {
                         }
                         else {
                             let internalFile = creteObjInternalFiles(res.data)
+                            dispatch(setDataCurrentStorage({'owner' : e.target.owner.value, 'name' : e.target.name.value}))
                             dispatch(setDataFiles(internalFile))
                             dispatch(setDataFolderFirst(e.target.owner.value + '/' + 'Storage_' + e.target.name.value))
                             dispatch(setDataCurrentFolder('Storage_' + e.target.name.value))

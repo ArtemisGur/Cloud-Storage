@@ -8,6 +8,7 @@ import { setDataSubscribed } from "../store/subscribedStorageSlice"
 import { setDataFolder, getDataFolder, setDataFolderFirst } from "../store/foldersSlice"
 import { setDataCurrentFolder } from "../store/currentFolderSlice"
 import { setUserRole } from "../store/roleSlice"
+import { setDataCurrentStorage } from "../store/currentStoragesSlice"
 
 let path
 
@@ -44,6 +45,7 @@ const EnableStorages = () => {
                 dispatch(setDataFiles(internalFile))
             })
             .then(() => {
+                dispatch(setDataCurrentStorage({'owner' : owner, 'name' : name}))
                 dispatch(setDataFolderFirst(owner + '/' + 'Storage_' + name))
                 dispatch(setDataCurrentFolder('Storage_' + name + '/'))
                 dispatch(setDataOwn({ 'name': name, 'type': type, 'owner': owner }))
