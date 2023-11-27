@@ -10,11 +10,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { deleteData, addFile } from '../store/internalFilesSlice'
 import mimeFileType from "../store/mimeFileType"
 import { setDataFiles } from '../store/internalFilesSlice'
-import folderIcon from '../../img/folder.png'
 import { changeDataUser, changeAllRoles, deleteDataUser } from "../store/userListSlice"
 import { setDataUsers } from "../store/userListSlice"
 import { setDataPasswordStorage } from "../store/changePasswordSlice"
 import Chat from "./chat"
+import folderIcon from '../../img/folder.png'
 import jpeg from '../../img/jpeg.png'
 import zip from '../../img/zip.png'
 import doc from '../../img/doc.png'

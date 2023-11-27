@@ -1,0 +1,94 @@
+.brand-plugin-alphabet {
+	position: relative;
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 1400px;
+	padding: 0 6px;
+	background: #f5f5f5;
+	z-index: 100;
+}
+
+.brand-plugin-alphabet-list {
+	display: flex;
+	align-items: center;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.brand-plugin-alphabet-list--letters {
+	flex-wrap: wrap;
+}
+
+.brand-plugin-alphabet-list__item {
+	padding: 0 4px;
+}
+
+.brand-plugin-alphabet-list__item--letter {
+	padding: 5px 4px;
+}
+
+.brand-plugin-alphabet-list__item--show-all {
+	border-left: 1px solid #b7b7b7;
+}
+
+.brand-plugin-alphabet-list__brands {
+	position: absolute;
+	top: 100%;
+	right: 0;
+	left: 0;
+	display: none;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.brand-plugin-alphabet-list__item--letter:hover .brand-plugin-alphabet-list__brands {
+	display: flex;
+}
+
+.brand-plugin-alphabet-list__letter {
+	color: #206dc4;
+	cursor: pointer;
+}
+
+.brand-plugin-alphabet-list__letter:hover {
+	color: #f00f00;
+}
+
+.brand-plugin-alphabet-brands {
+	padding: 12px 10px;
+	background: #ffffff;
+	box-shadow: 0px 5px 5px #777;
+}
+
+.brand-plugin-alphabet-brands__title {
+	align-self: flex-start;
+	font-size: 4em;
+	line-height: 1;
+	padding: 20px;
+}
+
+.brand-plugin-alphabet-brands__list {
+	flex-grow: 1;
+	list-style: none;
+	column-count: 4;
+	margin: 0;
+	padding: 0;
+}
+
+.brand-plugin-alphabet-brands__item {
+	display: block;
+	padding: 3px 0;
+}
+
+@media (max-width: 760px) {
+	.brand-plugin-alphabet-brands__list {
+		column-count: 3;
+	}
+}
+
+@media (max-width: 450px) {
+	.brand-plugin-alphabet-brands__list {
+		column-count: 2;
+	}
+}
