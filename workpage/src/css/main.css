@@ -81,9 +81,7 @@ body {
 
 .App {
     background: -webkit-linear-gradient(90deg, #f4ebff, #c0e3f2, #f4ebff);
-    /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(90deg, #f4ebff, #c0e3f2, #f4ebff);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     height: 100vh;
 }
 
@@ -484,12 +482,12 @@ html {
 
 #choose-file-label {
     border: 0px solid #2d4a53;
-    box-shadow: 0 0 3px #2d4a53;
+    box-shadow: 0 0 2px #2d4a53;
     background-color: rgba(242, 236, 250, 0.438);
     border-radius: 12px;
     cursor: pointer;
     font-size: 14px;
-    padding: 10px;
+    padding: 5px 10px 5px 10px;
     font-family: system-ui;
     align-items: center;
     margin-left: 2%;
@@ -542,7 +540,7 @@ html {
 .progessBar {
     margin-right: 5%;
     font-size: 12px;
-    width: 50%;
+    width: 30%;
     margin-left: 5%;
 }
 
@@ -608,8 +606,7 @@ html {
     height: 28vh;
     backface-visibility: hidden;
     overflow: hidden;
-    min-width: 10%;
-    max-width: 15%;
+    width: 10%;
     margin-left: 1%;
 }
 
@@ -852,7 +849,8 @@ html {
 }
 
 #subscribe-storage:hover,
-#subscribe-storage-2:hover, .send-message:hover {
+#subscribe-storage-2:hover,
+.send-message:hover {
     background-color: rgb(236, 227, 247);
     cursor: pointer;
 }
@@ -976,6 +974,17 @@ html {
     margin-left: auto;
 }
 
+.dropdown-role-block-2 {
+    margin-left: auto;
+    width: 12%;
+}
+
+.dropdown-role-block-2:hover .dropdown-role-type {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
 .dropdown-role {
     display: none;
     position: absolute;
@@ -984,15 +993,63 @@ html {
     box-shadow: 0 0 5px #2d4a53;
 }
 
-.change-role-field {
-    background: white;
-    border: 0px;
+.dropdown-role-type {
+    display: none;
+    position: absolute;
+    width: 14%;
+    background-color: #f9f9fd;
+    box-shadow: 0 0 5px #2d4a53;
+    z-index: 10;
+
+}
+
+.change-role-field-first{
+    float: right;
     width: 100%;
+    border: 0px;
     padding: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
     cursor: pointer;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.change-role-field {  
+    float: right;
+    margin-left: 10%;
+    width: 100%;
+    border: 0px;
+    padding: 5px;
+    cursor: pointer;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.change-role-field-1{
+    float: right;
+    margin-left: 10%;
+    width: 100%;
+    border: 0px;
+    padding: 5px;
+    cursor: pointer;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.change-role-field-1:hover{
+    background-color: rgb(236, 227, 247);
+}
+
+.change-role-block{
+    display: flex;
+    height: 30px;
+    padding: 5px 10px 5px 10px;
+    cursor: pointer;
+}
+
+.change-role-block:hover{
+    background-color: lightgray;
+}
+
+.picture-type{ 
+    background-size:auto;
+    height: 100%;
 }
 
 .user-in-list {
@@ -1116,10 +1173,6 @@ html {
     font-size: 12px;
 }
 
-.change-role-field:hover {
-    background-color: rgb(236, 227, 247);
-}
-
 .popup-create:hover,
 .popup-create-submit:hover,
 .change-role:hover,
@@ -1195,16 +1248,17 @@ html {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     background-color: white;
+    display: flex;
 }
 
 .but-nav-storage {
     border: 0px solid #2d4a53;
-    box-shadow: 0 0 3px #2d4a53;
+    box-shadow: 0 0 2px #2d4a53;
     background-color: rgba(242, 236, 250, 0.438);
     border-radius: 12px;
     cursor: pointer;
     font-size: 14px;
-    padding: 10px;
+    padding: 5px 10px 5px 10px;
     font-family: system-ui;
     align-items: center;
     margin-left: 2%;
@@ -1212,14 +1266,12 @@ html {
 
 .but-nav-storage-2 {
     border: 0px solid #2d4a53;
-    box-shadow: 0 0 3px #2d4a53;
+    box-shadow: 0 0 2px #2d4a53;
     background-color: rgba(242, 236, 250, 0.438);
     border-radius: 12px;
     cursor: pointer;
     font-size: 18px;
-    padding: 6px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 2px 10px 2px 10px;
     font-family: system-ui;
     align-items: center;
 }
@@ -1231,18 +1283,62 @@ html {
     box-shadow: 0 0 7px #2d4a53;
 }
 
+
+
+.change-type {
+    width: 100%;
+    border: 0px solid #2d4a53;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    box-shadow: 0 0 2px #2d4a53;
+    padding: 5px 10px 5px 10px;
+    background-color: rgba(242, 236, 250, 0.438);
+    cursor: pointer;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.default-type{
+    border: 0px solid #2d4a53;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: 0 0 2px #2d4a53;
+    padding: 5px 10px 5px 10px;
+    background-color: rgba(242, 236, 250, 0.438);
+    cursor: pointer;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    transition: 0.2s;
+}
+
+.default-type:hover{
+    background-color: rgb(236, 227, 247);
+}
+
 #path-navigation {
     font-family: system-ui;
-    float: right;
-    font-weight: 500;
+    margin-left: auto;
     margin-right: 5%;
+    font-weight: 500;
     background-color: white;
     font-size: 14px;
     border: 0px solid #2d4a53;
-    box-shadow: 0 0 5px #2d4a53;
+    box-shadow: 0 0 3px #2d4a53;
     background-color: rgba(242, 236, 250, 0.438);
     border-radius: 6px;
-    padding: 10px;
+    padding: 5px 10px 5px 10px;
+    align-items: center;
+}
+
+#path-navigation-default {
+    font-family: system-ui;
+    margin-right: 5%;
+    font-weight: 500;
+    background-color: white;
+    font-size: 14px;
+    border: 0px solid #2d4a53;
+    box-shadow: 0 0 3px #2d4a53;
+    background-color: rgba(242, 236, 250, 0.438);
+    border-radius: 6px;
+    padding: 5px 10px 5px 10px;
     align-items: center;
 }
 
@@ -1311,7 +1407,7 @@ html {
     background-color: #f9f9fd;
 }
 
-.message-block-chat{
+.message-block-chat {
     padding-left: 20px;
     margin-top: 10px;
     width: 50%;
@@ -1329,24 +1425,25 @@ html {
     box-shadow: 0 0 2px #2d4a53;
 }
 
-.message-field:hover{
+.message-field:hover {
     box-shadow: 0 0 5px #2d4a53;
 }
 
-.cont-chat{
+.cont-chat {
     height: 90%;
     background-color: #f9f9fd;
     overflow-y: auto;
     overflow-x: hidden;
-    overflow-wrap:break-word;
+    overflow-wrap: break-word;
     scroll-behavior: smooth;
 }
-.cont-chat-2{
+
+.cont-chat-2 {
     height: 84%;
     background-color: #f9f9fd;
 }
 
-.send-message{
+.send-message {
     margin-left: auto;
     margin-right: 5%;
     border-radius: 6px;
@@ -1357,13 +1454,13 @@ html {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.username-chat{
+.username-chat {
     font-weight: 600;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.message__bubble{
-    width:fit-content;
+.message__bubble {
+    width: fit-content;
     margin-left: auto;
     background-color: #f0e3f1a9;
     border-radius: 20px;
@@ -1371,50 +1468,103 @@ html {
     margin-top: 1%;
 }
 
-.message__bubble-2{
-    width:fit-content;
+.message__bubble-2 {
+    width: fit-content;
     background-color: rgba(211, 211, 211, 0.582);
     border-radius: 20px;
     padding: 8px 10px 8px 10px;
     margin-top: 1%;
 }
 
-.message{
+.message {
     margin-top: 5%;
     padding-left: 5%;
 }
 
-.message__actions{
+.message__actions {
     text-align: right;
     font-weight: 500;
 }
 
-.message__actions-2{
+.message__actions-2 {
     font-weight: 500;
 }
-.message__outer{
+
+.message__outer {
     padding-right: 5%;
 }
 
-.open-chat{
+.open-chat {
     float: right;
 }
 
-.convert{
+.convert {
     scale: 2.5
 }
 
-.convert:hover{
+.convert:hover {
     cursor: pointer;
 }
 
-@media (max-width: 900px) {
+.but-block-type{
+    display: flex;
+}
+
+.but-block-type-default{
+    display: flex;
+    margin-right: 5%;
+}
+
+@media (max-width: 999px) and (min-width: 700px){
     #chat-container {
         width: 80%;
     }
+    .file-block{
+        width: 25%;
+        height: 25vh;
+    }
+    .dropdown-role-block-2{
+        margin-right: 10%;
+    }
+    .dropdown-role-type{
+        width: 30%;
+    }
+
+    .change-role-block{
+        height: 50%;
+    }
 }
-@media (max-width: 1500px) and (min-width: 901px) {
+
+@media (max-width: 1550px) and (min-width: 1000px) {
     #chat-container {
         width: 40%;
+    }
+
+    .dropdown-role-type{
+        width: 22%;
+    }
+
+    .dropdown-role-block-2{
+        margin-right: 10%;
+    }
+
+    .file-block{
+        width: 15%;
+    }
+}
+
+@media (max-width: 699px) and (min-width: 400px){
+    #chat-container {
+        width: 40%;
+    }
+    .file-block{
+        height: 50vh;
+    }
+    .dropdown-role-block-2{
+        margin-right: 10%;
+    }
+
+    #discription-block{
+        display: none;
     }
 }

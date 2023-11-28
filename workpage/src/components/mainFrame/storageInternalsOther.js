@@ -41,6 +41,8 @@ const ShowInternalFilesOthers = () => {
     const [menu, setMenu] = useState(-1)
     const [showMenu, setShowMenu] = useState(false)
     const [showType, setShowType] = useState(2)
+    const [typeFile, setTypeFile] = useState('Тип')
+    const [showCross, setShowCross] = useState(false)
     const [chatStatus, setChatStatus] = useState(false)
     const el = useRef();
 
@@ -235,6 +237,26 @@ const ShowInternalFilesOthers = () => {
         setChatStatus(!chatStatus)
     }
 
+    const showSelectedFiles = (type) => {
+        axios.post('/showSelectedFiles', { owner: storages.owner, name: storages.name, fileType: type })
+            .then((res) => {
+                let internalFile = creteObjInternalFiles(res.data)
+                dispatch(setDataFiles(internalFile))
+            })
+    }
+
+    const handlerChangeType = () => {
+        axios.post('/showFiles', { "path": storages.owner + '/Storage_' + storages.name })
+            .then((res) => {
+                let internalFile = creteObjInternalFiles(res.data)
+                dispatch(setDataFiles(internalFile))
+            })
+            .then(() => {
+                setShowCross(false)
+                setTypeFile('Тип')
+            })
+    }
+
     return activePage === 6 ? (
         <div className="show-file-cont">
             {modalWin && (<div id="popup">
@@ -279,17 +301,48 @@ const ShowInternalFilesOthers = () => {
                 <div className="block-nav-but">
                     <button className="but-nav-storage-2" onClick={() => navigateBack()}>↶</button>
                     <button className="but-nav-storage" onClick={() => { setModalWin(true); setDirName('') }}>Создать каталог</button>
-                    {storages.type === 'Closed' && (
-                        <div className="test_3">
-                            <label id="choose-file-label">
-                                +
-                                <input type="file" ref={el} onChange={handleChange} id="butt-choose" />
-                            </label>
-                            <span className="progessBar">
-                                {progress}
-                            </span>
-                            
-                        </div>)}
+                    <label id="choose-file-label">
+                        <input type="file" ref={el} onChange={handleChange} id="butt-choose" />+
+                    </label>
+                    <span className="progessBar">
+                        {progress}
+                    </span>
+                    <div className="dropdown-role-block-2">
+                        <div className="but-block-type">
+                            <button className="change-type">{typeFile} &#129083;</button>
+                            {showCross && <button className="default-type" onClick={() => handlerChangeType()}>X</button>}
+                        </div>
+                        <div className="dropdown-role-type">
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('doc'); setTypeFile('Документы'); setShowCross(true) }}>
+                                <img className="picture-type" src={doc}></img>
+                                <span className="change-role-field" >Документы</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('pdf'); setTypeFile('PDF'); setShowCross(true) }}>
+                                <img className="picture-type" src={pdf}></img>
+                                <span className="change-role-field" >Файлы PDF</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('mp4'); setTypeFile('Видео'); setShowCross(true) }}>
+                                <img className="picture-type" src={mp4}></img>
+                                <span className="change-role-field" >Видео</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('zip'); setTypeFile('Архивы'); setShowCross(true) }}>
+                                <img className="picture-type" src={zip}></img>
+                                <span className="change-role-field" >Архивы (ZIP)</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('png'); setTypeFile('PNG'); setShowCross(true) }}>
+                                <img className="picture-type" src={png}></img>
+                                <span className="change-role-field" >Картинки (PNG)</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('jpeg'); setTypeFile('JPEG'); setShowCross(true) }}>
+                                <img className="picture-type" src={jpeg}></img>
+                                <span className="change-role-field" >Картинки (JPEG)</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('jpg'); setTypeFile('JPG'); setShowCross(true) }}>
+                                <img className="picture-type" src={jpg}></img>
+                                <span className="change-role-field" >Картинки (JPG)</span>
+                            </div>
+                        </div>
+                    </div>
                     <span id="path-navigation">{folder}</span>
                 </div>
                 {showType === 1 && (
@@ -419,11 +472,47 @@ const ShowInternalFilesOthers = () => {
                     </div>)
                 }
             </div>}
-            
+
             {role === 'default' && <div id="interior-block-files">
                 <div className="block-nav-but">
                     <button className="but-nav-storage-2" onClick={() => navigateBack()}>↶</button>
-                    <span id="path-navigation">{folder}</span>
+                    <div className="dropdown-role-block-2">
+                        <div className="but-block-type-default">
+                            <button className="change-type">{typeFile} &#129083;</button>
+                            {showCross && <button className="default-type" onClick={() => handlerChangeType()}>X</button>}
+                        </div>
+                        <div className="dropdown-role-type">
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('doc'); setTypeFile('Документы'); setShowCross(true) }}>
+                                <img className="picture-type" src={doc}></img>
+                                <span className="change-role-field" >Документы</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('pdf'); setTypeFile('PDF'); setShowCross(true) }}>
+                                <img className="picture-type" src={pdf}></img>
+                                <span className="change-role-field" >Файлы PDF</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('mp4'); setTypeFile('Видео'); setShowCross(true) }}>
+                                <img className="picture-type" src={mp4}></img>
+                                <span className="change-role-field" >Видео</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('zip'); setTypeFile('Архивы'); setShowCross(true) }}>
+                                <img className="picture-type" src={zip}></img>
+                                <span className="change-role-field" >Архивы (ZIP)</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('png'); setTypeFile('PNG'); setShowCross(true) }}>
+                                <img className="picture-type" src={png}></img>
+                                <span className="change-role-field" >Картинки (PNG)</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('jpeg'); setTypeFile('JPEG'); setShowCross(true) }}>
+                                <img className="picture-type" src={jpeg}></img>
+                                <span className="change-role-field" >Картинки (JPEG)</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('jpg'); setTypeFile('JPG'); setShowCross(true) }}>
+                                <img className="picture-type" src={jpg}></img>
+                                <span className="change-role-field" >Картинки (JPG)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <span id="path-navigation-default">{folder}</span>
                 </div>
                 {showType === 1 && (
                     <div id="interior-block-files-2">

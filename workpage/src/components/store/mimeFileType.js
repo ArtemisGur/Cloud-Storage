@@ -1,5 +1,3 @@
-
-
 const fileType = new Map([
     ['jpeg', 'image/jpeg'],
     ['pdf', 'application/pdf'],

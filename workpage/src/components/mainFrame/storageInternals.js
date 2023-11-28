@@ -10,9 +10,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { deleteData, addFile } from '../store/internalFilesSlice'
 import mimeFileType from "../store/mimeFileType"
 import { setDataFiles } from '../store/internalFilesSlice'
-import { changeDataUser, changeAllRoles, deleteDataUser } from "../store/userListSlice"
 import { setDataUsers } from "../store/userListSlice"
 import { setDataPasswordStorage } from "../store/changePasswordSlice"
+import StorageControll from "./controllStorage"
 import Chat from "./chat"
 import folderIcon from '../../img/folder.png'
 import jpeg from '../../img/jpeg.png'
@@ -28,7 +28,7 @@ import xml from '../../img/xml.png'
 import list from '../../img/list.png'
 import icons from '../../img/icons.png'
 import mp4 from '../../img/mp4.png'
-import cross from '../../img/cross.png'
+import fileType from "../store/mimeFileType"
 
 const creteObjUsers = (data) => {
     let userList = []
@@ -44,8 +44,6 @@ const ShowInternalFiles = () => {
     let storages = useSelector((store) => store.ownStorages.data)
     let currentFolder = useSelector((store) => store.currentFolder.data)
     let folder = useSelector((store) => store.folder.data)
-    let usersList = useSelector((store) => store.userList.data)
-    let passwordStorage = useSelector((store) => store.changePassword.data)
 
     const { activePage, changePage } = useContext(PageContext)
     const [file, setFile] = useState('');
@@ -55,6 +53,9 @@ const ShowInternalFiles = () => {
     const [showType, setShowType] = useState(2)
     const [modalWin, setModalWin] = useState(false)
     const [chatStatus, setChatStatus] = useState(false)
+    const [typeFile, setTypeFile] = useState('Тип')
+    const [showCross, setShowCross] = useState(false)
+    const [dirName, setDirName] = useState()
     const [modalWinControll, setModalWinControll] = useState(false)
     const el = useRef();
 
@@ -156,6 +157,7 @@ const ShowInternalFiles = () => {
         }
         setDrag(false)
     }
+    const [newPassword, setNewPassword] = useState()
 
     const getUserList = () => {
         axios.post('http://localhost:5000/getUsersList', { "owner": storages.owner, "name": storages.name })
@@ -234,9 +236,6 @@ const ShowInternalFiles = () => {
             })
     }
 
-    const [dirName, setDirName] = useState()
-    const [newPassword, setNewPassword] = useState()
-
     const createDir = () => {
         if (dirName === '') {
             return -1
@@ -254,41 +253,28 @@ const ShowInternalFiles = () => {
             })
     }
 
-    const changePassword = () => {
-        if (newPassword === null || newPassword === '') {
-            return -1
-        }
-        axios.post('/changeStoragePassword', { 'owner': storages.owner, 'name': storages.name, 'password': newPassword })
-            .then(() => {
-                dispatch(setDataPasswordStorage('Пароль успешно сменен'))
-            })
-    }
-
-    const changeRole = (newRole, key, name) => {
-        axios.post('/changeUserRole', { 'owner': storages.owner, 'name': storages.name, 'user': name, 'newRole': newRole })
-            .then(() => {
-                dispatch(changeDataUser({ 'key': key, 'role': newRole }))
-            })
-    }
-
-    const changeRoleToAll = (newRole) => {
-        axios.post('/changeAllRoles', { 'owner': storages.owner, 'name': storages.name, 'newRole': newRole })
-            .then(() => {
-                dispatch(changeAllRoles({ 'role': newRole }))
-            })
-    }
-
-    const deleteUser = (name, key) => {
-        axios.post('/excludeUser', { 'owner': storages.owner, 'name': storages.name, 'user': name })
-            .then((res) => {
-                if (res.data = 'OK') {
-                    dispatch(deleteDataUser(key))
-                }
-            })
-    }
-
     const handlerClick = () => {
         setChatStatus(!chatStatus)
+    }
+
+    const showSelectedFiles = (type) => {
+        axios.post('/showSelectedFiles', { owner: storages.owner, name: storages.name, fileType: type })
+            .then((res) => {
+                let internalFile = creteObjInternalFiles(res.data)
+                dispatch(setDataFiles(internalFile))
+            })
+    }
+
+    const handlerChangeType = () => {
+        axios.post('/showFiles', { "path": storages.owner + '/Storage_' + storages.name })
+            .then((res) => {
+                let internalFile = creteObjInternalFiles(res.data)
+                dispatch(setDataFiles(internalFile))
+            })
+            .then(() => {
+                setShowCross(false)
+                setTypeFile('Тип')
+            })
     }
 
     return activePage === 4 ? (
@@ -303,57 +289,7 @@ const ShowInternalFiles = () => {
                     <button className="popup-create" onClick={() => { createDir() }}>Создать</button>
                 </div>
             </div>)}
-            {modalWinControll && (<div id="popup">
-                <div className="popup-content-controll">
-                    <div className="popup-header">
-                        <div className="popup-title-2">Управление хранилищем <b>{storages.name}</b></div>
-                        <button className="popup-close" onClick={() => { setModalWinControll(false) }}>X</button>
-                    </div>
-                    <div className="interior-controll">
-                        {storages.type != 'Open' && <div className="interior-controll-2">
-                            <input className="popup-input-field" type="text" placeholder="Введите новый пароль хранилища..." onChange={(e) => { setNewPassword(e.target.value) }} />
-                            <button className="popup-create-submit" onClick={() => { changePassword() }}>Сменить пароль</button>
-                            <span className="success-change">{passwordStorage}</span>
-                        </div>}
-                        <div className="interior-controll-users-block">
-                            <div className="interior-controll-users">
-                                <div className="span-users-list">Список пользователей</div>
-                                <div className="users-interior">
-                                    {
-                                        usersList.map((userList) => {
-                                            return (
-                                                <div className="user-in-list" key={userList.key}>
-                                                    <span>{userList.userName}</span>
-                                                    <div className="dropdown-role-block">
-                                                        <button className="change-role">{userList.role === 'default' && 'Только просмотр'}
-                                                            {userList.role === 'full' && 'Редактирование'}</button>
-                                                        <div className="dropdown-role">
-                                                            <div>
-                                                                <button className="change-role-field" onClick={() => { changeRole('default', userList.key, userList.userName) }}>Только просмотр</button>
-                                                            </div>
-                                                            <div>
-                                                                <button className="change-role-field" onClick={() => { changeRole('full', userList.key, userList.userName) }}>Редактирование</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <img className="cross-pic" src={cross} onClick={() => deleteUser(userList.userName, userList.key)} />
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-                            </div>
-                            <div className="interior-controll-users">
-                                <div className="span-users-list">Вы можете назначить роль сразу для всех пользователей</div>
-                                <div><button className="button-change-role" onClick={() => changeRoleToAll('default')}>Только просмотр</button></div>
-                                <div><button className="button-change-role" onClick={() => changeRoleToAll('full')}>Редактирование содержимого хранилища</button></div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>)}
+            {modalWinControll && <StorageControll changeState={setModalWinControll} setPswd={setNewPassword} pswd={newPassword} />}
             {!modalWinControll && <div className="show-files-interior">
                 <div className="upload_file">
                     <div id="block-interior-submenu">
@@ -392,6 +328,42 @@ const ShowInternalFiles = () => {
                     <span className="progessBar">
                         {progress}
                     </span>
+                    <div className="dropdown-role-block-2">
+                        <div className="but-block-type">
+                            <button className="change-type">{typeFile} &#129083;</button>
+                            {showCross && <button className="default-type" onClick={() => handlerChangeType()}>X</button>}
+                        </div>
+                        <div className="dropdown-role-type">
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('doc'); setTypeFile('Документы'); setShowCross(true) }}>
+                                <img className="picture-type" src={doc}></img>
+                                <span className="change-role-field" >Документы</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('pdf'); setTypeFile('PDF'); setShowCross(true) }}>
+                                <img className="picture-type" src={pdf}></img>
+                                <span className="change-role-field" >Файлы PDF</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('mp4'); setTypeFile('Видео'); setShowCross(true) }}>
+                                <img className="picture-type" src={mp4}></img>
+                                <span className="change-role-field" >Видео</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('zip'); setTypeFile('Архивы'); setShowCross(true) }}>
+                                <img className="picture-type" src={zip}></img>
+                                <span className="change-role-field" >Архивы (ZIP)</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('png'); setTypeFile('PNG'); setShowCross(true) }}>
+                                <img className="picture-type" src={png}></img>
+                                <span className="change-role-field" >Картинки (PNG)</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('jpeg'); setTypeFile('JPEG'); setShowCross(true) }}>
+                                <img className="picture-type" src={jpeg}></img>
+                                <span className="change-role-field" >Картинки (JPEG)</span>
+                            </div>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles('jpg'); setTypeFile('JPG'); setShowCross(true) }}>
+                                <img className="picture-type" src={jpg}></img>
+                                <span className="change-role-field" >Картинки (JPG)</span>
+                            </div>
+                        </div>
+                    </div>
                     <span id="path-navigation">{folder}</span>
                 </div>
 
@@ -550,7 +522,7 @@ const ShowInternalFiles = () => {
             </div>}
             <div className="open-chat">
                 {chatStatus && <Chat />}
-                <div className="convert" onClick={() => handlerClick() }>&#9993;</div>
+                <div className="convert" onClick={() => handlerClick()}>&#9993;</div>
             </div>
         </div>
     ) : null
