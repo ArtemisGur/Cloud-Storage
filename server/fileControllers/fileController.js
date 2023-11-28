@@ -24,6 +24,27 @@ const deleteStorage = (login, name) => {
     }
 }
 
+const showSelectedFiles = (dir, files, fileType) => {
+    files = files || [];
+    var  allFiles = fs.readdirSync(dir);
+    for (var i = 0; i < allFiles.length; i++) {
+        let fullName = dir + '/' + allFiles[i];
+        let stat = fs.statSync(dir + '/' + allFiles[i])
+        let size = stat.size
+        let birthtime = stat.birthtime
+        let name = allFiles[i];
+        let type = name.slice(name.lastIndexOf('.') + 1)
+        if (fs.statSync(fullName).isDirectory()) {
+            showSelectedFiles(fullName, files, fileType);
+        } 
+        else if (type === fileType){
+            let file = new File(fullName, name, type, size, birthtime)
+            files.push(file);
+        }
+    }
+    return files;
+}
+
 const showFiles = (req) => {
 
     let dirPath = (path.resolve(__dirname, '../')) + `/files/${req.body.path}`
@@ -161,4 +182,4 @@ const createDir = (newPath) => {
     });
 }
 
-module.exports = { showFiles, showFiles_2, deleteStorage, getFile, searchFiles, createDir }
+module.exports = { showFiles, showFiles_2, deleteStorage, getFile, searchFiles, createDir, showSelectedFiles }

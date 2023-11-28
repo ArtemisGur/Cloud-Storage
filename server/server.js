@@ -270,6 +270,13 @@ APP.post("/showFiles", (req, res) => {
 
 })
 
+APP.post("/showSelectedFiles", (req, res) => {
+    let dirPath = __dirname + `/files/${req.body.owner}` + `/Storage_${req.body.name}`
+    let files = fileController.showSelectedFiles(dirPath, undefined, req.body.fileType)
+    res.send(files)
+})
+
+
 APP.post("/getUsersList", (req, res) => {
     collectionEnabledStorages.find({ owner: req.body.owner, name: req.body.name }).toArray()
         .then((response) => {
