@@ -1,4 +1,3 @@
-import axios from 'axios'
 import logo from '../img/logoSite.png'
 import profileLogo from '../img/profile-logo.png'
 import SearchField from "./SearchField"

@@ -15,28 +15,28 @@ const StorageControll = ({setPswd, pswd, changeState}) => {
         if (pswd === null || pswd === '') {
             return -1
         }
-        axios.post('/changeStoragePassword', { 'owner': storages.owner, 'name': storages.name, 'password': pswd })
+        axios.post('/storageRouter/changeStoragePassword', { 'owner': storages.owner, 'name': storages.name, 'password': pswd })
             .then(() => {
                 dispatch(setDataPasswordStorage('Пароль успешно сменен'))
             })
     }
 
     const changeRole = (newRole, key, name) => {
-        axios.post('/changeUserRole', { 'owner': storages.owner, 'name': storages.name, 'user': name, 'newRole': newRole })
+        axios.post('/storageRouter/changeUserRole', { 'owner': storages.owner, 'name': storages.name, 'user': name, 'newRole': newRole })
             .then(() => {
                 dispatch(changeDataUser({ 'key': key, 'role': newRole }))
             })
     }
 
     const changeRoleToAll = (newRole) => {
-        axios.post('/changeAllRoles', { 'owner': storages.owner, 'name': storages.name, 'newRole': newRole })
+        axios.post('/storageRouter/changeAllRoles', { 'owner': storages.owner, 'name': storages.name, 'newRole': newRole })
             .then(() => {
                 dispatch(changeAllRoles({ 'role': newRole }))
             })
     }
 
     const deleteUser = (name, key) => {
-        axios.post('/excludeUser', { 'owner': storages.owner, 'name': storages.name, 'user': name })
+        axios.post('/storageRouter/excludeUser', { 'owner': storages.owner, 'name': storages.name, 'user': name })
             .then((res) => {
                 if (res.data = 'OK') {
                     dispatch(deleteDataUser(key))

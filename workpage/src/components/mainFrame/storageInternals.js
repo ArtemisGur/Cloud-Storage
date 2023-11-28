@@ -1,9 +1,9 @@
 import axios from "axios"
 import { PageContext } from "../PageContext"
-import { path, creteObjInternalFiles } from "./showOwnerStorages"
+import { creteObjInternalFiles } from "./showOwnerStorages"
 import { useContext, useState } from "react"
 import fileDownload from 'js-file-download'
-import { setDataFolder, getDataFolder, setDataFolderFirst, navFolder, } from "../store/foldersSlice"
+import { setDataFolder, navFolder} from "../store/foldersSlice"
 import { setDataCurrentFolder, setDataCurrentFolder_2 } from "../store/currentFolderSlice"
 import React, { useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux"
@@ -28,7 +28,6 @@ import xml from '../../img/xml.png'
 import list from '../../img/list.png'
 import icons from '../../img/icons.png'
 import mp4 from '../../img/mp4.png'
-import fileType from "../store/mimeFileType"
 
 const creteObjUsers = (data) => {
     let userList = []
@@ -57,6 +56,7 @@ const ShowInternalFiles = () => {
     const [showCross, setShowCross] = useState(false)
     const [dirName, setDirName] = useState()
     const [modalWinControll, setModalWinControll] = useState(false)
+    const [showDelete, setShowDelete] = useState(false)
     const el = useRef();
 
     const handleChange = async (e) => {
@@ -72,7 +72,7 @@ const ShowInternalFiles = () => {
         formData.append('file', file_)
         formData.append('path', folder)
         formData.append('fileName', str)
-        axios.post('http://localhost:5000/uploadNewFiles', formData, {
+        axios.post('/fileRouter/uploadNewFiles', formData, {
             onUploadProgress: (ProgressEvent) => {
                 let progress = Math.round(
                     ProgressEvent.loaded / ProgressEvent.total * 100
@@ -87,7 +87,7 @@ const ShowInternalFiles = () => {
     }
 
     const downloadFile = (fullName, fileName) => {
-        axios.post('/downloadFile', { 'fullPath': fullName }, { responseType: 'blob' })
+        axios.post('/fileRouter/downloadFile', { 'fullPath': fullName }, { responseType: 'blob' })
             .then((res) => {
                 fileDownload(res.data, fileName)
             })
@@ -96,7 +96,7 @@ const ShowInternalFiles = () => {
 
     const deleteFile = (fullName, fileName, key) => {
 
-        axios.post('/deleteFile', { 'fullPath': fullName })
+        axios.post('/fileRouter/deleteFile', { 'fullPath': fullName })
             .then(() => {
                 dispatch(deleteData(key))
             })
@@ -104,20 +104,18 @@ const ShowInternalFiles = () => {
 
     const deleteFolder = (fullName, key) => {
         console.log(key)
-        axios.post('/deleteFolder', { 'fullPath': fullName })
+        axios.post('/fileRouter/deleteFolder', { 'fullPath': fullName })
             .then(() => {
                 dispatch(deleteData(key))
             })
     }
-
-    const [showDelete, setShowDelete] = useState(false)
 
     const deleteStorage = () => {
         setShowDelete(!showDelete)
     }
 
     const deleteStorageConfirm = () => {
-        axios.post('/deleteStorage', { 'owner': storages.owner, 'name': storages.name })
+        axios.post('/storageRouter/deleteStorage', { 'owner': storages.owner, 'name': storages.name })
             .then((response) => {
                 if (response) {
                     setShowDelete(false)
@@ -149,7 +147,7 @@ const ShowInternalFiles = () => {
         for (let i = 0; i < files.length; i++) {
             createFormData(files[i], i)
                 .then((res) => {
-                    axios.post('/uploadNewFiles', res)
+                    axios.post('/fileRouter/uploadNewFiles', res)
                         .then((response) => {
                             dispatch(addFile(response.data))
                         })
@@ -160,7 +158,7 @@ const ShowInternalFiles = () => {
     const [newPassword, setNewPassword] = useState()
 
     const getUserList = () => {
-        axios.post('http://localhost:5000/getUsersList', { "owner": storages.owner, "name": storages.name })
+        axios.post('/storageRouter/getUsersList', { "owner": storages.owner, "name": storages.name })
             .then((res) => {
                 let userList = creteObjUsers(res.data)
                 console.log(userList)
@@ -187,7 +185,7 @@ const ShowInternalFiles = () => {
 
     const viewFile = (fullName, type, name) => {
         const fileType = mimeFileType.get(type)
-        axios.post('/getFile', { 'name': fullName }, { responseType: 'blob' })
+        axios.post('/fileRouter/getFile', { 'name': fullName }, { responseType: 'blob' })
             .then((response) => {
                 return response.data.arrayBuffer()
             })
@@ -205,20 +203,22 @@ const ShowInternalFiles = () => {
     }
 
     const searchFile = (e) => {
-        axios.post('/searchFile', { path: folder, file: e.target.value })
+        axios.post('/fileRouter/searchFile', { path: folder, file: e.target.value })
             .then(res => {
                 let internalFile = creteObjInternalFiles(res.data)
                 dispatch(setDataFiles(internalFile))
             })
     }
 
-    const changeDir = (name) => {
-        dispatch(setDataFolder(name))
-        dispatch(setDataCurrentFolder(name))
-        axios.post('http://localhost:5000/showFiles', { "path": folder + '/' + name })
+    const changeDir = (name) => {       
+        axios.post('/fileRouter/showFiles', { "path": folder + '/' + name })
             .then((res) => {
                 let internalFile = creteObjInternalFiles(res.data)
                 dispatch(setDataFiles(internalFile))
+            })
+            .then(() => {
+                dispatch(setDataFolder(name))
+                dispatch(setDataCurrentFolder(name))
             })
     }
 
@@ -228,11 +228,13 @@ const ShowInternalFiles = () => {
         }
         dispatch(navFolder(currentFolder))
         const tempData = folder.slice(0, folder.length - currentFolder.length - 1)
-        axios.post('http://localhost:5000/showFiles', { "path": tempData })
+        axios.post('/fileRouter/showFiles', { "path": tempData })
             .then((res) => {
                 let internalFile = creteObjInternalFiles(res.data)
-                dispatch(setDataCurrentFolder_2(tempData))
                 dispatch(setDataFiles(internalFile))
+            })
+            .then(() => {
+                dispatch(setDataCurrentFolder_2(tempData))
             })
     }
 
@@ -240,9 +242,9 @@ const ShowInternalFiles = () => {
         if (dirName === '') {
             return -1
         }
-        axios.post('/createDir', { path: folder + '/' + dirName, name: dirName })
+        axios.post('/fileRouter/createDir', { path: folder + '/' + dirName, name: dirName })
             .then(() => {
-                axios.post('http://localhost:5000/showFiles', { "path": folder })
+                axios.post('/fileRouter/showFiles', { "path": folder })
                     .then((res) => {
                         let internalFile = creteObjInternalFiles(res.data)
                         dispatch(setDataFiles(internalFile))
@@ -258,7 +260,7 @@ const ShowInternalFiles = () => {
     }
 
     const showSelectedFiles = (type) => {
-        axios.post('/showSelectedFiles', { owner: storages.owner, name: storages.name, fileType: type })
+        axios.post('/fileRouter/showSelectedFiles', { owner: storages.owner, name: storages.name, fileType: type })
             .then((res) => {
                 let internalFile = creteObjInternalFiles(res.data)
                 dispatch(setDataFiles(internalFile))
@@ -266,7 +268,7 @@ const ShowInternalFiles = () => {
     }
 
     const handlerChangeType = () => {
-        axios.post('/showFiles', { "path": storages.owner + '/Storage_' + storages.name })
+        axios.post('/fileRouter/showFiles', { "path": storages.owner + '/Storage_' + storages.name })
             .then((res) => {
                 let internalFile = creteObjInternalFiles(res.data)
                 dispatch(setDataFiles(internalFile))

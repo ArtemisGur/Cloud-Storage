@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import 'firebase/compat/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { PageContext } from "../PageContext"
 import { setUser } from "../store/userSlice";
+import 'firebase/compat/firestore';
 import axios from "axios";
 
 const Chat = () => {

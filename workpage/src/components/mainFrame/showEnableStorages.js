@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { setDataFiles } from '../store/internalFilesSlice'
 import { setDataOwn } from "../store/ownStorageSlice"
 import { setDataSubscribed } from "../store/subscribedStorageSlice"
-import { setDataFolder, getDataFolder, setDataFolderFirst } from "../store/foldersSlice"
+import { setDataFolderFirst } from "../store/foldersSlice"
 import { setDataCurrentFolder } from "../store/currentFolderSlice"
 import { setUserRole } from "../store/roleSlice"
 import { setDataCurrentStorage } from "../store/currentStoragesSlice"
@@ -31,14 +31,14 @@ const EnableStorages = () => {
 
     const handlerClick = (num, type, owner, name) => {
 
-        axios.post('http://localhost:5000/checkStorage', { "owner": storages[num].owner, "name": storages[num].name }, {withCredentials: true})
+        axios.post('/storageRouter/checkStorage', { "owner": storages[num].owner, "name": storages[num].name }, {withCredentials: true})
         .then((res) => {
             dispatch(setDataSubscribed({ "owner" : res.data.owner, "name" : res.data.name}))
             console.log(res.data.role)
             dispatch(setUserRole(res.data.role))
         })
         .then(() => {
-            axios.post('http://localhost:5000/showFiles', { "path": owner + '/Storage_' + name })
+            axios.post('/fileRouter/showFiles', { "path": owner + '/Storage_' + name })
             .then((res) => {
                 let internalFile = creteObjInternalFiles(res.data)
                 path = `${storages[num].owner}/Storage_${storages[num].name}`

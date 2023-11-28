@@ -2,7 +2,7 @@ import { PageContext } from "../components/PageContext"
 import { setData } from "./store/searchSlice"
 import { useContext, useState } from "react"
 import { createOwnStorageObject } from "./buttonsNavigate/buttonMyStorages"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { setDataStorageType } from "./store/storageTypePasswordSlice"
 import axios from 'axios';
 
@@ -15,7 +15,7 @@ const SearchField = () => {
         document.getElementById('nav-field-my').style.background = ""
         document.getElementById('nav-field-enable').style.background = ""
         e.preventDefault()
-        axios.post('/searchStorages', {'storageName' : e.target.storageName.value})
+        axios.post('/storageRouter/searchStorages', {'storageName' : e.target.storageName.value})
         .then((res) => {
             let data = createOwnStorageObject(res.data)
             dispatch(setData(data))

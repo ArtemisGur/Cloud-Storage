@@ -4,9 +4,8 @@ import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { setDataFiles } from '../store/internalFilesSlice'
 import { setDataOwn } from "../store/ownStorageSlice"
-import { setDataFolder, getDataFolder, setDataFolderFirst } from "../store/foldersSlice"
+import { setDataFolderFirst } from "../store/foldersSlice"
 import { setDataCurrentFolder } from "../store/currentFolderSlice"
-import { setDataUsers } from "../store/userListSlice"
 import { setDataCurrentStorage } from "../store/currentStoragesSlice"
 
 let path
@@ -29,7 +28,7 @@ const OwnerStorage = () => {
     const { activePage, changePage } = useContext(PageContext)
 
     const handlerClick = (num, type, owner, name) => {
-        axios.post('http://localhost:5000/showFiles', { "path": storages[num].owner + '/Storage_' + storages[num].name })
+        axios.post('/fileRouter/showFiles', { "path": storages[num].owner + '/Storage_' + storages[num].name })
             .then((res) => {
                 console.log(res)
                 let internalFile = creteObjInternalFiles(res.data)

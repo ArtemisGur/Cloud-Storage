@@ -1,5 +1,5 @@
 import {  useContext, } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { PageContext } from "../PageContext"
 import axios from 'axios';
 import { createOwnStorageObject } from './buttonMyStorages'
@@ -15,7 +15,7 @@ const EnabledStorages = () => {
         document.getElementById('nav-field-enable').style.background = "#E6D1FF"
         document.getElementById('nav-field-my').style.background = ""
 
-        axios.post('http://localhost:5000/getEnableStorages', '', { withCredentials: true })
+        axios.post('/storageRouter/getEnableStorages', '', { withCredentials: true })
             .then((res) => {
                 let data = createOwnStorageObject(res.data)
                 dispatch(setData(data))

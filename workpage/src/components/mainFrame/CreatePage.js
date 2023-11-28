@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { PageContext } from "../PageContext"
 import { setDataHintIncorrect } from "../store/hintIncorrectSlice"
@@ -26,7 +26,6 @@ const CreateStorage = () => {
     console.log(hint_1, hint_2)
 
     let passwordForStorage = null
-    let hintName = null
     let hintNameEmpty = null
 
     const clickHandler = () => {
@@ -72,7 +71,7 @@ const CreateStorage = () => {
                 "typeStorage": type
             }
         }
-        axios.post('http://localhost:5000/getNewStorage', { "newStorage": data }, { withCredentials: true })
+        axios.post('/storageRouter/getNewStorage', { "newStorage": data }, { withCredentials: true })
             .then((response) => {
                 console.log(response.data.isEmpty)
                 if (response.data.stat === 202) {

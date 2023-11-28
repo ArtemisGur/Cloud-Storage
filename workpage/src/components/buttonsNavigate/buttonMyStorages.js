@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useContext} from "react"
+import { useDispatch } from "react-redux"
 import { PageContext } from "../PageContext"
 import axios from 'axios';
 import { setData } from "../store/storagesSlice"
@@ -11,7 +11,7 @@ const MyStorages = () => {
     const handlerClick = () => {
         document.getElementById('nav-field-my').style.background = "#E6D1FF"
         document.getElementById('nav-field-enable').style.background = ""
-        axios.post('http://localhost:5000/getOwnerStorages', '', { withCredentials: true })
+        axios.post('/storageRouter/getOwnerStorages', '', { withCredentials: true })
        .then((res) => {
             let data = createOwnStorageObject(res.data)
             dispatch(setData(data))
