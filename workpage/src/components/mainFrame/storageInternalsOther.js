@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { deleteData, addFile } from '../store/internalFilesSlice'
 import { setDataSubscribed } from "../store/subscribedStorageSlice"
 import mimeFileType from "../store/mimeFileType"
-import { setDataFolder, navFolder } from "../store/foldersSlice"
+import { setDataFolder, navFolder, setDataFolderFirst } from "../store/foldersSlice"
 import { setDataCurrentFolder, setDataCurrentFolder_2 } from "../store/currentFolderSlice"
 import { setDataFiles } from '../store/internalFilesSlice'
 import Chat from "./chat"
@@ -252,6 +252,7 @@ const ShowInternalFilesOthers = () => {
                 dispatch(setDataFiles(internalFile))
             })
             .then(() => {
+                dispatch(setDataFolderFirst(storages.owner + '/Storage_' + storages.name))
                 setShowCross(false)
                 setTypeFile('Тип')
             })
@@ -309,7 +310,7 @@ const ShowInternalFilesOthers = () => {
                     </span>
                     <div className="dropdown-role-block-2">
                         <div className="but-block-type">
-                            <button className="change-type">{typeFile} &#129083;</button>
+                            <button className = {showCross ? 'change-type-1' : 'change-type'} >{typeFile} &#129083;</button>
                             {showCross && <button className="default-type" onClick={() => handlerChangeType()}>X</button>}
                         </div>
                         <div className="dropdown-role-type">
@@ -329,17 +330,9 @@ const ShowInternalFilesOthers = () => {
                                 <img className="picture-type" src={zip}></img>
                                 <span className="change-role-field" >Архивы (ZIP)</span>
                             </div>
-                            <div className="change-role-block" onClick={() => { showSelectedFiles('png'); setTypeFile('PNG'); setShowCross(true) }}>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles(['png', 'jpeg', 'jpg']); setTypeFile('Картинки'); setShowCross(true) }}>
                                 <img className="picture-type" src={png}></img>
-                                <span className="change-role-field" >Картинки (PNG)</span>
-                            </div>
-                            <div className="change-role-block" onClick={() => { showSelectedFiles('jpeg'); setTypeFile('JPEG'); setShowCross(true) }}>
-                                <img className="picture-type" src={jpeg}></img>
-                                <span className="change-role-field" >Картинки (JPEG)</span>
-                            </div>
-                            <div className="change-role-block" onClick={() => { showSelectedFiles('jpg'); setTypeFile('JPG'); setShowCross(true) }}>
-                                <img className="picture-type" src={jpg}></img>
-                                <span className="change-role-field" >Картинки (JPG)</span>
+                                <span className="change-role-field" >Картинки (PNG, JPG)</span>
                             </div>
                         </div>
                     </div>

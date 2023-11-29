@@ -35,7 +35,7 @@ const showSelectedFiles = (dir, files, fileType) => {
         if (fs.statSync(fullName).isDirectory()) {
             showSelectedFiles(fullName, files, fileType);
         } 
-        else if (type === fileType){
+        else if (fileType.includes(type)){
             let file = new File(fullName, name, type, size, birthtime)
             files.push(file);
         }

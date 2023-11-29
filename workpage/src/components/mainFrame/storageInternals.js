@@ -3,7 +3,7 @@ import { PageContext } from "../PageContext"
 import { creteObjInternalFiles } from "./showOwnerStorages"
 import { useContext, useState } from "react"
 import fileDownload from 'js-file-download'
-import { setDataFolder, navFolder} from "../store/foldersSlice"
+import { setDataFolder, navFolder, setDataFolderFirst } from "../store/foldersSlice"
 import { setDataCurrentFolder, setDataCurrentFolder_2 } from "../store/currentFolderSlice"
 import React, { useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux"
@@ -210,7 +210,8 @@ const ShowInternalFiles = () => {
             })
     }
 
-    const changeDir = (name) => {       
+    const changeDir = (name) => {
+        console.log({ "path": folder + '/' + name })
         axios.post('/fileRouter/showFiles', { "path": folder + '/' + name })
             .then((res) => {
                 let internalFile = creteObjInternalFiles(res.data)
@@ -274,10 +275,12 @@ const ShowInternalFiles = () => {
                 dispatch(setDataFiles(internalFile))
             })
             .then(() => {
+                dispatch(setDataFolderFirst(storages.owner + '/Storage_' + storages.name))
                 setShowCross(false)
                 setTypeFile('Тип')
             })
     }
+
 
     return activePage === 4 ? (
         <div className="show-file-cont">
@@ -332,7 +335,7 @@ const ShowInternalFiles = () => {
                     </span>
                     <div className="dropdown-role-block-2">
                         <div className="but-block-type">
-                            <button className="change-type">{typeFile} &#129083;</button>
+                            <button className={showCross ? 'change-type-1' : 'change-type'} >{typeFile} &#129083;</button>
                             {showCross && <button className="default-type" onClick={() => handlerChangeType()}>X</button>}
                         </div>
                         <div className="dropdown-role-type">
@@ -352,17 +355,9 @@ const ShowInternalFiles = () => {
                                 <img className="picture-type" src={zip}></img>
                                 <span className="change-role-field" >Архивы (ZIP)</span>
                             </div>
-                            <div className="change-role-block" onClick={() => { showSelectedFiles('png'); setTypeFile('PNG'); setShowCross(true) }}>
+                            <div className="change-role-block" onClick={() => { showSelectedFiles(['png', 'jpeg', 'jpg']); setTypeFile('Картинки'); setShowCross(true) }}>
                                 <img className="picture-type" src={png}></img>
-                                <span className="change-role-field" >Картинки (PNG)</span>
-                            </div>
-                            <div className="change-role-block" onClick={() => { showSelectedFiles('jpeg'); setTypeFile('JPEG'); setShowCross(true) }}>
-                                <img className="picture-type" src={jpeg}></img>
-                                <span className="change-role-field" >Картинки (JPEG)</span>
-                            </div>
-                            <div className="change-role-block" onClick={() => { showSelectedFiles('jpg'); setTypeFile('JPG'); setShowCross(true) }}>
-                                <img className="picture-type" src={jpg}></img>
-                                <span className="change-role-field" >Картинки (JPG)</span>
+                                <span className="change-role-field" >Картинки (PNG, JPG)</span>
                             </div>
                         </div>
                     </div>
