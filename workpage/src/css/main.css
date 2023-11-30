@@ -21,7 +21,7 @@ body {
 }
 
 .logo-block {
-    flex-basis: 12.5%;
+    flex-basis: 11%;
     align-items: center;
     justify-content: center;
     vertical-align: middle;
@@ -57,11 +57,11 @@ body {
 .logo-profile {
     margin-left: auto;
     margin-right: 2%;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serifshow-file-cont;
 }
 
 #button-exit {
-    margin-right: 12%;
+    margin-right: 3%;
     padding-left: 10px;
     padding-right: 10px;
     height: 37px;
@@ -150,15 +150,16 @@ body {
 .create-storage-cont,
 .show-file-cont {
     border-radius: 20px;
-    width: 79.2%;
+    width: 82%;
     margin-top: 1%;
     height: 85vh;
     font-family: system-ui;
+    background-color: white;
 }
 
 .create-storage-cont-2 {
     border-radius: 20px;
-    width: 79.2%;
+    width: 82%;
     margin-top: 1%;
     height: 85vh;
     font-family: system-ui;
@@ -313,7 +314,7 @@ html {
 }
 
 .button-storage {
-    width: 90%;
+    width: 95%;
     border: 0px solid #2d4a53;
     box-shadow: 0 0 2px #2d4a53;
     border-radius: 20px;
@@ -376,14 +377,13 @@ html {
 }
 
 .upload_file {
-    margin-left: 2%;
-    width: 90%;
+    margin-left: 2.5%;
+    width: 93%;
 }
 
 .file-upload {
     display: flex;
     align-items: center;
-    margin-left: auto;
 }
 
 .file-upload-1 {
@@ -458,17 +458,16 @@ html {
 }
 
 #interior-block-files {
-    box-shadow: 0 0 3px #2d4a53;
     background-color: white;
     border-radius: 20px;
-    margin-left: 2%;
     margin-right: 8%;
     height: 70vh;
+    width: 100%;
 }
 
 #interior-block-files-2 {
     overflow: auto;
-    height: 55vh;
+    height: 60vh;
     background-color: white;
     border-radius: 20px;
 }
@@ -575,9 +574,10 @@ html {
     overflow: auto;
     display: flex;
     flex-wrap: wrap;
-    height: 55vh;
+    height: 60vh;
     border-radius: 20px;
     background-color: white;
+    margin-top: 2%;
 }
 
 #file-interior-with-img::-webkit-scrollbar {
@@ -721,11 +721,12 @@ html {
 #discription-block {
     width: 30%;
     padding: 10px;
-    border: 0px solid #2d4a53;
-    box-shadow: 0 0 2px #2d4a53;
-    border-radius: 12px;
     margin-top: 2%;
     background-color: white;
+    margin-right: auto;
+    border: 0px #2d4a53;
+    box-shadow: 0 0 2px #2d4a53;
+    border-radius: 12px;
 }
 
 #block-inter {
@@ -770,6 +771,7 @@ html {
     cursor: pointer;
     scale: 1.4;
     transition: 0.3s linear;
+    margin-left: auto;
 }
 
 #storage-delete-2 {
@@ -848,7 +850,6 @@ html {
     display: flex;
     align-items: center;
     margin-right: 1%;
-    padding-top: 10%;
 }
 
 #subscribe-storage:hover,
@@ -874,6 +875,7 @@ html {
     align-items: center;
     margin-right: 2%;
     float: right;
+    
 }
 
 .drop-area {
@@ -980,6 +982,7 @@ html {
 .dropdown-role-block-2 {
     margin-left: auto;
     width: 10%;
+    margin-right: 2%;
 }
 
 .dropdown-role-block-2:hover .dropdown-role-type {
@@ -1245,13 +1248,14 @@ html {
 }
 
 .block-nav-but {
-    padding-top: 2%;
-    padding-left: 2%;
-    padding-bottom: 2%;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     background-color: white;
+    margin-top: 2%;
     display: flex;
+    border-radius: 12px;
+    width: 93%;
+    margin-left: 2.5%;
 }
 
 .but-nav-storage {
@@ -1311,6 +1315,7 @@ html {
     background-color: rgba(242, 236, 250, 0.438);
     cursor: pointer;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: rgb(230, 209, 255);
 }
 
 .default-type{
@@ -1328,13 +1333,11 @@ html {
 }
 
 .default-type:hover{
-    background-color: rgb(236, 227, 247);
+    background-color: rgb(230, 209, 255)
 }
 
 #path-navigation {
     font-family: system-ui;
-    margin-left: auto;
-    margin-right: 5%;
     font-weight: 500;
     background-color: white;
     font-size: 14px;
@@ -1348,7 +1351,6 @@ html {
 
 #path-navigation-default {
     font-family: system-ui;
-    margin-right: 5%;
     font-weight: 500;
     background-color: white;
     font-size: 14px;
@@ -1513,6 +1515,7 @@ html {
 }
 
 .open-chat {
+    margin-top: 1%;
     float: right;
 }
 
@@ -1592,7 +1595,7 @@ html {
     }
     #interior-block-files{
         margin-right: 2%;
-        height: 100%;
+        height: 90%;
     }
     #but-create{
         font-size: 25px;
